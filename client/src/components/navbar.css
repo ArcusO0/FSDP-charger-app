@@ -1,0 +1,68 @@
+/* navbar.css */
+
+.navbar {
+    flex-direction: column;
+    background-color: #FFFFFF;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    height: 100%;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.navbar.open {
+    height: auto;
+}
+
+.navbar-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-header a {
+    margin-bottom: 10px;
+}
+
+.navbar-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+a {
+    font-size: auto;
+}
+
+.book {
+    margin-top: 214px;
+}
+
+.book,
+.charger,
+.settings,
+.about {
+    margin-bottom: 52px;
+    font-size: 24px;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        z-index: 1;
+        width: auto;
+    }
+    .navbar-header {
+        display: none;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar.open {
+        height: auto;
+    }
+    .navbar.open .navbar-header {
+        display: flex;
+        flex-direction: column;
+    }
+}

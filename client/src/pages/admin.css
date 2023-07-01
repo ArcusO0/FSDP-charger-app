@@ -1,0 +1,30 @@
+.top {
+    position: absolute;
+    width: 80%;
+    height: 25%;
+    margin-left: 120px;
+    margin-right: 5%;
+    top: 15%;
+    background-color: #fba263;
+}
+
+.bottom {
+    position: absolute;
+    width: 80%;
+    height: 25%;
+    margin-left: 120px;
+    margin-right: 5%;
+    bottom: 15%;
+    background-color: #fba263;
+}
+
+.icon {
+    font-size: 45px;
+}
+
+@media (max-width: 768px) {
+    .top,
+    .bottom {
+        margin-left: 5%;
+    }
+}
