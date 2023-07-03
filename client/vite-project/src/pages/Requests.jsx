@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import http from "../http"
-import { Container, Box, Grid, Card, CardContent, Typography, Drawer, Toolbar, List, Divider, 
-ListItem, ListItemButton, Avatar, createTheme, ThemeProvider, Link} from '@mui/material';
-import { GridViewSharp, LibraryBooks, Settings, HelpOutline, Bolt, ArrowBackIosRounded, CreateSharp, DeleteSharp } from '@mui/icons-material';
+import { Container, Box, Grid, Card, CardContent, Typography, Divider, 
+createTheme, ThemeProvider, IconButton, Link, Modal} from '@mui/material';
+import {ArrowBackIosRounded, CreateSharp, DeleteSharp } from '@mui/icons-material';
 import Sidebar from "../sidebar";
-
 
 function Requests() {
   const theme = createTheme({
@@ -23,22 +22,29 @@ function Requests() {
 
   const sidebar = Sidebar();
 
+  const [open, setOpen] = React.useState(false); 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx = {{ display: "flex" }}>
         {sidebar}
         {/* Body Content */}
-        <Box sx={{ml:-5, mt:5}} >
+        <Box sx={{ml:-5, mt:3}} >
           <ArrowBackIosRounded sx={{ display: 'inline-block', mr:2}}/>
           <Typography variant="h4" sx ={{display: 'inline-block' }}>
             My Requests
           </Typography>
-          <Box sx={{display: 'flex', mt: 5, pb: 5, maxHeight: 550}}>
+
+          {/* "Add" Requests */}
+          <Box sx={{display: 'flex', mt: 5, pb: 0, maxHeight: 600}}>
             <Container>
               <Typography variant="h5">
                 "Add" Requests
               </Typography>
-              <Container sx={{maxHeight: 500, overflowY: "auto", overflowX:"hidden", ml: -2, pb:5}}>
+              <Container sx={{maxHeight: 500, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                 <Grid container spacing={2} sx={{pr: 5}} minWidth={500}>
                   {
                     requestList.filter(x => x.type === "Add")
@@ -56,8 +62,46 @@ function Requests() {
                               <Typography variant="h6" sx={{mb: 2}}>
                                 Status: {request.status}
                               </Typography>
-                              <CreateSharp sx={{display: "inline-block", position: "relative", width: 30, height: 30, mx: 7, mt: -5, float:'right'}}/>
-                              <DeleteSharp sx={{display: "inline-block", position: "relative", width: 30, height: 30, mx: 1, mt: -5, float:'right', color: "red"}}/>
+
+                              {/* Delete Button */}
+                              <IconButton sx={{display: "inline-block", position: "relative", mt: -5, float:'right'}} onClick={handleOpen}>
+                                  <DeleteSharp sx={{width: 30, height: 30, color: "red"}}/>
+                              </IconButton>
+                              <Modal
+                              open={open}
+                              onClose={handleClose}
+                              >
+                                <Box sx={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600,
+                                    backgroundColor:'background.paper', border: '1px solid #000', boxShadow: 24, p: 4 }}>
+                                    <Container>
+                                        <ArrowBackIosRounded sx={{ display: 'inline-block', mr:2}} onClick={handleClose}/>
+                                        <Typography variant="h5" sx={{ display:"inline-block", ml:"25%"}}>
+                                            Delete Request
+                                        </Typography>
+                                    </Container>
+                                    <Container sx={{p:5}} >
+                                        <Typography>
+                                            Selected Request Id: {request.id}
+                                        </Typography>
+                                        <Typography>
+                                            EV Charger Name: {request.name}
+                                        </Typography>
+                                        <Typography>
+                                            EV Charger Address {request.address}
+                                        </Typography>
+                                        <Typography>
+                                            EV Charger Description {request.description}
+                                        </Typography>
+                                    </Container>
+                                </Box>
+                              </Modal>
+
+                              {/* Edit Button */}
+                              <Link to={`requests/updateRequest/${request.id}`}>
+                                <IconButton sx={{display: "inline-block", position: "relative", mt: -5, float:'right'}}>
+                                  <CreateSharp sx={{width: 30, height: 30, color: "black"}}/>
+                                </IconButton> 
+                              </Link>
                             </CardContent>
                           </Card>
                         </Grid>
@@ -67,12 +111,15 @@ function Requests() {
                 </Grid>
               </Container>
             </Container>
+
             <Divider orientation='vertical' sx={{ width:2, backgroundColor: '#707070', borderRadius: "2px", mx: 5, pb: 5}} flexItem/>
+            
+            {/* "Delete" Requests */}
             <Container>
               <Typography variant="h5">
                 "Delete" Requests
               </Typography>
-              <Container sx={{maxHeight: 500, overflowY: "auto", overflowX: "hidden", ml: -2}}>
+              <Container sx={{maxHeight: 500, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                 <Grid container spacing={2} sx={{pr:5}} minWidth={500}>
                   {
                     requestList.filter(x => x.type === "Delete")
@@ -90,8 +137,45 @@ function Requests() {
                               <Typography variant="h6" sx={{mb: 2}}>
                                 Status: {request.status}
                               </Typography>
-                              <CreateSharp sx={{display: "inline-block", position: "relative", width: 30, height: 30, mx: 7, mt: -5, float:'right'}}/>
-                              <DeleteSharp sx={{display: "inline-block", position: "relative", width: 30, height: 30, mx: 1, mt: -5, float:'right', color: "red"}}/>
+                              
+                              {/* Delete Button */}
+                              <IconButton sx={{display: "inline-block", position: "relative", mt: -5, float:'right'}} onClick={handleOpen}>
+                                  <DeleteSharp sx={{width: 30, height: 30, color: "red"}}/>
+                              </IconButton>
+                              <Modal
+                              open={open}
+                              onClose={handleClose}
+                              >
+                                <Box sx={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600,
+                                    backgroundColor:'background.paper', border: '1px solid #000', boxShadow: 24, p: 4 }}>
+                                    <Container>
+                                        <ArrowBackIosRounded sx={{ display: 'inline-block', mr:2}} onClick={handleClose}/>
+                                        <Typography variant="h5" sx={{ display:"inline-block", ml:"25%"}}>
+                                            Delete Request
+                                        </Typography>
+                                    </Container>
+                                    <Container sx={{p:5}} >
+                                        <Typography>
+                                            Selected Request Id: {request.id}
+                                        </Typography>
+                                        <Typography>
+                                            EV Charger Name: {request.name}
+                                        </Typography>
+                                        <Typography>
+                                            EV Charger Address {request.address}
+                                        </Typography>
+                                        <Typography>
+                                            EV Charger Description {request.description}
+                                        </Typography>
+                                    </Container>
+                                </Box>
+                              </Modal>
+
+                              {/* Edit Button */}
+                              <IconButton sx={{display: "inline-block", position: "relative", mt: -5, float:'right'}}>
+                                <CreateSharp sx={{width: 30, height: 30, color: "black"}}/>
+                              </IconButton> 
+
                             </CardContent>
                           </Card>
                         </Grid>

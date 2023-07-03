@@ -9,6 +9,8 @@ router.post("/addRequest", async (req, res) => {
     let validationSchema = yup.object().shape({
         type: yup.string().oneOf(['Add', 'Delete']).required(),
         name: yup.string().trim().min(3).max(100).required(),
+        address: yup.string().trim().min(3).max(500).required(),
+        description: yup.string().trim().min(3).max(500).required(),
         status: yup.string().oneOf(["Pending", "Approved", "Rejected"]).required()
     });
     try {
@@ -33,6 +35,7 @@ router.get("/", async (req, res) => {
     let search = req.query.search;
     if (search) {
         condition[Sequelize.Op.or] = [
+            {type: {[Sequelize.Op.like]: `${search}%`}},
             {name: {[Sequelize.Op.like]: `${search}%`}},
             {status: {[Sequelize.Op.like]: `${search}%`}}
         ];
@@ -66,7 +69,7 @@ router.get("/:type", async (req, res) => {
 });
 
 // Update Requests using Put
-router.put("/:id", async (req, res) => {
+router.put("/updateRequest/:id", async (req, res) => {
     let id = req.params.id;
     let request = await Request.findByPk(id);
     if(!request){
