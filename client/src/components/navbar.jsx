@@ -9,7 +9,7 @@ function Navbar() {
  
       
     <div className="navbar">
-      <img src="./assets/logo.jpg" alt="" className='logo' />
+      <img src="assets\logo.jpg" alt="" className='logo' />
       <div className='navbar-header'>
         <a href="/" className='book'><FontAwesomeIcon icon={faBook} /></a>
         <a href="/requests" className='charger'><FontAwesomeIcon icon={faBolt}  /></a>
