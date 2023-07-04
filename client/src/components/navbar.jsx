@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
 import './navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars,faBook,faBolt,faGear,faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBook,faBolt,faGear,faQuestionCircle,faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
    
-    <div className={`navbar ${isOpen ? 'open' : ''}`}>
-      <div className="navbar-toggle" onClick={toggleMenu}>
-        <FontAwesomeIcon icon={faBars} />
+ 
+      
+    <div className="navbar">
+      <img src="./assets/logo.jpg" alt="" className='logo' />
+      <div className='navbar-header'>
+        <a href="/" className='book'><FontAwesomeIcon icon={faBook} /></a>
+        <a href="/requests" className='charger'><FontAwesomeIcon icon={faBolt}  /></a>
+        <a href="/" className='settings'><FontAwesomeIcon icon={faGear}  /></a>
+        <a href="/" className='about'><FontAwesomeIcon icon={faQuestionCircle} /></a>
+        
       </div>
-      <div className="navbar-header">
-        <a href="#"><FontAwesomeIcon icon={faBook} className='book'/></a>
-        <a href="/tutorials"><FontAwesomeIcon icon={faBolt} className='charger' /></a>
-        <a href="/addtutorials"><FontAwesomeIcon icon={faGear} className='settings' /></a>
-        <a href="#"><FontAwesomeIcon icon={faQuestionCircle} className='about' /></a>
+      <a href="/" className='user'><FontAwesomeIcon icon={faUser} /></a>
       </div>
       
-    </div>
   );
 }
 

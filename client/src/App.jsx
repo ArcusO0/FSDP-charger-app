@@ -1,7 +1,10 @@
 import './App.css';
 import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Tutorials from './pages/Tutorials';
+import AdminHome from './pages/AdminHome';
+import AdminCharger from './pages/Chargers';
+import AdminBookings from './pages/bookings';
+import AdminRequests from './pages/requests';
 
 
 function App() {
@@ -13,7 +16,10 @@ function App() {
 
       <Container>
         <Routes>
-          <Route path={"/"} element={<Tutorials />} />
+          <Route path={"/"} element={<AdminHome />} />
+          <Route path={"/AdminCharger"} element={<AdminCharger />} />
+          <Route path={"/AdminBookings"} element={<AdminBookings />} />
+          <Route path={"/Requests"} element={<AdminRequests />} />
         </Routes>
       </Container>
     </Router>

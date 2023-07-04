@@ -4,11 +4,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        customerID: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        chargerID: {
+        customerId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -25,5 +21,13 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
+
+    bookings.associate = (models) => {
+        bookings.belongsTo(models.chargers, {
+            foreignKey: "chargerId",
+            as: 'charger'
+        });
+    };
+
     return bookings;
-}
+};

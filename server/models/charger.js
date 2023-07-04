@@ -1,9 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const Charger = sequelize.define("chargers", {
-        chargerId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
+    const charger = sequelize.define("chargers", {
+
         name: {
             type: DataTypes.TEXT,
             allowNull: false
@@ -25,5 +22,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
-    return Charger;
+    charger.associate = (models) => {
+        charger.hasMany(models.bookings, {
+            foreignKey: "chargerId",
+        });
+    };
+    return charger;
 }

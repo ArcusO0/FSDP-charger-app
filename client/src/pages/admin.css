@@ -2,19 +2,19 @@
     position: absolute;
     width: 80%;
     height: 25%;
-    margin-left: 120px;
-    margin-right: 5%;
-    top: 15%;
+    top: 20%;
+    left: 10%;
+    padding: 0;
     background-color: #fba263;
 }
 
 .bottom {
-    position: absolute;
+    position: fixed;
     width: 80%;
     height: 25%;
-    margin-left: 120px;
-    margin-right: 5%;
-    bottom: 15%;
+    bottom: 18%;
+    left: 10%;
+    padding: 0;
     background-color: #fba263;
 }
 
@@ -22,9 +22,37 @@
     font-size: 45px;
 }
 
-@media (max-width: 768px) {
-    .top,
-    .bottom {
-        margin-left: 5%;
+.header {
+    position: absolute;
+    left: 10%;
+    top: 0;
+    font-size: 30px;
+}
+
+.subheader1 {
+    left: 10%;
+    position: absolute;
+    bottom: 77.8%;
+    font-size: 24px;
+}
+
+.subheader2 {
+    left: 10%;
+    position: absolute;
+    bottom: 40.8%;
+    font-size: 24px;
+}
+
+@media (max-width:768px) {
+    .header {
+        font-size: 24px;
+    }
+    .subheader1 {
+        bottom: 78.5%;
+        font-size: 16px;
+    }
+    .subheader2 {
+        bottom: 41.5%;
+        font-size: 16px;
     }
 }

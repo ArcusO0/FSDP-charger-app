@@ -5,10 +5,27 @@ const yup = require("yup");
 
 router.get("/", async(req, res) => {
 
-    let list = await chargers.findAll({
+    let condition = {};
+    let search = req.query.search;
+    if (search) {
+        condition[Sequelize.Op.or] = [{
+                name: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                address: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            }
+        ];
+    }
+
+    let list = await Tutorial.findAll({
+        where: condition,
         order: [
             ['createdAt', 'DESC']
-        ]
+        ],
     });
     res.json(list);
 });
@@ -18,11 +35,12 @@ router.post("/", async(req, res) => {
     let data = req.body;
     // Validate request body
     let validationSchema = yup.object().shape({
-        reqId: yup.number().min(0).max(10000000000).required(),
+
         name: yup.string().trim().min(3).max(100).required(),
+        rating: yup.number().min(0).max(5).required(),
         address: yup.string().trim().min(3).max(100).required(),
-        description: yup.string().trim().min(3).max(500).required(),
-        addOrDelete: yup.boolean().required()
+        noOfBookings: yup.number().trim().min(0).required(),
+        bookingRate: yup.number().required()
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });

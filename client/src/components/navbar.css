@@ -2,14 +2,15 @@
 
 .navbar {
     flex-direction: column;
-    background-color: #FFFFFF;
+    display: flex;
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
-    width: 120px;
+    width: 6.25%;
     height: 100%;
-    padding: 20px;
+    text-align: center;
+    padding: 2px;
     transition: transform 0.3s ease;
 }
 
@@ -18,12 +19,9 @@
 }
 
 .navbar-header {
+    margin-top: 50%;
     display: flex;
     flex-direction: column;
-}
-
-.navbar-header a {
-    margin-bottom: 10px;
 }
 
 .navbar-toggle {
@@ -31,38 +29,45 @@
     cursor: pointer;
 }
 
-a {
-    font-size: auto;
-}
-
 .book {
-    margin-top: 214px;
+    margin-top: 100px;
 }
 
 .book,
 .charger,
 .settings,
-.about {
-    margin-bottom: 52px;
+.about,
+.user {
+    color: #fba263;
+    display: block;
+    padding: 2px;
+    margin-bottom: 30px;
     font-size: 24px;
+}
+
+.logo {
+    height: auto;
+    width: fit-content;
+}
+
+.user {
+    margin-top: auto;
 }
 
 @media (max-width: 768px) {
     .navbar {
         z-index: 1;
         width: auto;
-    }
-    .navbar-header {
-        display: none;
-    }
-    .navbar-toggle {
-        display: block;
-    }
-    .navbar.open {
         height: auto;
-    }
-    .navbar.open .navbar-header {
         display: flex;
         flex-direction: column;
+        min-width: 5%;
+        padding-left: 5px;
+    }
+    .book,
+    .charger,
+    .settings,
+    .about {
+        font-size: 20px;
     }
 }
