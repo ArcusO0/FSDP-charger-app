@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, Tutorial, Sequelize } = require('../models');
+const { User, Feedback, Sequelize } = require('../models');
 const yup = require("yup");
 const { validateToken } = require('../middlewares/auth');
 
@@ -25,7 +25,7 @@ router.post("/", validateToken, async (req, res) => {
     data.description = data.description.trim();
     data.location = data.location.trim()
     data.userId = req.user.id
-    let result = await Tutorial.create(data);
+    let result = await Feedback.create(data);
     res.json(result);
 });
 
@@ -50,29 +50,29 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", validateToken, async (req, res) => {
     let id = req.params.id;
-    let tutorial = await Tutorial.findByPk(id, {
+    let feedback = await Feedback.findByPk(id, {
         include: { model: User, as: "user", attributes: ['name'] }
     }); 
     // Check id not found
-    if (!tutorial) {
+    if (!feedback) {
         res.sendStatus(404);
         return;
     }
 
     // Check request user id
     let userId = req.user.id;
-    if (tutorial.userId != userId) {
+    if (feedback.userId != userId) {
         res.sendStatus(403);
         return;
     }
-    res.json(tutorial);
+    res.json(feedback);
 });
 
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let feedback = await Tutorial.findByPk(id);
-    if (!tutorial) {
+    let feedback = await Feedback.findByPk(id);
+    if (!feedback) {
         res.sendStatus(404);
         return;
     }
@@ -94,17 +94,17 @@ router.put("/:id", async (req, res) => {
 
     data.title = data.title.trim();
     data.description = data.description.trim();
-    let num = await Tutorial.update(data, {
+    let num = await Feedback.update(data, {
         where: { id: id }
     });
     if (num == 1) {
         res.json({
-            message: "Tutorial was updated successfully."
+            message: "Feedback was updated successfully."
         });
     }
     else {
         res.status(400).json({
-            message: `Cannot update tutorial with id ${id}.`
+            message: `Cannot update feedback with id ${id}.`
         });
     }
 });
@@ -112,23 +112,23 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let tutorial = await Tutorial.findByPk(id);
-    if (!tutorial) {
+    let feedback = await Feedback.findByPk(id);
+    if (!feedback) {
         res.sendStatus(404);
         return;
     }
 
-    let num = await Tutorial.destroy({
+    let num = await Feedback.destroy({
         where: { id: id }
     })
     if (num == 1) {
         res.json({
-            message: "Tutorial was deleted successfully."
+            message: "Feedback was deleted successfully."
         });
     }
     else {
         res.status(400).json({
-            message: `Cannot delete tutorial with id ${id}.`
+            message: `Cannot delete feedback with id ${id}.`
         });
     }
 });
