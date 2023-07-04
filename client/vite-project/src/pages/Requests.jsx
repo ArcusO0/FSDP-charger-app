@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import http from "../http"
 import { Container, Box, Grid, Card, CardContent, Typography, Divider, 
-createTheme, ThemeProvider, IconButton, Link, Modal} from '@mui/material';
+createTheme, ThemeProvider, IconButton, Modal} from '@mui/material';
 import {ArrowBackIosRounded, CreateSharp, DeleteSharp } from '@mui/icons-material';
+import { Link }from "react-router-dom";
 import Sidebar from "../sidebar";
 
 function Requests() {
@@ -18,23 +19,29 @@ function Requests() {
       console.log(res.data);
       setRequestList(res.data);
     });
-  });
+  }, []);
+
+  const AddRequestList = requestList.filter(x => x.type === "Add");
+  const DeleteRequestList = requestList.filter(x => x.type === "Delete");
 
   const sidebar = Sidebar();
 
-  const [open, setOpen] = React.useState(false); 
-  const handleOpen = () => setOpen(true);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {setOpen(true)};
   const handleClose = () => setOpen(false);
 
 
   return (
     <ThemeProvider theme={theme}>
+      {sidebar}
+
+      {/* Body Content */}
       <Box sx = {{ display: "flex" }}>
-        {sidebar}
-        {/* Body Content */}
         <Box sx={{ml:-5, mt:3}} >
-          <ArrowBackIosRounded sx={{ display: 'inline-block', mr:2}}/>
-          <Typography variant="h4" sx ={{display: 'inline-block' }}>
+          <Link to="/" sx={{color:'black'}}>
+            <ArrowBackIosRounded sx={{ display: 'inline-block', mr:2}}/>
+          </Link>
+          <Typography variant="h4" sx ={{display: 'inline-block' ,fontWeight:"bold"}}>
             My Requests
           </Typography>
 
@@ -42,13 +49,12 @@ function Requests() {
           <Box sx={{display: 'flex', mt: 5, pb: 0, maxHeight: 600}}>
             <Container>
               <Typography variant="h5">
-                "Add" Requests
+                "Add" Requests 
               </Typography>
               <Container sx={{maxHeight: 500, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                 <Grid container spacing={2} sx={{pr: 5}} minWidth={500}>
                   {
-                    requestList.filter(x => x.type === "Add")
-                    .map((request, i) => {
+                    AddRequestList.map((request, i) => {
                       return(
                         <Grid item lg={12} key={request.id}>
                           <Card sx={{ mt: 3, border: "solid 1px black"}}>
@@ -70,6 +76,7 @@ function Requests() {
                               <Modal
                               open={open}
                               onClose={handleClose}
+                              id={`A${request.id}`}                              
                               >
                                 <Box sx={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600,
                                     backgroundColor:'background.paper', border: '1px solid #000', boxShadow: 24, p: 4 }}>
@@ -122,8 +129,7 @@ function Requests() {
               <Container sx={{maxHeight: 500, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                 <Grid container spacing={2} sx={{pr:5}} minWidth={500}>
                   {
-                    requestList.filter(x => x.type === "Delete")
-                    .map((request, i) => {
+                    DeleteRequestList.map((request, i) => {
                       return(
                         <Grid item lg={12} key={request.id}>
                           <Card sx={{ mt: 3, border: "solid 1px black"}}>

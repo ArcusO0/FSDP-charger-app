@@ -1,5 +1,6 @@
-import {Box, Drawer, Toolbar, Avatar, List, ListItem, ListItemButton} from "@mui/material";
-import {GridViewSharp, LibraryBooks, Bolt, Settings, HelpOutline} from "@mui/icons-material";
+import React from 'react';
+import {Box, Drawer, Toolbar, Avatar, List, ListItem, ListItemButton, Link} from "@mui/material";
+import {GridViewSharp, LibraryBooks, Bolt, Settings, HelpOutline, Send} from "@mui/icons-material";
 
 function Sidebar() {
     const drawerWidth = 0;
@@ -21,34 +22,51 @@ function Sidebar() {
                     {/*Website Logo */}
                     <Avatar alt="Logo" src="/static/images/avatar/"/>  
                 </Toolbar> 
-                <List>
+                <List sx={{maxHeight: "80%"}}>
                     <ListItem sx={{ color: "#137AE1" }}>
-                        <ListItemButton>
-                        <GridViewSharp/>
-                        </ListItemButton>
+                        <Link>
+                            <ListItemButton>
+                                <GridViewSharp/>
+                            </ListItemButton>
+                        </Link>
                     </ListItem> 
                     <ListItem sx={{ color: "#137AE1" }}>
-                        <ListItemButton>
-                        <LibraryBooks/>
-                        </ListItemButton>
+                        <Link>
+                            <ListItemButton>
+                                <LibraryBooks/>
+                            </ListItemButton>
+                        </Link>
                     </ListItem> 
                     <ListItem sx={{ color: "#137AE1" }}>
-                        <ListItemButton>
-                        <Bolt/>
-                        </ListItemButton>
+                        <Link href={"/MyEVC/Menu"}> 
+                            <ListItemButton>
+                                <Bolt/>
+                            </ListItemButton>
+                        </Link>                        
                     </ListItem> 
                     <ListItem sx={{ color: "#137AE1" }}>
-                        <ListItemButton>
-                        <Settings/>
-                        </ListItemButton>
+                        <Link href={"/requests"}>
+                            <ListItemButton>
+                                <Send sx={{display: "flex", position: "relative", left: 4, transform:"rotate(-45deg)"}}/>
+                            </ListItemButton>
+                        </Link>
                     </ListItem> 
                     <ListItem sx={{ color: "#137AE1" }}>
-                        <ListItemButton>
-                        <HelpOutline/>
-                        </ListItemButton>
+                        <Link>
+                            <ListItemButton>
+                                <Settings/>
+                            </ListItemButton>
+                        </Link>
+                    </ListItem> 
+                    <ListItem sx={{ color: "#137AE1" }}>
+                        <Link>
+                            <ListItemButton>
+                                <HelpOutline/>
+                            </ListItemButton>
+                        </Link>
                     </ListItem> 
                 </List>
-                <Avatar alt="Profile" src="/static/images/avatar" sx={{alignSelf:"center", marginTop: "320%"}} anchor="bottom"/>
+                <Avatar alt="Profile" src="/static/images/avatar" sx={{position: "relative", alignSelf:"center", top: "30%"}} anchor="bottom"/>
             </Drawer>
         </Box>
     )

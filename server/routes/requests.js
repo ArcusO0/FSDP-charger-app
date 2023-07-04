@@ -10,7 +10,8 @@ router.post("/addRequest", async (req, res) => {
         type: yup.string().oneOf(['Add', 'Delete']).required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
-        description: yup.string().trim().min(3).max(500).required(),
+        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{2}$/)),
+        description: yup.string().trim().min(3).max(500),
         status: yup.string().oneOf(["Pending", "Approved", "Rejected"]).required()
     });
     try {

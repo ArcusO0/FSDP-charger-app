@@ -1,10 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const EVC = sequelize.define("EVC Info", {
+    const EVC = sequelize.define("EVC", {
         vendorId: {
             type: DataTypes.STRING,
             allowNull: false
         },
         chargerId: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        name: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -26,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         status: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
     });
     return EVC;

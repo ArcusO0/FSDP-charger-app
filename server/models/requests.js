@@ -8,6 +8,18 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        rate: {
+            type: DataTypes.DECIMAL(4,2),
+            allowNull: true,
+        },
         status: { // EVC Request Status
             type: DataTypes.STRING,
             allowNull: false
