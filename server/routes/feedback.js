@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { User, Feedback, Sequelize } = require('../models');
+const { Feedback, Sequelize } = require('../models');
 const yup = require("yup");
-const { validateToken } = require('../middlewares/auth');
 
-router.post("/", validateToken, async (req, res) => {
+router.post("/", async (req, res) => {
     let data = req.body;
     // Validate request body
     let validationSchema = yup.object().shape({
         title: yup.string().trim().min(3).max(100).required(),
-        description: yup.string().trim().min(3).max(500).required(),
-        location: yup.string().trim().min(3).max(100).required()
+        description: yup.string().trim().min(3).max(500).required()
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
@@ -23,8 +21,6 @@ router.post("/", validateToken, async (req, res) => {
 
     data.title = data.title.trim();
     data.description = data.description.trim();
-    data.location = data.location.trim()
-    data.userId = req.user.id
     let result = await Feedback.create(data);
     res.json(result);
 });
@@ -35,34 +31,23 @@ router.get("/", async (req, res) => {
     if (search) {
         condition[Sequelize.Op.or] = [
             { title: { [Sequelize.Op.like]: `%${search}%` } },
-            { description: { [Sequelize.Op.like]: `%${search}%` } },
-            { location: { [Sequelize.Op.like]: `%${search}%` } }
+            { description: { [Sequelize.Op.like]: `%${search}%` } }
         ];
     }
 
     let list = await Feedback.findAll({
         where: condition,
-        order: [['createdAt', 'DESC']],
-        include: {model: User, as: "user", attributes: ['name'] }
+        order: [['createdAt', 'DESC']]
     });
     res.json(list);
 });
 
-router.get("/:id", validateToken, async (req, res) => {
+router.get("/:id", async (req, res) => {
     let id = req.params.id;
-    let feedback = await Feedback.findByPk(id, {
-        include: { model: User, as: "user", attributes: ['name'] }
-    }); 
+    let feedback = await Feedback.findByPk(id);
     // Check id not found
     if (!feedback) {
         res.sendStatus(404);
-        return;
-    }
-
-    // Check request user id
-    let userId = req.user.id;
-    if (feedback.userId != userId) {
-        res.sendStatus(403);
         return;
     }
     res.json(feedback);

@@ -7,17 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.TEXT,
             allowNull: false
-        },
-        location: {
-            type: DataTypes.STRING,
-            allowNull: false
         }
     });
-    Tutorial.associate = (models) => {
-        Tutorial.belongsTo(models.User, {
-            foreignKey: "userId",
-            as: 'user'
-        });
-    };
-    return Tutorial;
+    return Feedback;
 }

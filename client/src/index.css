@@ -25,10 +25,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -65,5 +61,35 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  input, select, textarea {
+    color: white !important;
+  }
+
+  .MuiFormLabel-root {
+    color: lightgray !important;
+  }
+
+  .MuiFormLabel-root.Mui-focused {
+    color: #1976d2 !important;
+  }
+
+  .MuiFormLabel-root.Mui-error {
+    color: #d32f2f !important;
+  }
+
+  .MuiInputBase-root fieldset {
+    border-color: lightgray !important;
+  }
+
+  .MuiInputBase-root.Mui-focused fieldset {
+    border-color: #1976d2 !important;
+  }
+
+  .MuiInputBase-root.Mui-error fieldset {
+    border-color: #d32f2f !important;
   }
 }

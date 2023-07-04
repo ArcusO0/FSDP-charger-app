@@ -40,13 +40,6 @@ declare namespace debug {
         skips: RegExp[];
 
         formatters: Formatters;
-
-        inspectOpts?: {
-            hideDate?: boolean | number | null;
-            colors?: boolean | number | null;
-            depth?: boolean | number | null;
-            showHidden?: boolean | number | null;
-        };
     }
 
     type IDebug = Debug;
@@ -73,7 +66,7 @@ declare namespace debug {
 ````
 
 ### Additional Details
- * Last updated: Mon, 22 May 2023 21:02:53 GMT
+ * Last updated: Sat, 24 Jul 2021 08:01:14 GMT
  * Dependencies: [@types/ms](https://npmjs.com/package/@types/ms)
  * Global values: `debug`
 
