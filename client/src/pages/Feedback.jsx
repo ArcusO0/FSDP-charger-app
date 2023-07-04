@@ -29,10 +29,10 @@ function Feedback() {
         onSubmit: (data) => {
             data.title = data.title.trim();
             data.description = data.description.trim();
-            http.post("/tutorial", data)
+            http.post("/feedback", data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/tutorials");
+                    navigate("/feedbacks");
                 });
         }
     });
@@ -66,27 +66,12 @@ function Feedback() {
                 />
                     </Grid>
                     <Grid item xs={12} md={6} lg={4}>
-                        <Box sx={{ textAlign: 'center', mt: 2 }} >
-                            <Button variant="contained" component="label">
-                                Upload Image
-                                <input hidden accept="image/*" multiple type="file" 
-                                    onChange={onFileChange} />                    
-                            </Button>
-                            {
-                                imageFile && (
-                                    <AspectRatio sx={{ mt: 2 }}>
-                                        <Box component="img" alt="tutorial"
-                                            src={`${import.meta.env.VITE_FILE_BASE_URL}${imageFile}`}>
-                                        </Box>
-                                    </AspectRatio>
-                                )
-                            }
-                        </Box>
+
                     </Grid>
                 </Grid>
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">
-                        Add
+                        Submit
                     </Button>
                 </Box>
             </Box>
