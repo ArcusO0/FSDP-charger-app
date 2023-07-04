@@ -35,11 +35,12 @@ router.get("/", async (req, res) => {
     if (search) {
         condition[Sequelize.Op.or] = [
             { title: { [Sequelize.Op.like]: `%${search}%` } },
-            { description: { [Sequelize.Op.like]: `%${search}%` } }
+            { description: { [Sequelize.Op.like]: `%${search}%` } },
+            { location: { [Sequelize.Op.like]: `%${search}%` } }
         ];
     }
 
-    let list = await Tutorial.findAll({
+    let list = await Feedback.findAll({
         where: condition,
         order: [['createdAt', 'DESC']],
         include: {model: User, as: "user", attributes: ['name'] }
@@ -70,7 +71,7 @@ router.get("/:id", validateToken, async (req, res) => {
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let tutorial = await Tutorial.findByPk(id);
+    let feedback = await Tutorial.findByPk(id);
     if (!tutorial) {
         res.sendStatus(404);
         return;
