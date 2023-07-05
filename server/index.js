@@ -14,6 +14,8 @@ app.get("/", (req, res) => {
 // Routes
 const feedbackRoute = require('./routes/feedback');
 app.use("/feedback", feedbackRoute);
+const bookingRoute = require('./routes/booking');
+app.use("/booking", bookingRoute);
 
 const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {
