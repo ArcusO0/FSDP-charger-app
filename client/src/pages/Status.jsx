@@ -7,10 +7,16 @@ import dayjs from 'dayjs';
 import global from '../global';
 
 function Status() {
-    <Box>
-        <h3>Time Elapsed</h3>
-        <h1>00:00:00</h1>
-    </Box>    
+    return(
+        <Box>
+            <Typography variant="h3" sx={{ my: 2 }}>
+                Status
+            </Typography>
+            <Typography variant="h1" sx={{ my: 2 }}>
+                00:00:00
+            </Typography>
+        </Box>  
+    );  
 }
 
 export default Status;

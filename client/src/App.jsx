@@ -12,11 +12,11 @@ import Bookings from './pages/Bookings';
 function App() {
   return (
     <Router>
-      <AppBar position="static" className="AppBar">
+      <AppBar position="static" className="AppBar" id="navbar">
         <Container>
           <Toolbar disableGutters={true}>
             <Link to="/">
-              <img src="/assets/car.png" alt="" />
+              <img src="../public/car.png" alt="" />
             </Link>
             <Link to="/bookings" ><Typography>Bookings</Typography></Link>
             <Link to="/rewards" ><Typography>Rewards</Typography></Link>
@@ -35,7 +35,7 @@ function App() {
           <Route path={"/editfeedback/:id"} element={<EditFeedback />} />
           <Route path={"/status"} element={<Status />} />
           <Route path={"/addbooking"} element={<AddBooking />} />
-          <Route path={"/editbooking"} element={<EditBooking />} />
+          <Route path={"/editbooking/:id"} element={<EditBooking />} />
           <Route path={"/bookings"} element={<Bookings />} />
         </Routes>
       </Container>

@@ -4,6 +4,10 @@
   margin-right: 16px;
 }
 
+#navbar {
+  background-color: green;
+}
+
 .AppBar a:hover {
   color: lightblue;
 }
