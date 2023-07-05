@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
     let validationSchema = yup.object().shape({
         email: yup.string().trim().min(3).max(321).required(),
         license: yup.string().trim().min(5).max(10).required(),
-        hours: yup.number().trim().min(1).max(12).required(),
+        hours: yup.string().trim().min(1).max(12).required(),
         arrival: yup.string().trim().min(5).max(5).required(),
     });
     try {
@@ -73,7 +73,7 @@ router.put("/:id", async (req, res) => {
     let validationSchema = yup.object().shape({
         email: yup.string().trim().min(3).max(321).required(),
         license: yup.string().trim().min(5).max(10).required(),
-        hours: yup.number().trim().min(1).max(12).required(),
+        hours: yup.string().trim().min(1).max(12).required(),
         arrival: yup.string().trim().min(5).max(5).required(),
     });
     try {

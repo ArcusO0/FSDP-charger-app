@@ -9,6 +9,7 @@ import AddBooking from './pages/AddBooking';
 import EditBooking from './pages/EditBooking';
 import Bookings from './pages/Bookings';
 
+
 function App() {
   return (
     <Router>

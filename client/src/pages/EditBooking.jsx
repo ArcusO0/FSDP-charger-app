@@ -10,37 +10,50 @@ function EditBooking() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [feedback, setFeedback] = useState({
-        title: "",
-        description: ""
+    const [booking, setBooking] = useState({
+        email: "",
+        license: "",
+        hours: "",
+        arrival: "",
     });
 
     useEffect(() => {
-        http.get(`/feedback/${id}`).then((res) => {
-            setFeedback(res.data);
+        http.get(`/booking/${id}`).then((res) => {
+            setBooking(res.data);
         });
     }, []);
 
     const formik = useFormik({
-        initialValues: feedback,
+        initialValues: booking,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
-            title: yup.string().trim()
-                .min(3, 'Title must be at least 3 characters')
-                .max(100, 'Title must be at most 100 characters')
-                .required('Title is required'),
-            description: yup.string().trim()
-                .min(3, 'Description must be at least 3 characters')
-                .max(500, 'Description must be at most 500 characters')
-                .required('Description is required')
+            email: yup.string().trim()
+                .min(3, 'email is too short')
+                .max(320, 'email is too long')
+                .email("Invalid Email")
+                .required('Email is required'),
+            license: yup.string().trim()
+                .min(5, 'License plate must be at least 5 characters')
+                .max(10, 'License plate must be at most 10 characters')
+                .required('License plate is required'),
+            hours: yup.string().trim()
+                .min(1, 'Must book at least 1 hour')
+                .max(12, '12 hours maximum')
+                .required('Hours is required'),
+            arrival: yup.string().trim()
+                .min(5, 'Arrival must be 5 characters')
+                .max(5, 'Arrival must be 5 characters')
+                .required('Time of arrival is required'),
         }),
         onSubmit: (data) => {
-            data.title = data.title.trim();
-            data.description = data.description.trim();
-            http.put(`/feedback/${id}`, data)
+            data.email = data.email.trim();
+            data.license = data.license.trim();
+            data.hours = data.hours.trim();
+            data.arrival = data.arrival.trim();
+            http.put(`/booking/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/feedbacks");
+                    navigate("/bookings");
                 });
         }
     });
@@ -55,38 +68,55 @@ function EditBooking() {
         setOpen(false);
     };
 
-    const deleteFeedback = () => {
-        http.delete(`/feedback/${id}`)
+    const deleteBooking = () => {
+        http.delete(`/booking/${id}`)
             .then((res) => {
                 console.log(res.data);
-                navigate("/feedbacks");
+                navigate("/bookings");
             });
     }
 
     return (
         <Box>
             <Typography variant="h5" sx={{ my: 2 }}>
-                Edit Feedback
+                Edit Booking
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
-                <TextField
+            <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="Title"
-                    name="title"
-                    value={formik.values.title}
+                    label="Email"
+                    name="email"
+                    value={formik.values.email}
                     onChange={formik.handleChange}
-                    error={formik.touched.title && Boolean(formik.errors.title)}
-                    helperText={formik.touched.title && formik.errors.title}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    multiline minRows={2}
-                    label="Description"
-                    name="description"
-                    value={formik.values.description}
+                    label="License"
+                    name="license"
+                    value={formik.values.license}
                     onChange={formik.handleChange}
-                    error={formik.touched.description && Boolean(formik.errors.description)}
-                    helperText={formik.touched.description && formik.errors.description}
+                    error={formik.touched.license && Boolean(formik.errors.license)}
+                    helperText={formik.touched.license && formik.errors.license}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Hours"
+                    name="hours"
+                    value={formik.values.hours}
+                    onChange={formik.handleChange}
+                    error={formik.touched.hours && Boolean(formik.errors.hours)}
+                    helperText={formik.touched.hours && formik.errors.hours}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Arrival"
+                    name="arrival"
+                    value={formik.values.arrival}
+                    onChange={formik.handleChange}
+                    error={formik.touched.arrival && Boolean(formik.errors.arrival)}
+                    helperText={formik.touched.arrival && formik.errors.arrival}
                 />
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">
@@ -101,11 +131,11 @@ function EditBooking() {
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>
-                    Delete Feedback
+                    Delete Booking
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete this feedback?
+                        Are you sure you want to delete this booking?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -114,7 +144,7 @@ function EditBooking() {
                         Cancel
                     </Button>
                     <Button variant="contained" color="error"
-                        onClick={deleteFeedback}>
+                        onClick={deleteBooking}>
                         Delete
                     </Button>
                 </DialogActions>
