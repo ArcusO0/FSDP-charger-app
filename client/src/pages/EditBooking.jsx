@@ -36,10 +36,11 @@ function EditBooking() {
                 .min(5, 'License plate must be at least 5 characters')
                 .max(10, 'License plate must be at most 10 characters')
                 .required('License plate is required'),
-            hours: yup.string().trim()
+            hours: yup.number()
                 .min(1, 'Must book at least 1 hour')
                 .max(12, '12 hours maximum')
-                .required('Hours is required'),
+                .required('Hours is required')
+                .integer("Must be an integer"),
             arrival: yup.string().trim()
                 .min(5, 'Arrival must be 5 characters')
                 .max(5, 'Arrival must be 5 characters')
@@ -48,7 +49,7 @@ function EditBooking() {
         onSubmit: (data) => {
             data.email = data.email.trim();
             data.license = data.license.trim();
-            data.hours = data.hours.trim();
+            data.hours = data.hours;
             data.arrival = data.arrival.trim();
             http.put(`/booking/${id}`, data)
                 .then((res) => {
