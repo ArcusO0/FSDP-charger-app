@@ -22,6 +22,10 @@ const bookings = require('./routes/bookings');
 app.use("/bookings", bookings);
 const chargers = require('./routes/chargers');
 app.use("/chargers", chargers);
+const feedbackRoute = require('./routes/feedback');
+app.use("/feedback", feedbackRoute);
+const bookingRoute = require('./routes/booking');
+app.use("/booking", bookingRoute);
 
 const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {

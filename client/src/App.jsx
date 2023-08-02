@@ -17,6 +17,13 @@ import RegisterVendor from './pages/RegisterVendor';
 import UpdateProfile from './pages/UpdateProfile';
 import LoginAdmin from './pages/LoginAdmin'
 import Navbaradmin from './pages/navbar/navbaradmin';
+import Feedbacks from './pages/Feedbacks';
+import AddFeedback from './pages/AddFeedback';
+import EditFeedback from './pages/EditFeedback';
+import Status from './pages/Status';
+import AddBooking from './pages/AddBooking';
+import EditBooking from './pages/EditBooking';
+import Bookings from './pages/Bookings';
 
 
           
@@ -77,6 +84,10 @@ function App() {
                 <Link to="/login" ><Typography>Login</Typography></Link>
               </>
             )}
+
+
+
+
           </Toolbar>
         </Container>
       </AppBar>
@@ -96,6 +107,15 @@ function App() {
                 <Route path={"/AdminCharger"} element={<AdminCharger />} />
                 <Route path={"/AdminBookings"} element={<AdminBookings />} />
                 <Route path={"/Requests"} element={<AdminRequests />} />
+        
+          <Route path={"/"} element={<Feedbacks />} />
+          <Route path={"/feedbacks"} element={<Feedbacks />} />
+          <Route path={"/addfeedback"} element={<AddFeedback />} />
+          <Route path={"/editfeedback/:id"} element={<EditFeedback />} />
+          <Route path={"/status"} element={<Status />} />
+          <Route path={"/addbooking"} element={<AddBooking />} />
+          <Route path={"/editbooking/:id"} element={<EditBooking />} />
+          <Route path={"/bookings"} element={<Bookings />} />
         </Routes>
       </Container>
     </Router>
