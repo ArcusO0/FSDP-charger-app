@@ -1,28 +1,21 @@
-module.exports= (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     const Booking = sequelize.define("Booking", {
-        vendorId: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        bookingId: {
+        license: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        hours: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        arrival: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        bookingPrice: {
-            type: DataTypes.DECIMAL(4,2)
-        },
-        bookingDateTime: {
-            type: DataTypes.DATE,
-            allowNull: true
-        },
-        customerId: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        evcId:{
-            type: DataTypes.STRING,
-            allowNull: false
-        }
     });
     return Booking;
-};
+}

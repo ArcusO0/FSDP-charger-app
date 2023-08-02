@@ -3,7 +3,7 @@ import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AdminHome from './pages/AdminHome';
 import AdminCharger from './pages/Chargers';
-import AdminBookings from './pages/bookings';
+import AdminBookings from './pages/UserBookings';
 import AdminRequests from './pages/Requests';
 import HomePage from './pages/home';
 import { useState, useEffect } from 'react';
@@ -23,7 +23,7 @@ import EditFeedback from './pages/EditFeedback';
 import Status from './pages/Status';
 import AddBooking from './pages/AddBooking';
 import EditBooking from './pages/EditBooking';
-import Bookings from './pages/Bookings';
+import UserBookings from './pages/UserBookings';
 
 
           
@@ -115,7 +115,7 @@ function App() {
           <Route path={"/status"} element={<Status />} />
           <Route path={"/addbooking"} element={<AddBooking />} />
           <Route path={"/editbooking/:id"} element={<EditBooking />} />
-          <Route path={"/bookings"} element={<Bookings />} />
+          <Route path={"/bookings"} element={<UserBookings />} />
         </Routes>
       </Container>
     </Router>
