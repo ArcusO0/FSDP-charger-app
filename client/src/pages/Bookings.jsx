@@ -10,6 +10,8 @@ function Bookings() {
     const [bookingList, setBookingList] = useState([]);
     const [search, setSearch] = useState('');
 
+    
+
     const onSearchChange = (e) => {
         setSearch(e.target.value);
     };
