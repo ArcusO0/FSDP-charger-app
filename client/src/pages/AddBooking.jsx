@@ -1,17 +1,25 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, TextField, Button } from '@mui/material';
-import { useFormik } from 'formik';
+import { useFormik, useField, useFormikContext } from 'formik';
 import * as yup from 'yup';
 import http from '../http';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
+
 
 function AddBooking() {
     const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
-            title: "",
-            description: ""
+            email:"",
+            license:"",
+            hours:"",
+            arrival:dayjs()
+
         },
         validationSchema: yup.object().shape({
             email: yup.string().trim()
@@ -28,16 +36,14 @@ function AddBooking() {
                 .max(12, '12 hours maximum')
                 .required('Hours is required')
                 .integer("Must be an integer"),
-            arrival: yup.string().trim()
-                .min(5, 'Arrival must be 5 characters')
-                .max(5, 'Arrival must be 5 characters')
+            arrival: yup.string()
                 .required('Time of arrival is required'),
         }),
         onSubmit: (data) => {
             data.email = data.email.trim();
             data.license = data.license.trim();
-            data.hours = data.hours.trim();
-            data.arrival = data.arrival.trim();
+            data.hours = data.hours;
+            data.arrival = data.arrival;
             http.post("/booking", data)
                 .then((res) => {
                     console.log(res.data);
@@ -47,11 +53,13 @@ function AddBooking() {
     });
 
     return (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Add Booking
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
+                
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="Email"
@@ -74,17 +82,20 @@ function AddBooking() {
                     fullWidth margin="normal" autoComplete="off"
                     label="Hours"
                     name="hours"
+                    type="number"
                     value={formik.values.hours}
                     onChange={formik.handleChange}
                     error={formik.touched.hours && Boolean(formik.errors.hours)}
                     helperText={formik.touched.hours && formik.errors.hours}
                 />
-                <TextField
+                <TimePicker
+                    views={['hours', 'minutes']}
                     fullWidth margin="normal" autoComplete="off"
                     label="Arrival"
                     name="arrival"
+                    ampm={false}
                     value={formik.values.arrival}
-                    onChange={formik.handleChange}
+                    onChange={(value) => formik.setFieldValue('arrival', value.format("hh:mm"))}
                     error={formik.touched.arrival && Boolean(formik.errors.arrival)}
                     helperText={formik.touched.arrival && formik.errors.arrival}
                 />
@@ -95,6 +106,7 @@ function AddBooking() {
                 </Box>
             </Box>
         </Box>
+        </LocalizationProvider>
     );
 }
 

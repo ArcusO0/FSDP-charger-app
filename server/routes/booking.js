@@ -23,8 +23,8 @@ router.post("/", async (req, res) => {
 
     data.email = data.email.trim();
     data.license = data.license.trim();
-    data.hours = data.hours.trim();
-    data.arrival = data.arrival.trim();
+    data.hours = data.hours;
+    data.arrival = data.arrival;
     let result = await Booking.create(data);
     res.json(result);
 });
