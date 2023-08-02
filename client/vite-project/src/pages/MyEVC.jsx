@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import {ThemeProvider, createTheme, Box, Container, Card, CardContent, Typography, Grid, Rating} from "@mui/material";
 import { MoreHorizRounded, StarHalf } from '@mui/icons-material';
 import http from "../http";
-import mapboxgl from 'mapbox-gl'; 
+import mapboxgl, { LngLat } from 'mapbox-gl'; 
 import Sidebar from "../components/sidebar";
 import { Link } from 'react-router-dom';
 
@@ -42,6 +42,28 @@ function MyEVC() {
         });
     }, []);
 
+    const addrList = evcList.map((evc) => evc.address);
+    
+    var requestOptions = {
+      method: 'GET',
+    };
+
+    addrList.map((address) => {
+      fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=7382d72310e743bcbd4982a95342a6cb`, requestOptions)
+        .then((res) => res.json())
+        .then(result => {
+          console.log(result);
+          return result;
+        })
+        .then(result => {
+          new mapboxgl.Marker()
+            .setLngLat(new mapboxgl.LngLat(result.features[0].geometry.coordinates[0], result.features[0].geometry.coordinates[1]))
+            .setPopup(new mapboxgl.Popup({offset: 25}).setHTML(`<h3>${result.query.text}</h3>`))
+            .addTo(map.current)
+        })
+        .catch(error => console.log('error', error));
+    }); 
+
     const[bookList, setBookList] = useState([]);
     
     useEffect(()=>{
@@ -51,24 +73,6 @@ function MyEVC() {
       })
     }, [])
  
-    const [evc, setEVC] = useState({
-        vendorId: "",
-        chargerId: "",
-        name: "",
-        address: "",
-        rate: "",
-        description: "",
-        rating: "",
-        status: ""
-    });
-
-    function setID(evcID) {
-        const id = evcID
-        http.get(`/MyEVC/${id}`).then((res) => {
-        console.log(res.data);
-        setEVC(res.data);
-        });
-    }
 
     function setBorderColor(status) {
       if (status == "Good") {
