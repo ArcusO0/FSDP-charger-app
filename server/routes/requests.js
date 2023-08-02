@@ -1,3 +1,4 @@
+const express = require("express");
 const router = express.Router();
 const { requests, Sequelize } = require('../models');
 const yup = require("yup");
@@ -11,9 +12,8 @@ router.get("/", async(req, res) => {
     });
     res.json(list);
 });
-const { Request, Sequelize } = require("../models");
-const express = require("express");
-const yup = require("yup");
+
+
 
 // Create "Add" and "Delete" Requests
 router.post("/addRequest", async(req, res) => {
@@ -45,13 +45,21 @@ router.get("/", async(req, res) => {
     let condition = {};
     let search = req.query.search;
     if (search) {
-        condition[Sequelize.Op.or] = [
-            { type: {
-                    [Sequelize.Op.like]: `${search}%` } },
-            { name: {
-                    [Sequelize.Op.like]: `${search}%` } },
-            { status: {
-                    [Sequelize.Op.like]: `${search}%` } }
+        condition[Sequelize.Op.or] = [{
+                type: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            },
+            {
+                name: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            },
+            {
+                status: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            }
         ];
     }
     let list = await Request.findAll({

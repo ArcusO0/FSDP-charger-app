@@ -1,5 +1,5 @@
 import './App.css';
-import { Container, AppBar, Toolbar, Typography } from '@mui/material';
+import { Container, AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AdminHome from './pages/AdminHome';
 import AdminCharger from './pages/Chargers';
@@ -7,8 +7,7 @@ import AdminBookings from './pages/UserBookings';
 import AdminRequests from './pages/Requests';
 import HomePage from './pages/home';
 import { useState, useEffect } from 'react';
-import { Container, AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
-import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
 import Register from './pages/Register';
 import Login from './pages/Login';
 import http from './http';
@@ -55,20 +54,13 @@ function App() {
         <Container>
           <Toolbar disableGutters={true}>
             <Link to="/">
-              <Typography variant="h6" component="div">
-                Logo
-              </Typography>
+              
             </Link>
-            <Link to="/" ><Typography>Bookings</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Rewards</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Status</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Map</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Feedback</Typography></Link>
-            <Box sx={{ flexGrow: 2 }}></Box>
+            <Link to="/bookings" ><Typography>Bookings</Typography></Link>
+            <Link to="/rewards" ><Typography>Rewards</Typography></Link>
+            <Link to="/status" ><Typography>Status</Typography></Link>
+            <Link to="/map" ><Typography>Map</Typography></Link>
+            <Link to="/feedbacks" ><Typography>Feedbacks</Typography></Link>
             {user && (
               <>
                 <Link to="/UpdateProfile">
@@ -94,7 +86,7 @@ function App() {
 
       <Container>
               <Routes>
-            <Route path={"/"} element={<AdminHome />} />
+            <Route path={"/"} element={<HomePage />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/loginvendor"} element={<LoginVendor />} />
@@ -108,7 +100,6 @@ function App() {
                 <Route path={"/AdminBookings"} element={<AdminBookings />} />
                 <Route path={"/Requests"} element={<AdminRequests />} />
         
-          <Route path={"/"} element={<Feedbacks />} />
           <Route path={"/feedbacks"} element={<Feedbacks />} />
           <Route path={"/addfeedback"} element={<AddFeedback />} />
           <Route path={"/editfeedback/:id"} element={<EditFeedback />} />

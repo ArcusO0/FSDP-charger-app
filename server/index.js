@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const express = require("express");
-const cors = require("cors");
+
 const app = express();
 const db = require('./models');
 
@@ -27,14 +26,14 @@ app.use("/feedback", feedbackRoute);
 const bookingRoute = require('./routes/booking');
 app.use("/booking", bookingRoute);
 
-const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {
     let port = process.env.APP_PORT;
     app.listen(port, () => {
         console.log(`⚡ Sever running on http://localhost:${port}`);
     });
+    res.send("Welcome to our FSDP Project.");
 });
-res.send("Welcome to our FSDP Project.");
+
 
 
 require('dotenv').config();
@@ -49,7 +48,6 @@ db.sequelize.sync({ alter: true }).then(() => {
 
 const requestRoute = require("./routes/requests");
 const evcRoute = require("./routes/evc");
-const bookingRoute = require("./routes/booking");
 app.use('/MyRequests', requestRoute);
 app.use("/MyEVC", evcRoute);
 app.use("/MyBookings", bookingRoute);
