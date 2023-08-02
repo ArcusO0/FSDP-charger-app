@@ -46,8 +46,11 @@
 }
 
 .logo {
+    position: absolute;
+    top: 2%;
+    left: 25%;
     height: auto;
-    width: fit-content;
+    width: 50%;
 }
 
 .user {

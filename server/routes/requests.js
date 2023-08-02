@@ -18,10 +18,11 @@ router.post("/", async(req, res) => {
     let data = req.body;
     // Validate request body
     let validationSchema = yup.object().shape({
-        reqId: yup.number().min(0).max(10000000000).required(),
+        reqId: yup.string().min(0).max(10000000000).required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(100).required(),
         description: yup.string().trim().min(3).max(500).required(),
+        status: yup.string().trim().min(3).max(500).required(),
         addOrDelete: yup.boolean().required()
     });
     try {
@@ -35,6 +36,7 @@ router.post("/", async(req, res) => {
     data.name = data.name.trim();
     data.description = data.description.trim();
     data.address = data.address.trim();
+    data.status = data.status.trim();
     let result = await requests.create(data);
     res.json(result);
 });

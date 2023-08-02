@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         rating: {
-            type: DataTypes.TEXT,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         address: {

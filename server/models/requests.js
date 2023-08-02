@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const requests = sequelize.define("requests", {
         reqId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         name: {

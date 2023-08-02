@@ -21,7 +21,7 @@ router.get("/", async(req, res) => {
         ];
     }
 
-    let list = await Tutorial.findAll({
+    let list = await chargers.findAll({
         where: condition,
         order: [
             ['createdAt', 'DESC']
@@ -39,8 +39,8 @@ router.post("/", async(req, res) => {
         name: yup.string().trim().min(3).max(100).required(),
         rating: yup.number().min(0).max(5).required(),
         address: yup.string().trim().min(3).max(100).required(),
-        noOfBookings: yup.number().trim().min(0).required(),
-        bookingRate: yup.number().required()
+        noOfBookings: yup.number().min(0).required(),
+        bookingRate: yup.number().min(0).required()
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });

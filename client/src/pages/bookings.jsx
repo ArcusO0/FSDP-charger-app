@@ -1,164 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "./bookings.css"
 import Headerbox from '../components/Headerbox';
 
-
+import http from '../http';
 import Navbar from '../components/navbar';
 
 function AdminBookings() {
+    const [bookingdata, setbookingdata] = useState([]);
+    const getBookings = () => {
+        http.get('/bookings').then((res) => {
+            setbookingdata(res.data);
+        });
+    };
+    useEffect(() => {
+        getBookings();
+    }, []);
     return (
         <>
             <Navbar />
-            <Headerbox number="100,000" text="Bookings" />
+            <Headerbox number={bookingdata.length} text="Bookings" />
             <div className="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Header 1</th>
-                            <th>Header 2</th>
-                            <th>Header 3</th>
-                            <th>Header 4</th>
-                            <th>Header 5</th>
+                            <th>Booking ID</th>
+                            <th>Customer ID</th>
+                            <th>EV Charger ID</th>
+                            <th>Booking Date</th>
+                            <th>Booking Price ($)</th>
                             
                         </tr>
                     </thead>
                     <tbody id="table-body">
                         
-                        <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr>
-                        <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr>
-                        <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr> <tr>
-                            <td>Data 1</td>
-                            <td>Data 2</td>
-                            <td>Data 3</td>
-                            <td>Data 4</td>
-                            <td>Data 5</td>
-                        </tr>
+                        {bookingdata.map((booking) => (
+                            <tr key={booking.bookingID}>
+                                <td>{booking.bookingID}</td>
+                                <td>{booking.customerID}</td>
+                                <td>{booking.chargerID}</td>
+                                <td>{booking.bookingDate}</td>
+                                <td>{booking.bookingPrice}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
