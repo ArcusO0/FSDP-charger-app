@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { Link, useNavigate} from "react-router-dom";
-import { ThemeProvider, createTheme, Box, Typography, Input, Grid, Card, CardContent, Container, TextField, Button, InputAdornment} from '@mui/material';
+import { ThemeProvider, createTheme, Box, Typography, Input, Grid, Card, CardContent, Container, TextField, Button, InputAdornment,
+Rating} from '@mui/material';
 import { ArrowBackIosRounded, StarHalf } from "@mui/icons-material";
 import { useFormik }from "formik";
 import * as yup from "yup";
@@ -45,6 +46,15 @@ function UpdateEVC() {
         });
     }
 
+    const[bookList, setBookList] = useState([]);
+
+    useEffect(()=>{
+      http.get("/MyBookings").then((res) => {
+        console.log(res.data);
+        setBookList(res.data);
+      })
+    }, [])
+
     const [search, setSearch] = useState("");
 
     const formik = useFormik({
@@ -82,6 +92,23 @@ function UpdateEVC() {
         }
     });
 
+    function setBorderColor(status) {
+        if (status == "Good") {
+            return "#67F65C";
+        }
+        else if (status == "Poor") {
+            return "#F9B459";
+        }
+        else if (status == "Critical") {
+            return "#FF6868";
+        }
+    }
+
+    function totalEarned(evcID) {
+        const total = bookList.filter((booking)=> booking.evcId == evcID).map((booking)=> parseFloat(booking.bookingPrice)).reduce((sum, val) => sum + val, 0);
+        return total;
+      }
+
     return (
         <ThemeProvider theme={theme}>
             {sidebar}
@@ -108,19 +135,14 @@ function UpdateEVC() {
                                         evcList.map((evc, i) => {
                                             return(
                                                 <Grid item lg={12} key={evc.id}>
-                                                    <Card sx={{ mt: 3, border: "solid 1px black"}} onClick={() => {setID(evc.id)}}>
+                                                    <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.id)}}>
                                                         <CardContent>
                                                             <Typography variant="h6" sx={{mb: 2}}>
                                                                 EV Charger Name: {evc.name}
                                                             </Typography>
-                                                            <Typography variant="h6" sx={{mb: 2}}>
-                                                                {/* Ratings */}
-                                                            </Typography>
-                                                            <Typography sx={{mb: 2, display: "flex", justifySelf: 'center'}}>
-                                                                <StarHalf sx={{mr: 1}}/> Reviews
-                                                            </Typography>
+                                                            <Rating name="read-only" precision={0.1} size="large" value={parseFloat(evc.rating)} sx={{color:"#9BB1C3"}} readOnly/>
                                                             <Typography sx={{mb: 2}}>
-                                                                Commission Earned 
+                                                                Commission Earned: ${totalEarned(evc.chargerId)}
                                                             </Typography>
                                                         </CardContent>
                                                     </Card>

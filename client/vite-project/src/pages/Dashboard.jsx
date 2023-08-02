@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {ThemeProvider, createTheme, Container, Card, Typography, Box, Button,
-Link, Grid} from '@mui/material';
+Link, Grid, Rating} from '@mui/material';
 import {StarRounded, Send} from "@mui/icons-material";
 import Sidebar from '../components/sidebar';
 import http from "../http";
@@ -50,6 +50,14 @@ function Dashboard() {
     return percent * 100;
   }
 
+  function calcAvgRating() { 
+    const sumRatingList = evcList.map((evc) => parseFloat(evc.rating)).reduce((sum, val) => sum + val, 0);
+    const evcListCount = evcList.length;
+    const avgRating = sumRatingList / evcListCount;
+
+    return avgRating;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
@@ -86,18 +94,10 @@ function Dashboard() {
                 EV Charger Rating (AVG)
               </Typography>
               <Typography variant="h5" sx={{fontWeight:"bold", pl: 5}}>
-                4.5 / 5 
+                {calcAvgRating()} / 5 
               </Typography>
               <Box sx={{pl: 4, pt: 1}}>
-                {/*Review Icons, add conditions for stars to match rating */}
-                {
-
-                }
-                <StarRounded sx={{color:"#9BB1C3", width:"35px", height:"35px"}}/>
-                <StarRounded sx={{color:"#9BB1C3", width:"35px", height:"35px"}}/>
-                <StarRounded sx={{color:"#9BB1C3", width:"35px", height:"35px"}}/>
-                <StarRounded sx={{color:"#9BB1C3", width:"35px", height:"35px"}}/>
-                <StarRounded sx={{color:"#9BB1C3", width:"35px", height:"35px"}}/>
+                <Rating name="read-only" value={calcAvgRating()} precision={0.1} size="large" sx={{color:"#9BB1C3"}} readOnly/>
                 <Button variant="contained" sx={{bgcolor:"#9BB1C3", float:"right", mb:4, mr: 5}}>Read Reviews</Button>
               </Box>
             </Card>

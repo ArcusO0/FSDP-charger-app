@@ -11,7 +11,7 @@ router.post("/addBooking", async (req, res) => {
         bookingPrice: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)).required(),
         bookingDateTime: yup.string().required(),
         customerId: yup.string().trim().min(5).max(5).required(),
-        evcId: yup.string().min(6).max(6).required()
+        evcId: yup.string().min(5).max(5).required()
     });
     try{
         await validationSchema.validate(data, {
