@@ -16,10 +16,13 @@
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.6",
     "axios": "^1.4.0",
+    "formik": "^2.4.3",
+    "mapbox-gl": "^2.15.0",
     "react": "^18.2.0",
     "react-burger-menu": "^3.0.9",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.13.0"
+    "react-router-dom": "^6.13.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
