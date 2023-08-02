@@ -1,5 +1,5 @@
 module.exports= (sequelize, DataTypes) => {
-    const Booking = sequelize.define("Booking Info", {
+    const Booking = sequelize.define("Booking", {
         vendorId: {
             type: DataTypes.STRING,
             allowNull: false
@@ -13,9 +13,13 @@ module.exports= (sequelize, DataTypes) => {
         },
         bookingDateTime: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         customerId: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        evcId:{
             type: DataTypes.STRING,
             allowNull: false
         }

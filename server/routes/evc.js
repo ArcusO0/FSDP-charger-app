@@ -12,8 +12,8 @@ router.post("/addEVC", async (req, res) => {
         name: yup.string().trim().min(3).max(100).required(),
         description: yup.string().trim().max(500),
         address: yup.string().trim().min(3).max(500).required(),
-        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{2}$/)).required(),
-        rating: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 1 decimal place', (value) => (value+"").match(/^\d*\.{1}\d{1}$/)).required(),
+        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)).required(),
+        rating: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 1 decimal place', (value) => (value+"").match(/^\d*\.{1}\d?$/)).required(),
         status: yup.string().oneOf(["Good", "Poor", "Critical"]).required()
     });
     try{
@@ -34,7 +34,7 @@ router.post("/addEVC", async (req, res) => {
         data.description = data.description.trim();
     }
     data.address = data.address.trim();
-    let result = await EVC.create(data)
+    let result = await EVC.create(data);
     res.json(result);
 });
 
@@ -57,6 +57,26 @@ router.get("/:id", async (req, res)=> {
     res.json(evc)
 });
 // Update EVC Info
+router.put("/updateEVC/:id", async (req, res) => {
+    let id = req.params.id;
+    let evc = await EVC.findByPk(id);
+    if (!evc) {
+        res.sendStatus(404);
+        return;
+    }
+    let data = req.body;
+    let num = await EVC.update(data, {where: {id: id}});
+    if (num == 1){
+        res.json({
+            message: "EVC Info was updated successfully."
+        });
+    }
+    else {
+        res.status(400).json({
+            message: `Cannot update EVC Info with id ${id}.`
+        })
+    }
+});
 
 // Delete EVC Info
 

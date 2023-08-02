@@ -5,7 +5,10 @@ import {ArrowBackIosRounded} from "@mui/icons-material";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import http from "../http";
-import Sidebar from '../sidebar';
+import Sidebar from '../components/sidebar';
+
+{/* Add EVC Requests, Send a request to admin side (Marcus) for approval. Once approved, requests will be turned into EVC objects,
+request status cahnges to "Approved" and content is sent to actual registration of EVC in database, then it is displayed on the map*/}
 
 function AddEVC() {
     const navigate = useNavigate();
@@ -35,11 +38,11 @@ function AddEVC() {
                 .min(3, "Name must be at least 3 characters")
                 .max(500, "Name must be at most 100 characters")
                 .required("Name is required"),
-            rate: yup.number()
+            rate: yup.string()
                 .test(
                     'is-decimal',
                     'Invalid rate, enter a decimal value with 2 decimal places',
-                    (value) => (value+"").match(/^\d*\.{1}\d*$/)
+                    (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)
                     ),
             description: yup.string().trim()
                 .max(500, "Description must be at most 500 characters")
@@ -51,10 +54,10 @@ function AddEVC() {
                 data.description = data.description.trim();
             }
             console.log(data)
-            http.post("/requests/addRequest", data)
+            http.post("/MyRequests/addRequest", data)
             .then((res) => {
                 console.log(res.data);
-                navigate('/requests')
+                navigate('/MyRequests')
             })
         }
     })

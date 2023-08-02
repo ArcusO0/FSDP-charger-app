@@ -1,12 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import { Link, useNavigate} from "react-router-dom";
-import { ThemeProvider, createTheme, Box, Typography, Input, Grid, Card, CardContent, Container, TextField, Button } from '@mui/material';
+import { ThemeProvider, createTheme, Box, Typography, Input, Grid, Card, CardContent, Container, TextField, Button, InputAdornment} from '@mui/material';
 import { ArrowBackIosRounded, StarHalf } from "@mui/icons-material";
 import { useFormik }from "formik";
 import * as yup from "yup";
 import http from "../http";
-
-import Sidebar from '../sidebar';
+import Sidebar from '../components/sidebar';
 
 function UpdateEVC() {
     const theme = createTheme({
@@ -21,7 +20,7 @@ function UpdateEVC() {
     const[evcList, setEVCList] = useState([]);
 
     useEffect(() => {
-        http.get('/evc').then((res) => {
+        http.get('/MyEVC').then((res) => {
             console.log(res.data);
             setEVCList(res.data);
         });
@@ -40,18 +39,17 @@ function UpdateEVC() {
 
     function setID(evcID) {
         const id = evcID
-        
-        http.get(`/evc/${id}`).then((res) => {
+        http.get(`/MyEVC/${id}`).then((res) => {
         console.log(res.data);
         setEVC(res.data);
         });
-           
     }
 
     const [search, setSearch] = useState("");
 
     const formik = useFormik({
         initialValues: evc,
+        enableReinitialize: true,
         validationSchema: yup.object().shape({
             name: yup.string().trim()
                 .min(3, "Name must be at least 3 characters")
@@ -63,11 +61,11 @@ function UpdateEVC() {
                 .min(3, "Address must be at least 3 characters")
                 .max(500, "Address must be at most 500 characters")
                 .required("Address is required"),
-            rate: yup.number()
+            rate: yup.string()
                 .test('is-decimal', 
                     'Invalid rate, enter a decimal value with 2 decimal places', 
-                    (value) => (value+"").match(/^\d*\.{1}\d{2}$/))
-                .required()
+                    (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/))
+                .required("Rate is required")
         }),
         onSubmit: (data) => {
             data.name = data.name.trim();
@@ -75,14 +73,14 @@ function UpdateEVC() {
             if (data.description) {
                 data.description = data.description.trim();
             }
-            console.log(data)
-            http.post("/evc/addEVC", data)
+            console.log(data);
+            http.put(`/MyEVC/updateEVC/${evc.id}`, data)
             .then((res) => {
                 console.log(res.data);
-                navigate('/evc')
-            })
+                navigate('/MyEVC/Menu');
+            });
         }
-    })
+    });
 
     return (
         <ThemeProvider theme={theme}>
@@ -90,7 +88,7 @@ function UpdateEVC() {
             <Box sx={{display: "flex"}}>
                 {/* Body Content */}
                 <Box sx={{ml:-5, mt:3}} >
-                    <Link to="/MyEVC" sx={{color:'black'}}>
+                    <Link to="/MyEVC/Menu" sx={{color:'black'}}>
                         <ArrowBackIosRounded sx={{ display: 'inline-block', mr:2}}/>
                     </Link>
                     <Typography variant="h4" sx ={{display: 'inline-block', fontWeight: "bold"}}>
@@ -110,7 +108,7 @@ function UpdateEVC() {
                                         evcList.map((evc, i) => {
                                             return(
                                                 <Grid item lg={12} key={evc.id}>
-                                                    <Card sx={{ mt: 3, border: "solid 1px black"}} onClick={setID(evc.id)}>
+                                                    <Card sx={{ mt: 3, border: "solid 1px black"}} onClick={() => {setID(evc.id)}}>
                                                         <CardContent>
                                                             <Typography variant="h6" sx={{mb: 2}}>
                                                                 EV Charger Name: {evc.name}
@@ -163,12 +161,15 @@ function UpdateEVC() {
                                 autoComplete='off'
                                 fullWidth
                                 margin="normal"
-                                label="EV Charger Address"
-                                name="address"
-                                value={formik.values.address}
+                                label="EV Charger Rate"
+                                name="rate"
+                                value={formik.values.rate}
                                 onChange={formik.handleChange}
-                                error={formik.touched.address && Boolean(formik.errors.address)}
-                                helperText={formik.touched.address && formik.errors.address}
+                                error={formik.touched.rate && Boolean(formik.errors.rate)}
+                                helperText={formik.touched.rate && formik.errors.rate}
+                                InputProps={{
+                                    startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                }}
                                 />           
                                 
                                 <TextField
@@ -186,13 +187,12 @@ function UpdateEVC() {
                                 />         
                             </Grid>
                             <Box sx={{mt: 5}}>
-                                <Button variant="contained" type="submit" sx={{px:5, py: 1, bgcolor: "#9BB1C3", float:"right"}} anchor="bottom">
+                                <Button variant="contained" type="Submit" sx={{px:5, py: 1, bgcolor: "#9BB1C3", float:"right"}} anchor="bottom">
                                     Update
                                 </Button>
                             </Box>
                         </Box>
                     </Box>
-                    
                 </Box>
             </Box>
 

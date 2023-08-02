@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         description: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         },
-        rate: {
+        rate: { // How much the EV Charger will charge the customers per hour
             type: DataTypes.DECIMAL(4,2),
-            allowNull: true,
+            allowNull: true
         },
         status: { // EVC Request Status
             type: DataTypes.STRING,

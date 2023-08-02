@@ -23,6 +23,8 @@ db.sequelize.sync({ alter: true }).then(() => {
 
 const requestRoute = require("./routes/requests");
 const evcRoute = require("./routes/evc");
-app.use('/requests', requestRoute);
-app.use("/evc", evcRoute);
+const bookingRoute = require("./routes/booking");
+app.use('/MyRequests', requestRoute);
+app.use("/MyEVC", evcRoute);
+app.use("/MyBookings", bookingRoute);
 

@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import http from "../http"
 import { Container, Box, Grid, Card, CardContent, Typography, Divider, 
-createTheme, ThemeProvider, IconButton, Modal} from '@mui/material';
+createTheme, ThemeProvider, IconButton, Modal, Button} from '@mui/material';
 import {ArrowBackIosRounded, CreateSharp, DeleteSharp } from '@mui/icons-material';
 import { Link }from "react-router-dom";
-import Sidebar from "../sidebar";
+import Sidebar from "../components/sidebar";
 
 function Requests() {
   const theme = createTheme({
@@ -15,7 +15,7 @@ function Requests() {
 
   const [requestList, setRequestList] = useState([]);
   useEffect(() => {
-    http.get('/requests').then((res) => {
+    http.get('/MyRequests').then((res) => {
       console.log(res.data);
       setRequestList(res.data);
     });
@@ -27,7 +27,7 @@ function Requests() {
   const sidebar = Sidebar();
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => {setOpen(true)};
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
 
@@ -73,10 +73,11 @@ function Requests() {
                               <IconButton sx={{display: "inline-block", position: "relative", mt: -5, float:'right'}} onClick={handleOpen}>
                                   <DeleteSharp sx={{width: 30, height: 30, color: "red"}}/>
                               </IconButton>
+                              
                               <Modal
                               open={open}
                               onClose={handleClose}
-                              id={`A${request.id}`}                              
+                              className={`A${request.id}`}                              
                               >
                                 <Box sx={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600,
                                     backgroundColor:'background.paper', border: '1px solid #000', boxShadow: 24, p: 4 }}>
@@ -100,11 +101,12 @@ function Requests() {
                                             EV Charger Description {request.description}
                                         </Typography>
                                     </Container>
+                                    <Button variant="contained" href={`/deleteRequest/${request.id}`} sx={{justifyContent:"center"}}>Delete Request</Button>
                                 </Box>
                               </Modal>
 
                               {/* Edit Button */}
-                              <Link to={`requests/updateRequest/${request.id}`}>
+                              <Link to={`requests/updateRequest/${request.id}`}> 
                                 <IconButton sx={{display: "inline-block", position: "relative", mt: -5, float:'right'}}>
                                   <CreateSharp sx={{width: 30, height: 30, color: "black"}}/>
                                 </IconButton> 
@@ -151,6 +153,7 @@ function Requests() {
                               <Modal
                               open={open}
                               onClose={handleClose}
+                              id={`D${request.id}`} 
                               >
                                 <Box sx={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 600,
                                     backgroundColor:'background.paper', border: '1px solid #000', boxShadow: 24, p: 4 }}>

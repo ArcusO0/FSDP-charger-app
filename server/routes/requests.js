@@ -81,7 +81,8 @@ router.put("/updateRequest/:id", async (req, res) => {
     let validationSchema = yup.object().shape({
         type: yup.string().trim().min(3).max(100).required(),
         name: yup.string().trim().min(3).max(100).required(),
-        status: yup.string().trim().min(3).max(100).required()
+        status: yup.string().trim().min(3).max(100).required(),
+        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)),
     });
     try {
         await validationSchema.validate(data, 
