@@ -4,155 +4,167 @@ const router = express.Router();
 const yup = require("yup");
 
 router.post("/addBooking", async(req, res) => {
-            let data = req.body;
-            let validationSchema = yup.object().shape({
-                vendorId: yup.string().trim().min(5).max(5).required(),
-                bookingId: yup.string().trim().min(5).max(5).required(),
-                bookingPrice: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{0,2}$/)).required(),
-                bookingDateTime: yup.string().required(),
-                customerId: yup.string().trim().min(5).max(5).required(),
-                evcId: yup.string().min(5).max(5).required()
-            });
-            try {
-                await validationSchema.validate(data, {
-                    abortEarly: false,
-                    strict: true
-                });
-            } catch (err) {
-                console.error(err);
-                res.status(400).json({ errors: err.errors });
-                return;
-            }
-            data.vendorId = data.vendorId.trim();
-            data.bookingId = data.bookingId.trim();
-            data.customerId = data.customerId.trim();
+    let data = req.body;
+    let validationSchema = yup.object().shape({
+        vendorId: yup.string().trim().min(5).max(5).required(),
+        bookingId: yup.string().trim().min(5).max(5).required(),
+        bookingPrice: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{0,2}$/)).required(),
+        bookingDateTime: yup.string().required(),
+        customerId: yup.string().trim().min(5).max(5).required(),
+        evcId: yup.string().min(5).max(5).required()
+    });
+    try {
+        await validationSchema.validate(data, {
+            abortEarly: false,
+            strict: true
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
+    data.vendorId = data.vendorId.trim();
+    data.bookingId = data.bookingId.trim();
+    data.customerId = data.customerId.trim();
+});
 
+router.post("/", async(req, res) => {
+    let data = req.body;
+    // Validate request body
+    let validationSchema = yup.object().shape({
+        email: yup.string().trim().min(3).max(321).required(),
+        license: yup.string().trim().min(5).max(10).required(),
+        hours: yup.number().min(1).max(12).required(),
+        arrival: yup.string().trim().min(5).max(5).required(),
+    });
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
 
-            router.post("/", async(req, res) => {
-                let data = req.body;
-                // Validate request body
-                let validationSchema = yup.object().shape({
-                    email: yup.string().trim().min(3).max(321).required(),
-                    license: yup.string().trim().min(5).max(10).required(),
-                    hours: yup.number().min(1).max(12).required(),
-                    arrival: yup.string().trim().min(5).max(5).required(),
-                });
-                try {
-                    await validationSchema.validate(data, { abortEarly: false });
-                } catch (err) {
-                    console.error(err);
-                    res.status(400).json({ errors: err.errors });
-                    return;
+    data.email = data.email.trim();
+    data.license = data.license.trim();
+    data.hours = data.hours;
+    data.arrival = data.arrival;
+    let result = await Booking.create(data);
+    res.json(result);
+});
+
+router.get("/", async(req, res) => {
+    let condition = {};
+    let search = req.query.search;
+    if (search) {
+        condition[Sequelize.Op.or] = [{
+                email: {
+                    [Sequelize.Op.like]: `%${search}%`
                 }
-
-                data.email = data.email.trim();
-                data.license = data.license.trim();
-                data.hours = data.hours;
-                data.arrival = data.arrival;
-                let result = await Booking.create(data);
-                res.json(result);
-            });
-
-            router.get("/", async(req, res) => {
-                let condition = {};
-                let search = req.query.search;
-                if (search) {
-                    condition[Sequelize.Op.or] = [
-                        { email: {
-                                [Sequelize.Op.like]: `%${search}%` } },
-                        { license: {
-                                [Sequelize.Op.like]: `%${search}%` } },
-                        { hours: {
-                                [Sequelize.Op.like]: `%${search}%` } },
-                        { arrival: {
-                                [Sequelize.Op.like]: `%${search}%` } },
-                    ];
+            },
+            {
+                license: {
+                    [Sequelize.Op.like]: `%${search}%`
                 }
-
-                let list = await Booking.findAll({
-                    where: condition,
-                    order: [
-                        ['createdAt', 'DESC']
-                    ]
-                });
-                res.json(list);
-            });
-
-            router.get("/:id", async(req, res) => {
-                let id = req.params.id;
-                let booking = await Booking.findByPk(id);
-                // Check id not found
-                if (!booking) {
-                    res.sendStatus(404);
-                    return;
+            },
+            {
+                hours: {
+                    [Sequelize.Op.like]: `%${search}%`
                 }
-                res.json(booking);
-            });
-
-            router.put("/:id", async(req, res) => {
-                let id = req.params.id;
-                // Check id not found
-                let booking = await Booking.findByPk(id);
-                if (!booking) {
-                    res.sendStatus(404);
-                    return;
+            },
+            {
+                arrival: {
+                    [Sequelize.Op.like]: `%${search}%`
                 }
+            },
+        ];
+    }
 
-                let data = req.body;
-                // Validate request body
-                let validationSchema = yup.object().shape({
-                    email: yup.string().trim().min(3).max(321).required(),
-                    license: yup.string().trim().min(5).max(10).required(),
-                    hours: yup.number().min(1).max(12).required(),
-                    arrival: yup.string().trim().min(5).max(5).required(),
-                });
-                try {
-                    await validationSchema.validate(data, { abortEarly: false });
-                } catch (err) {
-                    console.error(err);
-                    res.status(400).json({ errors: err.errors });
-                    return;
-                }
+    let list = await Booking.findAll({
+        where: condition,
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+    res.json(list);
+});
 
-                data.email = data.email.trim();
-                data.license = data.license.trim();
-                data.hours = data.hours.trim();
-                data.arrival = data.arrival.trim();
-                let num = await Booking.update(data, {
-                    where: { id: id }
-                });
-                if (num == 1) {
-                    res.json({
-                        message: "Booking was updated successfully."
-                    });
-                } else {
-                    res.status(400).json({
-                        message: `Cannot update booking with id ${id}.`
-                    });
-                }
-            });
+router.get("/:id", async(req, res) => {
+    let id = req.params.id;
+    let booking = await Booking.findByPk(id);
+    // Check id not found
+    if (!booking) {
+        res.sendStatus(404);
+        return;
+    }
+    res.json(booking);
+});
 
-            router.delete("/:id", async(req, res) => {
-                let id = req.params.id;
-                // Check id not found
-                let booking = await Booking.findByPk(id);
-                if (!booking) {
-                    res.sendStatus(404);
-                    return;
-                }
+router.put("/:id", async(req, res) => {
+    let id = req.params.id;
+    // Check id not found
+    let booking = await Booking.findByPk(id);
+    if (!booking) {
+        res.sendStatus(404);
+        return;
+    }
 
-                let num = await Booking.destroy({
-                    where: { id: id }
-                })
-                if (num == 1) {
-                    res.json({
-                        message: "Booking was deleted successfully."
-                    });
-                } else {
-                    res.status(400).json({
-                        message: `Cannot delete booking with id ${id}.`
-                    });
-                }
-            });
+    let data = req.body;
+    // Validate request body
+    let validationSchema = yup.object().shape({
+        email: yup.string().trim().min(3).max(321).required(),
+        license: yup.string().trim().min(5).max(10).required(),
+        hours: yup.number().min(1).max(12).required(),
+        arrival: yup.string().trim().min(5).max(5).required(),
+    });
+    try {
+        await validationSchema.validate(data, { abortEarly: false });
+    } catch (err) {
+        console.error(err);
+        res.status(400).json({ errors: err.errors });
+        return;
+    }
 
-            module.exports = router;
+    data.email = data.email.trim();
+    data.license = data.license.trim();
+    data.hours = data.hours.trim();
+    data.arrival = data.arrival.trim();
+    let num = await Booking.update(data, {
+        where: { id: id }
+    });
+    if (num == 1) {
+        res.json({
+            message: "Booking was updated successfully."
+        });
+    } else {
+        res.status(400).json({
+            message: `Cannot update booking with id ${id}.`
+        });
+    }
+});
+
+router.delete("/:id", async(req, res) => {
+    let id = req.params.id;
+    // Check id not found
+    let booking = await Booking.findByPk(id);
+    if (!booking) {
+        res.sendStatus(404);
+        return;
+    }
+
+    let num = await Booking.destroy({
+        where: { id: id }
+    })
+    if (num == 1) {
+        res.json({
+            message: "Booking was deleted successfully."
+        });
+    } else {
+        res.status(400).json({
+            message: `Cannot delete booking with id ${id}.`
+        });
+    }
+});
+
+
+module.exports = router;
