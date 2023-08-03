@@ -7,6 +7,7 @@ import http from '../http';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from './vendorbg.jpeg';
+import Navbarvendor from './navbar/navbarvendor';
 
 
 function Login() {
@@ -66,7 +67,7 @@ function Login() {
             backgroundRepeat: 'no-repeat',
         }}>
             <>
-
+                <Navbarvendor /> 
             </>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Vendor Sign In

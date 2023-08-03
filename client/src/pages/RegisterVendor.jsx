@@ -7,6 +7,7 @@ import http from '../http';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from './vendorbg.jpeg'; 
+import Navbarvendor from './navbar/navbarvendor';
 
 
 function Register() {
@@ -69,6 +70,9 @@ function Register() {
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
         }}>
+            <>
+                <Navbarvendor /> 
+            </>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Vendor Sign Up
             </Typography>
@@ -99,7 +103,7 @@ function Register() {
                     fullWidth margin="normal" autoComplete="off"
                     label="Password"
                     name="password" type="password" size="small"
-                    value={formik.values.password}
+                    value={formik.values.password}      
                     onChange={formik.handleChange}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}

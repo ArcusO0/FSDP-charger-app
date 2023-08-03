@@ -1,0 +1,75 @@
+/* navbar.css */
+
+.navbarvendor {
+    flex-direction: column;
+    display: flex;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6.25%;
+    height: 100%;
+    text-align: center;
+    padding: 2px;
+    transition: transform 0.3s ease;
+}
+
+.navbar.open {
+    height: auto;
+}
+
+.navbar-header {
+    margin-top: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+.gridv {
+    margin-top: 100px;
+}
+
+.gridv,
+.bookv,
+.chargerv,
+.settingsv,
+.aboutv,
+.userv {
+    color: #064de6;
+    display: block;
+    padding: 2px;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.logo {
+    height: auto;
+    width: fit-content;
+}
+
+.userv {
+    margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .navbaradmin {
+        z-index: 1;
+        width: auto;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        min-width: 5%;
+        padding-left: 5px;
+    }
+    .gridv,
+    .bookv,
+    .chargerv,
+    .settingsv,
+    .aboutv {
+        font-size: 20px;
+    }
+}

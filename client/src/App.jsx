@@ -10,6 +10,7 @@ import RegisterVendor from './pages/RegisterVendor';
 import UpdateProfile from './pages/UpdateProfile';
 import LoginAdmin from './pages/LoginAdmin'
 import Navbaradmin from './pages/navbar/navbaradmin';
+import Navbarvendor from './pages/navbar/navbarvendor';
 
 
 
@@ -80,6 +81,7 @@ function App() {
           <Route path={"/updateprofile"} element={<UpdateProfile />} />
           <Route path={"/loginadmin"} element={<LoginAdmin />} />
           <Route path={"/navbaradmin"} element={<Navbaradmin/>} />
+          <Route path={"/navbarvendor"} element={<Navbarvendor/>} />
         </Routes>
       </Container>
     </Router>
