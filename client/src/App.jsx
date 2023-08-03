@@ -54,7 +54,7 @@ function App() {
         <Container>
           <Toolbar disableGutters={true}>
             <Link to="/">
-              
+              <img src="car.png" alt="" />
             </Link>
             <Link to="/bookings" ><Typography>Bookings</Typography></Link>
             <Link to="/rewards" ><Typography>Rewards</Typography></Link>
