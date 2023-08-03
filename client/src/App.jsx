@@ -1,5 +1,4 @@
 import './App.css';
-import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AdminHome from './pages/AdminHome';
 import AdminCharger from './pages/adminChargers';
@@ -8,7 +7,6 @@ import AdminRequests from './pages/adminRequests';
 import HomePage from './pages/home';
 import { useState, useEffect } from 'react';
 import { Container, AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
-import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import http from './http';

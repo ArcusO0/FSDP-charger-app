@@ -1,8 +1,6 @@
 const { finalRequests, Sequelize } = require("../models");
 
-const { finalRequest, Sequelize } = require("../models");
 
-const { finalRequest, Sequelize } = require("../models");
 
 const express = require("express");
 const router = express.Router();
@@ -38,11 +36,6 @@ router.post("/addRequest", async(req, res) => {
         res.status(400).json({ errors: err.errors });
 
         await validationSchema.validate(data, { abortEarly: false, strict: true })
-    } catch (err) {
-        console.error(err);
-        res.status(400).json({ errors: err.errors });
-
-        return;
     }
     data.reqId = data.reqId.trim();
     data.name = data.name.trim();
@@ -105,33 +98,22 @@ router.get("/", async(req, res) => {
         where: condition,
         order: [
                 ['id', 'ASC']
-            ] <<
-            << << < HEAD >>>
-            >>> > origin / Tyler ===
-            === = >>>
-            >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
+            ] 
     });
     res.json(list);
 });
 
 // Get by ID 
-<<
-<< << < HEAD
-    <<
-    << << < HEAD
+
 router.get("/:id", async(req, res) => {
             let id = req.params.id;
-            let request = await finalRequests.findByPk(id); ===
-            === =
-            router.get("/:id", async(req, res) => {
-                        let id = req.params.id;
-                        let request = await finalRequest.findByPk(id); >>>
-                        >>> > origin / Tyler ===
-                            === =
+            let request = await finalRequests.findByPk(id); 
+        });
+            
+                        
                             router.get("/:id", async(req, res) => {
                                 let id = req.params.id;
-                                let request = await finalRequest.findByPk(id); >>>
-                                >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
+                                let request = await finalRequest.findByPk(id); 
                                 if (!request) {
                                     res.sendStatus(404);
                                     return;
@@ -140,148 +122,74 @@ router.get("/:id", async(req, res) => {
                             });
 
                         // Get by Type of Request
-                        <<
-                        << << < HEAD
-                            <<
-                            << << < HEAD
+                       
                         router.get("/:type", async(req, res) => {
                                     let type = req.params.type;
                                     let request = await Request.findAll(type);
-                                    if (!request) { ===
-                                        === = ===
-                                        === = >>>
-                                        >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
+                                    if (!request) { 
                                         router.get("/:type", async(req, res) => {
                                             let type = req.params.type;
                                             let request = await Request.findAll(type);
-                                            if (!request) { <<
-                                                << << < HEAD
-                                                    >>>
-                                                    >>> > origin / Tyler ===
-                                                    === = >>>
-                                                    >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
+                                            if (!request) { 
                                                 res.sendStatus(404);
                                                 return;
                                             }
+                                            
                                         });
+                                    }});
+                                    
 
                                         // Update Requests using Put
-                                        <<
-                                        << << < HEAD
-                                            <<
-                                            << << < HEAD
-                                        router.put("/updateRequest/:id", async(req, res) => {
-                                                    let id = req.params.id;
-                                                    let request = await Request.findByPk(id);
-                                                    if (!request) { ===
-                                                        === = ===
-                                                        === = >>>
-                                                        >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                        router.put("/updateRequest/:id", async(req, res) => {
-                                                                let id = req.params.id;
-                                                                let request = await Request.findByPk(id);
-                                                                if (!request) { <<
-                                                                    << << < HEAD
-                                                                        >>>
-                                                                        >>> > origin / Tyler ===
-                                                                        === = >>>
-                                                                        >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                                    res.sendStatus(404);
-                                                                    return;
-                                                                }
-                                                                let data = req.body;
-                                                                let validationSchema = yup.object().shape({
-                                                                    type: yup.string().trim().min(3).max(100).required(),
-                                                                    name: yup.string().trim().min(3).max(100).required(),
-                                                                    status: yup.string().trim().min(3).max(100).required(),
-                                                                    <<
-                                                                    << << < HEAD <<
-                                                                    << << < HEAD
-                                                                    rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{0,2}$/)),
-                                                                });
-                                                                try {
-                                                                    await validationSchema.validate(data, { abortEarly: false, strict: true })
-                                                                } catch (err) {
-                                                                    console.error(err);
-                                                                    res.status(400).json({ errors: err.errors }); ===
-                                                                    === = ===
-                                                                    === = >>>
-                                                                    >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                                    rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{0,2}$/)),
-                                                                });
-                                                            try {
-                                                                await validationSchema.validate(data, { abortEarly: false, strict: true })
-                                                            } catch (err) {
-                                                                console.error(err);
-                                                                res.status(400).json({ errors: err.errors }); <<
-                                                                << << < HEAD
-                                                                    >>>
-                                                                    >>> > origin / Tyler ===
-                                                                    === = >>>
-                                                                    >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                                return;
-                                                            }
-                                                            data.type = data.type.trim(); data.name = data.name.trim(); data.status = data.status.trim(); <<
-                                                            << << < HEAD <<
-                                                            << << < HEAD
-                                                            let num = await Request.update(data, { where: { id: id } });
-                                                            if (num == 1) {
-                                                                res.json({
-                                                                    message: "Request was updated successfully."
-                                                                });
-                                                            } else { ===
-                                                                === = ===
-                                                                === = >>>
-                                                                >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                                let num = await Request.update(data, { where: { id: id } });
-                                                                if (num == 1) {
-                                                                    res.json({
-                                                                        message: "Request was updated successfully."
-                                                                    });
-                                                                } else { <<
-                                                                    << << < HEAD
-                                                                        >>>
-                                                                        >>> > origin / Tyler ===
-                                                                        === = >>>
-                                                                        >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                                    res.status(400).json({
-                                                                        message: `Cannot update request with id ${id}.`
-                                                                    })
-                                                                }
-                                                            });
-
+                                        
+                                        router.put("/updateRequest/:id", async (req, res) => {
+                                            let id = req.params.id;
+                                            let request = await Request.findByPk(id);
+                                            if(!request){
+                                                res.sendStatus(404);
+                                                return;
+                                            }
+                                            let data = req.body;
+                                            let validationSchema = yup.object().shape({
+                                                type: yup.string().trim().min(3).max(100).required(),
+                                                name: yup.string().trim().min(3).max(100).required(),
+                                                status: yup.string().trim().min(3).max(100).required(),
+                                                rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)),
+                                            });
+                                            try {
+                                                await validationSchema.validate(data, 
+                                                    { abortEarly: false, strict: true} )
+                                            } 
+                                            catch (err) {
+                                                console.error(err);
+                                                res.status(400).json({errors: err.errors});
+                                                return;
+                                            }
+                                            data.type = data.type.trim();
+                                            data.name = data.name.trim();
+                                            data.status = data.status.trim();
+                                            let num = await Request.update(data, {where: {id:id}});
+                                            if (num == 1){
+                                                res.json({
+                                                    message: "Request was updated successfully."
+                                                });
+                                            }
+                                            else {
+                                                res.status(400).json({
+                                                    message: `Cannot update request with id ${id}.`
+                                                })
+                                            }
+                                        });
                                                         // Delete Requests 
-                                                        <<
-                                                        << << < HEAD
-                                                            <<
-                                                            << << < HEAD
-                                                        router.delete("/deleteRequest/:id", async(req, res) => {
+                                                        
+                                                        router.delete("/deleteRequest/:id", async (req, res) => {
                                                             let id = req.params.id;
-                                                            let num = await Request.destroy({ where: { id: id } })
+                                                            let num = await Request.destroy({ where: {id:id}})
                                                             if (num == 1) {
-                                                                res.json({ message: "Request was deleted successfully." });
-                                                            } else {
-                                                                res.json({ message: `Cannot delete Request with id ${id}` })
+                                                                res.json({message: "Request was deleted successfully."});
+                                                            }
+                                                            else {
+                                                                res.json({message: `Cannot delete Request with id ${id}`})
                                                             }
                                                         });
-
-                                                        module.exports = router; ===
-                                                        === = ===
-                                                        === = >>>
-                                                        >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
-                                                        router.delete("/deleteRequest/:id", async(req, res) => {
-                                                            let id = req.params.id;
-                                                            let num = await Request.destroy({ where: { id: id } })
-                                                            if (num == 1) {
-                                                                res.json({ message: "Request was deleted successfully." });
-                                                            } else {
-                                                                res.json({ message: `Cannot delete Request with id ${id}` })
-                                                            }
-                                                        });
-
-                                                        module.exports = router; <<
-                                                        << << < HEAD
-                                                            >>>
-                                                            >>> > origin / Tyler ===
-                                                            === = >>>
-                                                            >>> > b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
+                                                        
+                                                        module.exports = router;
