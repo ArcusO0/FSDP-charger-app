@@ -1,0 +1,45 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  input, select, textarea {
+    color: white !important;
+  }
+
+  .MuiFormLabel-root {
+    color: lightgray !important;
+  }
+
+  .MuiFormLabel-root.Mui-focused {
+    color: #1976d2 !important;
+  }
+
+  .MuiFormLabel-root.Mui-error {
+    color: #d32f2f !important;
+  }
+
+  .MuiInputBase-root fieldset {
+    border-color: lightgray !important;
+  }
+
+  .MuiInputBase-root.Mui-focused fieldset {
+    border-color: #1976d2 !important;
+  }
+
+  .MuiInputBase-root.Mui-error fieldset {
+    border-color: #d32f2f !important;
+  }
+}
