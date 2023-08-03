@@ -19,11 +19,11 @@ function App() {
             <Link to="/">
               <img src="/car.png" alt="" />
             </Link>
-            <Link to="/bookings" ><Typography>Bookings</Typography></Link>
-            <Link to="/rewards" ><Typography>Rewards</Typography></Link>
-            <Link to="/status" ><Typography>Status</Typography></Link>
-            <Link to="/map" ><Typography>Map</Typography></Link>
-            <Link to="/feedbacks" ><Typography>Feedbacks</Typography></Link>
+            <Link to="/userbookings" ><Typography>Bookings</Typography></Link>
+            <Link to="/userrewards" ><Typography>Rewards</Typography></Link>
+            <Link to="/userstatus" ><Typography>Status</Typography></Link>
+            <Link to="/usermap" ><Typography>Map</Typography></Link>
+            <Link to="/userfeedbacks" ><Typography>Feedbacks</Typography></Link>
           </Toolbar>
         </Container>
       </AppBar>
@@ -31,13 +31,13 @@ function App() {
       <Container>
         <Routes>
           <Route path={"/"} element={<UserFeedbacks />} />
-          <Route path={"/feedbacks"} element={<UserFeedbacks />} />
-          <Route path={"/addfeedback"} element={<AddUserFeedback />} />
-          <Route path={"/editfeedback/:id"} element={<EditUserFeedback />} />
-          <Route path={"/status"} element={<UserStatus/>} />
-          <Route path={"/addbooking"} element={<AddUserBooking />} />
-          <Route path={"/editbooking/:id"} element={<EditUserBooking />} />
-          <Route path={"/bookings"} element={<UserBookings />} />
+          <Route path={"/userfeedbacks"} element={<UserFeedbacks />} />
+          <Route path={"/adduserfeedback"} element={<AddUserFeedback />} />
+          <Route path={"/edituserfeedback/:id"} element={<EditUserFeedback />} />
+          <Route path={"/userstatus"} element={<UserStatus/>} />
+          <Route path={"/adduserbooking"} element={<AddUserBooking />} />
+          <Route path={"/edituserbooking/:id"} element={<EditUserBooking />} />
+          <Route path={"/userbookings"} element={<UserBookings />} />
         </Routes>
       </Container>
     </Router>

@@ -21,7 +21,7 @@ function EditUserBooking() {
     });
 
     useEffect(() => {
-        http.get(`/booking/${id}`).then((res) => {
+        http.get(`/userbooking/${id}`).then((res) => {
             setBooking(res.data);
         });
     }, []);
@@ -52,10 +52,10 @@ function EditUserBooking() {
             data.license = data.license.trim();
             data.hours = data.hours;
             data.arrival = data.arrival;
-            http.put(`/booking/${id}`, data)
+            http.put(`/userbooking/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/bookings");
+                    navigate("/userbookings");
                 });
         }
     });

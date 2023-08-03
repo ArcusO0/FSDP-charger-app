@@ -44,10 +44,10 @@ function AddUserBooking() {
             data.license = data.license.trim();
             data.hours = data.hours;
             data.arrival = data.arrival;
-            http.post("/booking", data)
+            http.post("/userbooking", data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/bookings");
+                    navigate("/userbookings");
                 });
         }
     });

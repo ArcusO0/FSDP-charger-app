@@ -11,7 +11,7 @@ function UserBookings() {
     const [search, setSearch] = useState('');
 
     const MoveToOld = () => {
-        http.get('/booking').then((res) => {
+        http.get('/userbooking').then((res) => {
             setBookingList(res.data);
         });
     };
@@ -25,13 +25,13 @@ function UserBookings() {
     };
 
     const getBookings = () => {
-        http.get('/booking').then((res) => {
+        http.get('/userbooking').then((res) => {
             setBookingList(res.data);
         });
     };
 
     const searchBookings = () => {
-        http.get(`/booking?search=${search}`).then((res) => {
+        http.get(`/userbooking?search=${search}`).then((res) => {
             setBookingList(res.data);
         });
     };
@@ -79,7 +79,7 @@ function UserBookings() {
                     onClick={onClickRefresh}>
                     Refresh
                 </Button>
-                <Box sx={{ pr: 20}} />
+                <Box sx={{ pr: 5}} />
                 <Link to="/addbooking" style={{ textDecoration: 'none' }}>
                     <Button variant='contained'>
                         Book A Charger

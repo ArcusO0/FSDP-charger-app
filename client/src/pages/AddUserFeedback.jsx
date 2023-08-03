@@ -26,10 +26,10 @@ function AddUserFeedback() {
         onSubmit: (data) => {
             data.title = data.title.trim();
             data.description = data.description.trim();
-            http.post("/feedback", data)
+            http.post("/userfeedback", data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/feedbacks");
+                    navigate("/userfeedbacks");
                 });
         }
     });

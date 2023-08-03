@@ -15,13 +15,13 @@ function UserFeedbacks() {
     };
 
     const getFeedbacks = () => {
-        http.get('/feedback').then((res) => {
+        http.get('/userfeedback').then((res) => {
             setFeedbackList(res.data);
         });
     };
 
     const searchFeedbacks = () => {
-        http.get(`/feedback?search=${search}`).then((res) => {
+        http.get(`/userfeedback?search=${search}`).then((res) => {
             setFeedbackList(res.data);
         });
     };
@@ -64,7 +64,7 @@ function UserFeedbacks() {
                     <Clear />
                 </IconButton>
                 <Box sx={{ flexGrow: 1 }} />
-                <Link to="/addfeedback" style={{ textDecoration: 'none' }}>
+                <Link to="/adduserfeedback" style={{ textDecoration: 'none' }}>
                     <Button variant='contained'>
                         Add
                     </Button>
@@ -82,7 +82,7 @@ function UserFeedbacks() {
                                             <Typography variant="h6" sx={{ flexGrow: 1 }}>
                                                 {feedback.title}
                                             </Typography>
-                                            <Link to={`/editfeedback/${feedback.id}`}>
+                                            <Link to={`/edituserfeedback/${feedback.id}`}>
                                                 <IconButton color="primary" sx={{ padding: '4px' }}>
                                                     <Edit />
                                                 </IconButton>

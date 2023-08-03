@@ -16,7 +16,7 @@ function EditUserFeedback() {
     });
 
     useEffect(() => {
-        http.get(`/feedback/${id}`).then((res) => {
+        http.get(`/userfeedback/${id}`).then((res) => {
             setFeedback(res.data);
         });
     }, []);
@@ -37,10 +37,10 @@ function EditUserFeedback() {
         onSubmit: (data) => {
             data.title = data.title.trim();
             data.description = data.description.trim();
-            http.put(`/feedback/${id}`, data)
+            http.put(`/userfeedback/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/feedbacks");
+                    navigate("/userfeedbacks");
                 });
         }
     });
@@ -56,10 +56,10 @@ function EditUserFeedback() {
     };
 
     const deleteFeedback = () => {
-        http.delete(`/feedback/${id}`)
+        http.delete(`/userfeedback/${id}`)
             .then((res) => {
                 console.log(res.data);
-                navigate("/feedbacks");
+                navigate("/userfeedbacks");
             });
     }
 
