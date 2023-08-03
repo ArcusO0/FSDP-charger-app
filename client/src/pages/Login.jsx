@@ -58,7 +58,7 @@ function Login() {
             border: '1px solid #ccc',
             padding: '20px',
             maxWidth: '500px',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2) ',
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: '150px 150 px', 
             backgroundPosition: 'center',
