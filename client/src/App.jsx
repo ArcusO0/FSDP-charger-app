@@ -2,9 +2,9 @@ import './App.css';
 import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import AdminHome from './pages/AdminHome';
-import AdminCharger from './pages/Chargers';
-import AdminBookings from './pages/bookings';
-import AdminRequests from './pages/Requests';
+import AdminCharger from './pages/adminChargers';
+import AdminBookings from './pages/adminbookings';
+import AdminRequests from './pages/adminRequests';
 import HomePage from './pages/home';
 
 

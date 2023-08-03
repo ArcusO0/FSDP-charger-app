@@ -1,4 +1,4 @@
-const { finalRequest, Sequelize } = require("../models");
+const { finalRequests, Sequelize } = require("../models");
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -29,7 +29,7 @@ router.post("/addRequest", async(req, res) => {
     if (description) {
         data.description = data.description.trim
     }
-    let result = await finalRequest.create(data);
+    let result = await finalRequests.create(data);
     res.json(result);
 });
 
@@ -38,16 +38,24 @@ router.get("/", async(req, res) => {
     let condition = {};
     let search = req.query.search;
     if (search) {
-        condition[Sequelize.Op.or] = [
-            { type: {
-                    [Sequelize.Op.like]: `${search}%` } },
-            { name: {
-                    [Sequelize.Op.like]: `${search}%` } },
-            { status: {
-                    [Sequelize.Op.like]: `${search}%` } }
+        condition[Sequelize.Op.or] = [{
+                type: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            },
+            {
+                name: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            },
+            {
+                status: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            }
         ];
     }
-    let list = await finalRequest.findAll({
+    let list = await finalRequests.findAll({
         where: condition,
         order: [
             ['id', 'ASC']
@@ -59,7 +67,7 @@ router.get("/", async(req, res) => {
 // Get by ID 
 router.get("/:id", async(req, res) => {
     let id = req.params.id;
-    let request = await finalRequest.findByPk(id);
+    let request = await finalRequests.findByPk(id);
     if (!request) {
         res.sendStatus(404);
         return;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./requests.css"
+import "./adminrequests.css"
 import Request from '../components/request';
 import http from '../http';
 import Navbar from '../components/navbar';
@@ -7,7 +7,8 @@ import Navbar from '../components/navbar';
 function AdminRequests() {
     const [requests, setrequests] = useState([]);
     const getRequests = () => {
-        http.get('/requests').then((res) => {
+        http.get('/MyRequests').then((res) => {
+            
             setrequests(res.data);
         });
     };

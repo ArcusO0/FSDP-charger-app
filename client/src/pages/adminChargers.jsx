@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import "./charger.css"
+import "./admincharger.css"
 import Headerbox from '../components/Headerbox';
 
 import http from '../http';
@@ -8,7 +8,7 @@ import Navbar from '../components/navbar';
 function AdminCharger() {
     const [chargerdata, setchargerdata] = useState([]);
     const getChargers = () => {
-        http.get('/chargers').then((res) => {
+        http.get('/MyEVC').then((res) => {
             setchargerdata(res.data);
         });
     };
@@ -34,8 +34,8 @@ function AdminCharger() {
                     <tbody id="table-body">
 
                         {chargerdata.map((charger) => (
-                            <tr key={charger.id}>
-                                <td>{charger.id}</td>
+                            <tr key={charger.chargerId}>
+                                <td>{charger.chargerId}</td>
                                 <td>{charger.rating}</td>
                                 <td>{charger.address}</td>
                                 <td>{charger.name}</td>

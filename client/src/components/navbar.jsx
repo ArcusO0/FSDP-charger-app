@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './navbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook,faBolt,faGear,faQuestionCircle,faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBook,faPaperPlane,faGear,faQuestionCircle,faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
   return (
@@ -9,10 +9,12 @@ function Navbar() {
  
       
     <div className="navbar">
-      <img src="/logo.jpg" alt="" className='logo' />
+      <a href="/" >
+        <img src="/logo.jpg" alt="" className='logo' />
+      </a>
       <div className='navbar-header'>
-        <a href="/" className='book'><FontAwesomeIcon icon={faBook} /></a>
-        <a href="/requests" className='charger'><FontAwesomeIcon icon={faBolt}  /></a>
+        <a href="/adminhome" className='book'><FontAwesomeIcon icon={faBook} /></a>
+        <a href="/requests" className='charger'><FontAwesomeIcon icon={faPaperPlane}  /></a>
         <a href="/" className='settings'><FontAwesomeIcon icon={faGear}  /></a>
         <a href="/" className='about'><FontAwesomeIcon icon={faQuestionCircle} /></a>
         

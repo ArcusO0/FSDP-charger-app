@@ -12,12 +12,12 @@ app.get("/", (req, res) => {
 });
 
 // Routes
-const requests = require('./routes/requests');
-app.use("/requests", requests);
-const bookings = require('./routes/bookings');
-app.use("/bookings", bookings);
-const chargers = require('./routes/chargers');
-app.use("/chargers", chargers);
+const requestRoute = require("./routes/requests");
+const evcRoute = require("./routes/evc");
+const bookingRoute = require("./routes/booking");
+app.use('/MyRequests', requestRoute);
+app.use("/MyEVC", evcRoute);
+app.use("/MyBookings", bookingRoute);
 
 const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {

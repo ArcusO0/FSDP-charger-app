@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./bookings.css"
+import "./adminbookings.css"
 import Headerbox from '../components/Headerbox';
 
 import http from '../http';
@@ -8,7 +8,7 @@ import Navbar from '../components/navbar';
 function AdminBookings() {
     const [bookingdata, setbookingdata] = useState([]);
     const getBookings = () => {
-        http.get('/bookings').then((res) => {
+        http.get('/MyBookings').then((res) => {
             setbookingdata(res.data);
         });
     };
