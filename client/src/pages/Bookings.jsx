@@ -10,7 +10,11 @@ function Bookings() {
     const [bookingList, setBookingList] = useState([]);
     const [search, setSearch] = useState('');
 
-    
+    const MoveToOld = () => {
+        http.get('/booking').then((res) => {
+            setBookingList(res.data);
+        });
+    };
 
     const onSearchChange = (e) => {
         setSearch(e.target.value);
