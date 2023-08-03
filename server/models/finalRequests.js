@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const requests = sequelize.define("requests", {
+    const finalRequests = sequelize.define("finalRequests", {
         reqId: {
             type: DataTypes.STRING,
             allowNull: false
@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
+        rate: { // How much the EV Charger will charge the customers per hour
+            type: DataTypes.DECIMAL(4, 2),
+            allowNull: true
+        },
         status: {
             type: DataTypes.STRING,
             allowNull: false
@@ -23,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
         addOrDelete: {
             type: DataTypes.BOOLEAN,
             allowNull: false
-        }
+        },
+
     });
-    return requests;
+    return finalRequests;
 }

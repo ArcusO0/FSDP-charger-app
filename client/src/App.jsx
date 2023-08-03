@@ -17,8 +17,8 @@ function App() {
 
       <Container>
         <Routes>
-          <Route path={"/"} element={<AdminHome />} />
-          <Route path={"/home"} element={<HomePage/>} />
+          <Route path={"/"} element={<HomePage />} />
+          <Route path={"/adminhome"} element={<AdminHome/>} />
           <Route path={"/AdminCharger"} element={<AdminCharger />} />
           <Route path={"/AdminBookings"} element={<AdminBookings />} />
           <Route path={"/Requests"} element={<AdminRequests />} />
