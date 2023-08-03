@@ -18,6 +18,14 @@ import UpdateProfile from './pages/UpdateProfile';
 import LoginAdmin from './pages/LoginAdmin'
 import Navbaradmin from './pages/navbar/navbaradmin';
 import Navbarvendor from './pages/navbar/navbarvendor';
+import VendorAddEVCRequest from "./pages/VendorAddEVCRequest";
+import VendorBookings from './pages/VendorBookings';
+import VendorDashboard from './pages/VendorDashboard';
+import VendorEVCMap from './pages/VendorEVCMap';
+import VendorEVCMenu from './pages/VendorEVCMenu';
+import VendorRequests from './pages/VendorRequests';
+import VendorUpdateEVC from './pages/VendorUpdateEVC';
+
 
 
 function App() {
@@ -92,7 +100,15 @@ function App() {
           <Route path={"/updateprofile"} element={<UpdateProfile />} />
           <Route path={"/loginadmin"} element={<LoginAdmin />} />
           <Route path={"/navbaradmin"} element={<Navbaradmin/>} />
-          <Route path={"/navbarvendor"} element={<Navbarvendor/>} />
+          <Route path={"/navbarvendor"} element={<Navbarvendor />} />
+          <Route path={'/Dashboard'} element={<VendorDashboard />} />
+          <Route path={'/MyBookings'} element={<VendorBookings />} />
+          <Route path={'/MyRequests'} element={<VendorRequests />} />
+          <Route path={'/MyEVC'} element={<VendorEVCMap />} />
+          <Route path={"/MyEVC/Menu"} element={<VendorEVCMenu />} />
+          <Route path={"MyEVC/Menu/AddEVC"} element={<VendorAddEVCRequest />} />
+          <Route path={"/MyEVC/Menu/UpdateEVC"} element={<VendorUpdateEVC />} />
+
         </Routes>
       </Container>
     </Router>
