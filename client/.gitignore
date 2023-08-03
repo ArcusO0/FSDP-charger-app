@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+<<<<<<< HEAD
+=======
+.env
+>>>>>>> origin/Safwan
 
 # Editor directories and files
 .vscode/*

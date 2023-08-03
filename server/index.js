@@ -18,6 +18,11 @@ const bookingRoute = require("./routes/booking");
 app.use('/MyRequests', requestRoute);
 app.use("/MyEVC", evcRoute);
 app.use("/MyBookings", bookingRoute);
+const userRoute = require('./routes/user');
+app.use("/user", userRoute);
+
+const vendorRoute = require('./routes/vendor');
+app.use("/vendor", vendorRoute)
 
 const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {
