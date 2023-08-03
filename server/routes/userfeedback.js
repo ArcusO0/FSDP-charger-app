@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Feedback, Sequelize } = require('../models');
+const { UserFeedback, Sequelize } = require('../models');
 const yup = require("yup");
 
 router.post("/", async (req, res) => {

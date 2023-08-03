@@ -1,13 +1,13 @@
 import './App.css';
 import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Feedbacks from './pages/Feedbacks';
-import AddFeedback from './pages/AddFeedback';
-import EditFeedback from './pages/EditFeedback';
-import Status from './pages/Status';
-import AddBooking from './pages/AddBooking';
-import EditBooking from './pages/EditBooking';
-import Bookings from './pages/Bookings';
+import UserFeedbacks from './pages/UserFeedbacks';
+import AddUserFeedback from './pages/AddUserFeedback';
+import EditUserFeedback from './pages/EditUserFeedback';
+import UserStatus from './pages/UserStatus';
+import AddUserBooking from './pages/AddUserBooking';
+import EditUserBooking from './pages/EditUserBooking';
+import UserBookings from './pages/UserBookings';
 
 
 function App() {
@@ -30,14 +30,14 @@ function App() {
 
       <Container>
         <Routes>
-          <Route path={"/"} element={<Feedbacks />} />
-          <Route path={"/feedbacks"} element={<Feedbacks />} />
-          <Route path={"/addfeedback"} element={<AddFeedback />} />
-          <Route path={"/editfeedback/:id"} element={<EditFeedback />} />
-          <Route path={"/status"} element={<Status />} />
-          <Route path={"/addbooking"} element={<AddBooking />} />
-          <Route path={"/editbooking/:id"} element={<EditBooking />} />
-          <Route path={"/bookings"} element={<Bookings />} />
+          <Route path={"/"} element={<UserFeedbacks />} />
+          <Route path={"/feedbacks"} element={<UserFeedbacks />} />
+          <Route path={"/addfeedback"} element={<AddUserFeedback />} />
+          <Route path={"/editfeedback/:id"} element={<EditUserFeedback />} />
+          <Route path={"/status"} element={<UserStatus/>} />
+          <Route path={"/addbooking"} element={<AddUserBooking />} />
+          <Route path={"/editbooking/:id"} element={<EditUserBooking />} />
+          <Route path={"/bookings"} element={<UserBookings />} />
         </Routes>
       </Container>
     </Router>

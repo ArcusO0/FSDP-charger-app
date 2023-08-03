@@ -8,7 +8,7 @@ import global from '../global';
 import { useCountdown } from '../hooks/useCountdown';
 import DateTimeDisplay from './DateTimeDisplay';
 
-function Status() {
+function UserStatus() {
     const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
     const NOW_IN_MS = new Date().getTime();
 
@@ -67,4 +67,4 @@ function Status() {
       );
 }
 
-export default Status;
+export default UserStatus;

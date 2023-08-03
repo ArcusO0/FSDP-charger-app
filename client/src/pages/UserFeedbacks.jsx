@@ -6,7 +6,7 @@ import http from '../http';
 import dayjs from 'dayjs';
 import global from '../global';
 
-function Feedbacks() {
+function UserFeedbacks() {
     const [feedbackList, setFeedbackList] = useState([]);
     const [search, setSearch] = useState('');
 
@@ -109,4 +109,4 @@ function Feedbacks() {
     );
 }
 
-export default Feedbacks;
+export default UserFeedbacks;

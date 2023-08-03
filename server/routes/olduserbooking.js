@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Booking, Sequelize } = require('../models');
+const { OldUserBooking, Sequelize } = require('../models');
 const yup = require("yup");
 
 router.post("/", async (req, res) => {
@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
     data.license = data.license.trim();
     data.hours = data.hours;
     data.arrival = data.arrival;
-    let result = await Booking.create(data);
+    let result = await OldBooking.create(data);
     res.json(result);
 });
 
@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
         ];
     }
 
-    let list = await Booking.findAll({
+    let list = await OldBooking.findAll({
         where: condition,
         order: [['createdAt', 'DESC']]
     });
@@ -50,20 +50,20 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     let id = req.params.id;
-    let booking = await Booking.findByPk(id);
+    let oldbooking = await OldBooking.findByPk(id);
     // Check id not found
-    if (!booking) {
+    if (!oldbooking) {
         res.sendStatus(404);
         return;
     }
-    res.json(booking);
+    res.json(oldbooking);
 });
 
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let booking = await Booking.findByPk(id);
-    if (!booking) {
+    let oldbooking = await OldBooking.findByPk(id);
+    if (!oldbooking) {
         res.sendStatus(404);
         return;
     }
@@ -89,7 +89,7 @@ router.put("/:id", async (req, res) => {
     data.license = data.license.trim();
     data.hours = data.hours.trim();
     data.arrival = data.arrival.trim();
-    let num = await Booking.update(data, {
+    let num = await OldBooking.update(data, {
         where: { id: id }
     });
     if (num == 1) {
@@ -107,13 +107,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let booking = await Booking.findByPk(id);
-    if (!booking) {
+    let oldbooking = await OldBooking.findByPk(id);
+    if (!oldbooking) {
         res.sendStatus(404);
         return;
     }
 
-    let num = await Booking.destroy({
+    let num = await OldBooking.destroy({
         where: { id: id }
     })
     if (num == 1) {

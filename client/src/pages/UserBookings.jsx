@@ -6,7 +6,7 @@ import http from '../http';
 import dayjs from 'dayjs';
 import global from '../global';
 
-function Bookings() {
+function UserBookings() {
     const [bookingList, setBookingList] = useState([]);
     const [search, setSearch] = useState('');
 
@@ -15,6 +15,10 @@ function Bookings() {
             setBookingList(res.data);
         });
     };
+
+    const onClickRefresh = () => {
+        MoveToOld();
+    }
 
     const onSearchChange = (e) => {
         setSearch(e.target.value);
@@ -69,7 +73,13 @@ function Bookings() {
                     onClick={onClickClear}>
                     <Clear />
                 </IconButton>
-                <Box sx={{ flexGrow: 1 }} />
+                
+                <Box sx={{ flexGrow: 1}} />
+                <Button variant='contained'
+                    onClick={onClickRefresh}>
+                    Refresh
+                </Button>
+                <Box sx={{ pr: 20}} />
                 <Link to="/addbooking" style={{ textDecoration: 'none' }}>
                     <Button variant='contained'>
                         Book A Charger
@@ -117,10 +127,63 @@ function Bookings() {
                     })
                 }
             </Grid>
+            <Typography variant="h5" sx={{ my: 2 }}>
+                Old Bookings
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Input value={search} placeholder="Search"
+                    onChange={onSearchChange}
+                    onKeyDown={onSearchKeyDown} />
+                <IconButton color="primary"
+                    onClick={onClickSearch}>
+                    <Search />
+                </IconButton>
+                <IconButton color="primary"
+                    onClick={onClickClear}>
+                    <Clear />
+                </IconButton>
+                <Box sx={{ flexGrow: 1 }} />
+            </Box>
+
+            <Grid container spacing={2}>
+                {
+                    bookingList.map((oldbooking, i) => {
+                        return (
+                            <Grid item xs={12} md={6} lg={4} key={oldbooking.id}>
+                                <Card>
+                                    <CardContent>
+                                        <Box sx={{ display: 'flex', mb: 1 }}>
+                                            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                                                {oldbooking.email}
+                                            </Typography>
+                                        </Box>
+                                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}
+                                            color="text.secondary">
+                                            <AccessTime sx={{ mr: 1 }} />
+                                            <Typography>
+                                                {dayjs(oldbooking.createdAt).format(global.datetimeFormat)}
+                                            </Typography>
+                                        </Box>
+                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                            {oldbooking.license}
+                                        </Typography>
+                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                            {oldbooking.hours}
+                                        </Typography>
+                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                            {oldbooking.arrival}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        );
+                    })
+                }
+            </Grid>
         </Box>
         
         
     );
 }
 
-export default Bookings;
+export default UserBookings;

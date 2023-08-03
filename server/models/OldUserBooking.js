@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Booking = sequelize.define("Booking", {
+    const OldUserBooking = sequelize.define("OldBooking", {
         email: {
             type: DataTypes.STRING,
             allowNull: false
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         hours: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         arrival: {
@@ -17,5 +17,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
     });
-    return Booking;
+    return OldUserBooking;
 }

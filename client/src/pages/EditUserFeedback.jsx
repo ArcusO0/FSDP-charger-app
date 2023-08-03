@@ -1,18 +1,29 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, TextField, Button } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import http from '../http';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import http from '../http';
 
-function AddFeedback() {
+function EditUserFeedback() {
+    const { id } = useParams();
     const navigate = useNavigate();
 
+    const [feedback, setFeedback] = useState({
+        title: "",
+        description: ""
+    });
+
+    useEffect(() => {
+        http.get(`/feedback/${id}`).then((res) => {
+            setFeedback(res.data);
+        });
+    }, []);
+
     const formik = useFormik({
-        initialValues: {
-            title: "",
-            description: ""
-        },
+        initialValues: feedback,
+        enableReinitialize: true,
         validationSchema: yup.object().shape({
             title: yup.string().trim()
                 .min(3, 'Title must be at least 3 characters')
@@ -26,7 +37,7 @@ function AddFeedback() {
         onSubmit: (data) => {
             data.title = data.title.trim();
             data.description = data.description.trim();
-            http.post("/feedback", data)
+            http.put(`/feedback/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
                     navigate("/feedbacks");
@@ -34,10 +45,28 @@ function AddFeedback() {
         }
     });
 
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const deleteFeedback = () => {
+        http.delete(`/feedback/${id}`)
+            .then((res) => {
+                console.log(res.data);
+                navigate("/feedbacks");
+            });
+    }
+
     return (
         <Box>
             <Typography variant="h5" sx={{ my: 2 }}>
-                Add Feedback
+                Edit Feedback
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
                 <TextField
@@ -61,12 +90,37 @@ function AddFeedback() {
                 />
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">
-                        Add
+                        Update
+                    </Button>
+                    <Button variant="contained" sx={{ ml: 2 }} color="error"
+                        onClick={handleOpen}>
+                        Delete
                     </Button>
                 </Box>
             </Box>
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>
+                    Delete Feedback
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this feedback?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="inherit"
+                        onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" color="error"
+                        onClick={deleteFeedback}>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
 
-export default AddFeedback;
+export default EditUserFeedback;

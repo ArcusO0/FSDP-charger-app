@@ -9,18 +9,26 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 
-
-function AddBooking() {
+function EditUserBooking() {
+    const { id } = useParams();
     const navigate = useNavigate();
 
-    const formik = useFormik({
-        initialValues: {
-            email:"",
-            license:"",
-            hours:"",
-            arrival:dayjs()
+    const [booking, setBooking] = useState({
+        email:"",
+        license:"",
+        hours:"",
+        arrival:dayjs()
+    });
 
-        },
+    useEffect(() => {
+        http.get(`/booking/${id}`).then((res) => {
+            setBooking(res.data);
+        });
+    }, []);
+
+    const formik = useFormik({
+        initialValues: booking,
+        enableReinitialize: true,
         validationSchema: yup.object().shape({
             email: yup.string().trim()
                 .min(3, 'email is too short')
@@ -44,7 +52,7 @@ function AddBooking() {
             data.license = data.license.trim();
             data.hours = data.hours;
             data.arrival = data.arrival;
-            http.post("/booking", data)
+            http.put(`/booking/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
                     navigate("/bookings");
@@ -52,15 +60,32 @@ function AddBooking() {
         }
     });
 
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const deleteBooking = () => {
+        http.delete(`/booking/${id}`)
+            .then((res) => {
+                console.log(res.data);
+                navigate("/bookings");
+            });
+    }
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box>
             <Typography variant="h5" sx={{ my: 2 }}>
-                Add Booking
+                Edit Booking
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
-                
-                <TextField
+            <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="Email"
                     name="email"
@@ -101,13 +126,38 @@ function AddBooking() {
                 />
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">
-                        Add
+                        Update
+                    </Button>
+                    <Button variant="contained" sx={{ ml: 2 }} color="error"
+                        onClick={handleOpen}>
+                        Delete
                     </Button>
                 </Box>
             </Box>
+
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>
+                    Delete Booking
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete this booking?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button variant="contained" color="inherit"
+                        onClick={handleClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="contained" color="error"
+                        onClick={deleteBooking}>
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
         </LocalizationProvider>
     );
 }
 
-export default AddBooking;
+export default EditUserBooking;
