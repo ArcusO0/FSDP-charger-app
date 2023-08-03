@@ -10,7 +10,7 @@ import backgroundImage from './vendorbg.jpeg';
 import Navbarvendor from './navbar/navbarvendor';
 
 
-function Register() {
+function Registervendor() {
     const navigate = useNavigate();
 
     const formik = useFormik({
@@ -42,7 +42,7 @@ function Register() {
             data.name = data.name.trim();
             data.email = data.email.trim().toLowerCase();
             data.password = data.password.trim();
-            http.post("/user/register", data)
+            http.post("/vendor/register", data)
                 .then((res) => {
                     console.log(res.data);
                     navigate("/login");
@@ -134,4 +134,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default Registervendor;

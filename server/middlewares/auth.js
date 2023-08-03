@@ -10,6 +10,7 @@ const validateToken = (req, res, next) => {
 
         const payload = verify(accessToken, process.env.APP_SECRET);
         req.user = payload;
+        req.vendor = payload;
         return next();
     }
     catch (err) {

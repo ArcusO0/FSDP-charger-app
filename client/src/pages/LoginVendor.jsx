@@ -10,7 +10,7 @@ import backgroundImage from './vendorbg.jpeg';
 import Navbarvendor from './navbar/navbarvendor';
 
 
-function Login() {
+function Loginvendor() {
     const navigate = useNavigate();
     const [rememberMe, setRememberMe] = useState(false);
 
@@ -33,7 +33,7 @@ function Login() {
         onSubmit: (data) => {
             data.name = data.name.trim()
             data.password = data.password.trim();
-            http.post("/user/login", data)
+            http.post("/vendor/login", data)
                 .then((res) => {
                     localStorage.setItem("accessToken", res.data.accessToken);
                     navigate("/");
@@ -124,4 +124,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Loginvendor;
