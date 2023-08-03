@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const EVC = sequelize.define("EVC", {
+    const finalEVC = sequelize.define("finalEVC", {
         vendorId: {
             type: DataTypes.STRING,
             allowNull: false
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        rate: {
+        bookingRate: {
             type: DataTypes.DECIMAL(4,2),
             allowNull: false
         },
@@ -31,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         status: {
             type: DataTypes.STRING,
             allowNull: true
+        },
+        noOfBookings: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     });
-    return EVC;
+    return finalEVC;
 }

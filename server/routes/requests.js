@@ -1,4 +1,4 @@
-const { Request, Sequelize } = require("../models"); 
+const { finalRequest, Sequelize } = require("../models"); 
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -7,7 +7,8 @@ const yup = require("yup");
 router.post("/addRequest", async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        type: yup.string().oneOf(['Add', 'Delete']).required(),
+        reqId: yup.string().min(0).required(),
+        addOrDelete: yup.boolean().required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
         rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{2}$/)),
@@ -23,10 +24,14 @@ router.post("/addRequest", async (req, res) => {
         res.status(400).json({errors: err.errors});
         return;
     }
-    data.type = data.type.trim();
+    data.reqId = data.reqId.trim();
     data.name = data.name.trim();
     data.status = data.status.trim();
-    let result = await Request.create(data);
+    data.address = data.address.trim();
+    if (description) {
+        data.description = data.description.trim
+    }
+    let result = await finalRequest.create(data);
     res.json(result);
 });
 
@@ -41,7 +46,7 @@ router.get("/", async (req, res) => {
             {status: {[Sequelize.Op.like]: `${search}%`}}
         ];
     }
-    let list = await Request.findAll({
+    let list = await finalRequest.findAll({
         where: condition,
         order: [['id', 'ASC']]
     });
@@ -51,7 +56,7 @@ router.get("/", async (req, res) => {
 // Get by ID 
 router.get("/:id", async (req, res) => {
     let id = req.params.id;
-    let request = await Request.findByPk(id);
+    let request = await finalRequest.findByPk(id);
     if (!request) {
         res.sendStatus(404);
         return;
