@@ -1,0 +1,34 @@
+.overlay {
+    position: absolute;
+    background-color: black;
+    border: 1px solid white;
+    padding: 8% 20% 10%;
+    top: 20%;
+    left: 25%;
+}
+
+.exit {
+    position: absolute;
+    top: 8%;
+    left: 5%;
+}
+
+@media (prefers-color-scheme:light) {
+    .overlay {
+        background-color: white;
+        border: 1px solid black;
+    }
+}
+
+.accept,
+.deny {
+    width: 100%;
+}
+
+.accept {
+    color: lime;
+}
+
+.deny {
+    color: red;
+}

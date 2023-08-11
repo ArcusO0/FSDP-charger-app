@@ -11,7 +11,7 @@ router.post("/addRequest", async(req, res) => {
         addOrDelete: yup.boolean().required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
-        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{2}$/)),
+        rate: yup.number().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{2}$/)),
         description: yup.string().trim().min(3).max(500),
         status: yup.string().oneOf(["Pending", "Approved", "Rejected"]).required()
     });
@@ -26,8 +26,8 @@ router.post("/addRequest", async(req, res) => {
     data.name = data.name.trim();
     data.status = data.status.trim();
     data.address = data.address.trim();
-    if (description) {
-        data.description = data.description.trim
+    if (data.description) {
+        data.description = data.description.trim();
     }
     let result = await finalRequests.create(data);
     res.json(result);
@@ -121,6 +121,48 @@ router.put("/updateRequest/:id", async(req, res) => {
         })
     }
 });
+router.put("/updateRequest/accept/:id", async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const request = await finalRequests.findByPk(id);
+
+        if (!request) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+
+        // Update the status field to "Accepted"
+        request.status = 'Accepted';
+        await request.save();
+
+        return res.status(200).json({ message: 'Request status updated to Accepted' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while updating the request status' });
+    }
+});
+
+router.put("/updateRequest/reject/:id", async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const request = await finalRequests.findByPk(id);
+
+        if (!request) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+
+        // Update the status field to "Accepted"
+        request.status = 'Rejected';
+        await request.save();
+
+        return res.status(200).json({ message: 'Request status updated to Accepted' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while updating the request status' });
+    }
+});
+
 
 // Delete Requests 
 router.delete("/deleteRequest/:id", async(req, res) => {
