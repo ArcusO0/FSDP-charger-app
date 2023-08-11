@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const finalRequests = sequelize.define("finalRequests", {
-        reqId: {
+        type: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -27,8 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         addOrDelete: {
             type: DataTypes.BOOLEAN,
             allowNull: false
-        },
-
+        } 
     });
     return finalRequests;
 }
