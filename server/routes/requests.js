@@ -1,4 +1,4 @@
-const { finalRequests, Sequelize } = require("../models"); 
+const { finalRequest, Sequelize } = require("../models"); 
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
