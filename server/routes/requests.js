@@ -1,4 +1,4 @@
-const { Request, Sequelize } = require("../models"); 
+const { finalRequests, Sequelize } = require("../models"); 
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -7,10 +7,11 @@ const yup = require("yup");
 router.post("/addRequest", async (req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        type: yup.string().oneOf(['Add', 'Delete']).required(),
+        addOrDelete: yup.boolean(),
+        type: yup.string().oneOf(["Add", "Delete"]).required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
-        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{2}$/)),
+        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d*$/)),
         description: yup.string().trim().min(3).max(500),
         status: yup.string().oneOf(["Pending", "Approved", "Rejected"]).required()
     });
@@ -23,10 +24,13 @@ router.post("/addRequest", async (req, res) => {
         res.status(400).json({errors: err.errors});
         return;
     }
-    data.type = data.type.trim();
     data.name = data.name.trim();
     data.status = data.status.trim();
-    let result = await Request.create(data);
+    data.address = data.address.trim();
+    if (data.description) {
+        data.description = data.description.trim()
+    }
+    let result = await finalRequests.create(data);
     res.json(result);
 });
 
@@ -41,7 +45,7 @@ router.get("/", async (req, res) => {
             {status: {[Sequelize.Op.like]: `${search}%`}}
         ];
     }
-    let list = await Request.findAll({
+    let list = await finalRequests.findAll({
         where: condition,
         order: [['id', 'ASC']]
     });
@@ -51,7 +55,7 @@ router.get("/", async (req, res) => {
 // Get by ID 
 router.get("/:id", async (req, res) => {
     let id = req.params.id;
-    let request = await Request.findByPk(id);
+    let request = await finalRequests.findByPk(id);
     if (!request) {
         res.sendStatus(404);
         return;
@@ -59,30 +63,21 @@ router.get("/:id", async (req, res) => {
     res.json(request);
 });
 
-// Get by Type of Request
-router.get("/:type", async (req, res) => {
-    let type = req.params.type;
-    let request = await Request.findAll(type);
-    if(!request) {
-        res.sendStatus(404);
-        return;
-    }
-});
-
 // Update Requests using Put
 router.put("/updateRequest/:id", async (req, res) => {
     let id = req.params.id;
-    let request = await Request.findByPk(id);
+    let request = await finalRequests.findByPk(id);
     if(!request){
         res.sendStatus(404);
         return;
     }
     let data = req.body;
     let validationSchema = yup.object().shape({
-        type: yup.string().trim().min(3).max(100).required(),
-        name: yup.string().trim().min(3).max(100).required(),
-        status: yup.string().trim().min(3).max(100).required(),
-        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)),
+        type: yup.string().trim().min(3).max(100),
+        name: yup.string().trim().min(3).max(100),
+        address: yup.string().trim().min(3).max(200),
+        description: yup.string().trim().min(3).max(500),
+        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d*$/) ),
     });
     try {
         await validationSchema.validate(data, 
@@ -93,10 +88,7 @@ router.put("/updateRequest/:id", async (req, res) => {
         res.status(400).json({errors: err.errors});
         return;
     }
-    data.type = data.type.trim();
-    data.name = data.name.trim();
-    data.status = data.status.trim();
-    let num = await Request.update(data, {where: {id:id}});
+    let num = await finalRequests.update(data, {where: {id:id}});
     if (num == 1){
         res.json({
             message: "Request was updated successfully."
@@ -112,7 +104,7 @@ router.put("/updateRequest/:id", async (req, res) => {
 // Delete Requests 
 router.delete("/deleteRequest/:id", async (req, res) => {
     let id = req.params.id;
-    let num = await Request.destroy({ where: {id:id}})
+    let num = await finalRequests.destroy({ where: {id:id}})
     if (num == 1) {
         res.json({message: "Request was deleted successfully."});
     }

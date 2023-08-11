@@ -24,7 +24,7 @@ function Sidebar() {
                 </Toolbar> 
                 <List sx={{maxHeight: "80%"}}>
                     <ListItem sx={{ color: "#137AE1" }}>
-                        <Link href={'/'}>
+                        <Link href={'/Dashboard'}>
                             <ListItemButton>
                                 <GridViewSharp/>
                             </ListItemButton>

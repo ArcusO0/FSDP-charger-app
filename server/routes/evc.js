@@ -1,4 +1,4 @@
-const { EVC, Sequelize } = require("../models"); 
+const { finalEVC, Sequelize } = require("../models"); 
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -14,7 +14,8 @@ router.post("/addEVC", async (req, res) => {
         address: yup.string().trim().min(3).max(500).required(),
         rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)).required(),
         rating: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 1 decimal place', (value) => (value+"").match(/^\d*\.{1}\d?$/)).required(),
-        status: yup.string().oneOf(["Good", "Poor", "Critical"]).required()
+        status: yup.string().oneOf(["Good", "Poor", "Critical"]).required(),
+        noOfBookings: yup.number().min(0).required()
     });
     try{
         await validationSchema.validate(data, {
@@ -40,7 +41,7 @@ router.post("/addEVC", async (req, res) => {
 
 // Get EVC Information (with Search)
 router.get("/", async (req, res)=> {
-    let list = await EVC.findAll({
+    let list = await finalEVC.findAll({
         order: [['id',"ASC"]]
     });
     res.json(list)
@@ -49,7 +50,7 @@ router.get("/", async (req, res)=> {
 // Get EVC by ID
 router.get("/:id", async (req, res)=> {
     let id = req.params.id;
-    let evc = await EVC.findByPk(id);
+    let evc = await finalEVC.findByPk(id);
     if (!evc) {
         res.sendStatus(404);
         return;
@@ -59,13 +60,13 @@ router.get("/:id", async (req, res)=> {
 // Update EVC Info
 router.put("/updateEVC/:id", async (req, res) => {
     let id = req.params.id;
-    let evc = await EVC.findByPk(id);
+    let evc = await finalEVC.findByPk(id);
     if (!evc) {
         res.sendStatus(404);
         return;
     }
     let data = req.body;
-    let num = await EVC.update(data, {where: {id: id}});
+    let num = await finalEVC.update(data, {where: {id: id}});
     if (num == 1){
         res.json({
             message: "EVC Info was updated successfully."

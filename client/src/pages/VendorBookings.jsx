@@ -69,6 +69,9 @@ TablePaginationActions.propTypes = {
 };
 
 function ConvertDateString(str) {
+  if (str == null) {
+    return "No Date Recorded";
+  }
   const DateObj = new Date(str);
   const displayDate = DateObj.toDateString().slice(4);
   return displayDate;
@@ -143,7 +146,7 @@ function MyBookings() {
                   <TableCell>{booking.bookingId}</TableCell>
                   <TableCell>{booking.customerId}</TableCell>
                   <TableCell>{booking.evcId}</TableCell>
-                  <TableCell>{ConvertDateString(booking.bookingDateTime)}</TableCell>
+                  <TableCell>{ConvertDateString(booking.createdAt)}</TableCell>
                   <TableCell>{booking.bookingPrice}</TableCell>
                 </TableRow>
               ))}

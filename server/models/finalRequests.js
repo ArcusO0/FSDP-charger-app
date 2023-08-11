@@ -1,29 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
-    const Request = sequelize.define("Request", {
-        type: { // "Add" or "Delete"
+    const finalRequests = sequelize.define("finalRequests", {
+        type: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        name: { // EV Charger Name
-            type: DataTypes.STRING,
+        name: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
         address: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
-            allowNull: true
+            type: DataTypes.TEXT,
+            allowNull: false
         },
         rate: { // How much the EV Charger will charge the customers per hour
             type: DataTypes.DECIMAL(4,2),
             allowNull: true
         },
-        status: { // EVC Request Status
+        status: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        addOrDelete: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        } 
     });
-    return Request;
+    return finalRequests;
 }

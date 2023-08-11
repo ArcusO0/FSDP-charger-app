@@ -16,6 +16,12 @@ function AddEVC() {
         typography: {
             fontFamily: ["Verdana", "Inter", 'Helvetica'].join(','),
         },
+        palette: {
+            defButton: {
+              main: "#9BB1C3",
+              contrastText: "#FFFFFF"
+            }
+        }
     });
 
     const sidebar = Sidebar();
@@ -23,11 +29,13 @@ function AddEVC() {
     const formik = useFormik({
         initialValues: {
             type: "Add",
+            addOrDelete: true,
             name: "",
             address: "",
             rate: "",
             description: "",
-            status: "Pending"
+            status: "Pending",
+            noOfBookings: 0
         },
         validationSchema: yup.object().shape({
             name: yup.string().trim()
@@ -50,9 +58,7 @@ function AddEVC() {
         onSubmit: (data) => {
             data.name = data.name.trim();
             data.address = data.address.trim();
-            if (data.description) {
-                data.description = data.description.trim();
-            }
+            
             console.log(data)
             http.post("/MyRequests/addRequest", data)
             .then((res) => {
@@ -126,7 +132,7 @@ function AddEVC() {
                 sx={{minWidth: "90%"}}/>
              </Grid>
              <Box sx={{mt: 5}}>
-                <Button variant="contained" type="submit" sx={{px:5, py: 1, bgcolor: "#9BB1C3"}} anchor="bottom">
+                <Button variant="contained" type="submit" sx={{px:5, py: 1 }} anchor="bottom" color="defButton">
                     Submit
                 </Button>
              </Box>

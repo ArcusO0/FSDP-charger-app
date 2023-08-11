@@ -31,9 +31,42 @@ function Dashboard() {
     });
   }, []);
 
-  const count = bookingList.length;
-  const commissionSum = bookingList.map(attr => parseFloat(attr.bookingPrice)).reduce((sum, val) => sum + val, 0);
+  const initialCount = bookingList.length;
 
+  function perDay() {
+    const count = bookingList.filter((booking) => new Date(booking.createdAt) == DateObj).length;
+    return count;
+  }
+
+  function perMonth() {
+    const startDate = new Date();
+    startDate.setDate(DateObj.getDate() - 30);
+    console.log(startDate);
+    const count = bookingList.filter((booking) => new Date(booking.createdAt) > startDate).length;
+    return count
+  }
+
+  function perYear() {
+    const startDate = new Date();
+    startDate.setFullYear(DateObj.getFullYear() - 1);
+    console.log(startDate);
+    const count = bookingList.filter((booking) => new Date(booking.createdAt) > startDate).length;
+    return count
+  }
+
+  function changeCount(newCount) {
+    var count = document.getElementById("bookingCount");
+    if (count.innerHTML != initialCount) {
+      count.innerHTML = initialCount;
+    }
+    else {
+      count.innerHTML = newCount;
+    }
+  }
+  
+  const commissionSum = bookingList.map(attr => parseFloat(attr.bookingPrice)).reduce((sum, val) => sum + val, 0);
+  
+  
   // Get EVC information from db 
   const [evcList, setEVCList] = useState([]);
 
@@ -46,17 +79,24 @@ function Dashboard() {
 
   function calcStatusPercent(status) {
     const statusCount = evcList.filter((evc) => evc.status == status).length;
-    const percent = statusCount / evcList.length;
-    return percent * 100;
+    const percent = (statusCount / evcList.length) * 100;
+    if (!percent) {
+      return 0;
+    }
+    return percent.toFixed(1);
   }
 
   function calcAvgRating() { 
     const sumRatingList = evcList.map((evc) => parseFloat(evc.rating)).reduce((sum, val) => sum + val, 0);
     const evcListCount = evcList.length;
     const avgRating = sumRatingList / evcListCount;
-
-    return avgRating;
+    if (!avgRating) {
+      return 0
+    }
+    return avgRating.toFixed(2);
   }
+
+ 
 
   return (
     <ThemeProvider theme={theme}>
@@ -73,18 +113,20 @@ function Dashboard() {
               </Typography>
             </Card>
           </Grid>
-          <Grid item xs={6} onClick={() => navigate("/MyBookings")}>
+          <Grid item xs={6}>
             <Card sx={{textAlign:"center", border:"1px solid black", width: "100%"}}>
-              <Typography variant="h3" sx={{pt: 5, fontWeight: "bold"}}>
-                {count}
-              </Typography>
-              <Typography variant="h3" sx={{pb: 5, fontWeight: "bold"}}>
-                Bookings
-              </Typography>
+              <Box onClick={() => navigate("/MyBookings")}>
+                <Typography variant="h3" id="bookingCount" sx={{pt: 5, fontWeight: "bold"}}>
+                  {initialCount}
+                </Typography>
+                <Typography variant="h3" sx={{pb: 5, fontWeight: "bold"}}>
+                  Bookings
+                </Typography>
+              </Box>
               <Box sx={{float:"right", p:0, mt:-4}}>
-                <Button sx={{p:0, pb: 1}}>D</Button>
-                <Button sx={{p:0, pb: 1}}>M</Button>
-                <Button sx={{p:0, pb: 1}}>Y</Button>
+                <Button id="D" sx={{p:0, pb: 1}} onClick={() => changeCount(perDay())}>D</Button>
+                <Button id="M" sx={{p:0, pb: 1}} onClick={() => changeCount(perMonth())}>M</Button>
+                <Button id="Y" sx={{p:0, pb: 1}} onClick={() => changeCount(perYear())}>Y</Button>
               </Box>
             </Card>
           </Grid>
