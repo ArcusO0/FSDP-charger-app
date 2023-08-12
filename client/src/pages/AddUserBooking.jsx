@@ -15,19 +15,33 @@ function AddUserBooking() {
 
     const formik = useFormik({
         initialValues: {
-            email:"",
-            license:"",
-            hours:"",
-            arrival:dayjs()
+            vendorID:"TBA",
+            bookingID:"TBA",
+            customerID:"TBA",
+            evcID:"TBA",
+            bookingPrice:0.00,
+            duration:1,
+            arrivaltime:dayjs()
 
         },
         validationSchema: yup.object().shape({
-            email: yup.string().trim()
-                .min(3, 'email is too short')
-                .max(320, 'email is too long')
-                .email("Invalid Email")
-                .required('Email is required'),
-            license: yup.string().trim()
+            vendorID: yup.string().trim()
+                .min(5, 'License plate must be at least 5 characters')
+                .max(10, 'License plate must be at most 10 characters')
+                .required('License plate is required'),
+            bookingID: yup.string().trim()
+                .min(5, 'License plate must be at least 5 characters')
+                .max(10, 'License plate must be at most 10 characters')
+                .required('License plate is required'),
+            customerID: yup.string().trim()
+                .min(5, 'License plate must be at least 5 characters')
+                .max(10, 'License plate must be at most 10 characters')
+                .required('License plate is required'),
+            evcID: yup.string().trim()
+                .min(5, 'License plate must be at least 5 characters')
+                .max(10, 'License plate must be at most 10 characters')
+                .required('License plate is required'),
+            bookingPrice: yup.string().trim()
                 .min(5, 'License plate must be at least 5 characters')
                 .max(10, 'License plate must be at most 10 characters')
                 .required('License plate is required'),
@@ -40,8 +54,11 @@ function AddUserBooking() {
                 .required('Time of arrival is required'),
         }),
         onSubmit: (data) => {
-            data.email = data.email.trim();
-            data.license = data.license.trim();
+            data.vendorID = data.email.trim();
+            data.bookingID = data.license.trim();
+            data.customerID = data.license.trim();
+            data.evcID = data.license.trim();
+            data.bookingPrice = data.license.trim();
             data.hours = data.hours;
             data.arrival = data.arrival;
             http.post("/userbooking", data)
@@ -62,8 +79,8 @@ function AddUserBooking() {
                 
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="Email"
-                    name="email"
+                    label="VendorID"
+                    name="vendorID"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
@@ -71,12 +88,39 @@ function AddUserBooking() {
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="License"
-                    name="license"
+                    label="BookingID"
+                    name="bookingID"
                     value={formik.values.license}
                     onChange={formik.handleChange}
                     error={formik.touched.license && Boolean(formik.errors.license)}
                     helperText={formik.touched.license && formik.errors.license}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="CustomerID"
+                    name="customerID"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="EvcID"
+                    name="evcID"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="BookingPrice"
+                    name="bookingPrice"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"

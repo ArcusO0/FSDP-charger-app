@@ -1,9 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const Booking = sequelize.define("Booking", {
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
         vendorID: {
             type: DataTypes.STRING,
             allowNull: false
@@ -20,12 +16,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        bookingID: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        license: {
-            type: DataTypes.TEXT,
+        bookingPrice: {
+            type: DataTypes.DECIMAL(4,2),
             allowNull: false
         },
         duration: {
