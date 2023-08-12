@@ -27,14 +27,15 @@ function AdminRequests() {
         http.get('/MyRequests').then((res) => {
 
             setrequests(res.data);
+            console.log(res.data)
         });
     };
     useEffect(() => {
         getRequests();
     }, []);
     const onlypending = requests.filter((request) => request.status == "Pending");
-    const addRequests = onlypending.filter((request) => request.addOrDelete);
-    const deleteRequests = onlypending.filter((request) => !request.addOrDelete);
+    const addRequests = requests.filter((request) => request.addOrDelete);
+    const deleteRequests = requests.filter((request) => !request.addOrDelete);
     return (
         <div className='pageContainer'>
 
@@ -43,18 +44,18 @@ function AdminRequests() {
             <h1 className='requestsTitle'>Pending Requests</h1>
             
             
-            <h2>"Add Requests"</h2>
-            <h2 className='deltitle'>"Delete Requests"</h2>
+            <h2>"Add Charger Requests"</h2>
+            <h2 className='deltitle'>"Delete Charger Requests"</h2>
             <div className='addRequestsContainer'>
                 
                 {addRequests.map((request) => (
-                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} />
+                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate} />
                 ))}
             </div>
             
             <div className='deleteRequestsContainer'>
                 {deleteRequests.map((request) => (
-                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} />
+                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate}/>
                 ))}
 
             </div>
@@ -67,6 +68,7 @@ function AdminRequests() {
                 address={infoData.address}
                 description={infoData.description}
                 addOrDelete={infoData.addOrDelete}
+                bookingRate={infoData.rate}
             />
             
             

@@ -18,7 +18,7 @@ h2 {
 }
 
 .deltitle {
-    margin-left: 25%;
+    margin-left: 10%;
     margin-right: 10%
 }
 
@@ -52,13 +52,13 @@ h2 {
 
 @media(max-width:900px) {
     .deltitle {
-        margin-left: 19%;
+        margin-left: 5%;
     }
 }
 
 @media(max-width:780px) {
     .deltitle {
-        margin-left: 14%;
+        margin-left: 3%;
         margin-right: 0;
     }
 }

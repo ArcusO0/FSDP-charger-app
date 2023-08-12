@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     });
     FinalBooking.associate = (models) => {
         FinalBooking.belongsTo(models.FinalEVC, {
-            foreignKey: "chargerId",
-            as: 'charger'
+            foreignKey: "evcId",
+            targetKey: "chargerId"
         });
     };
 

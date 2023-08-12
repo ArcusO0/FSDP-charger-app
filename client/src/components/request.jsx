@@ -4,14 +4,30 @@ import http from '../http';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo ,faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Request = ({ id, name, status, reqId, toggleInfoshow, address, description,addOrDelete }) => {
+const Request = ({ id, name, status, reqId, toggleInfoshow, address, description, addOrDelete, bookingRate }) => {
+    
+    const requestdata = {
+        vendorId:reqId,
+        chargerId: reqId,
+        name: name,
+        description: description,
+        address: address,
+        bookingRate: bookingRate,
+        rating: "0.0",
+        status: "Good",
+        noOfBookings: 0
+    };
     const acceptrequest = () => {
         http.put(`/MyRequests/updateRequest/accept/${id}`).then((res) => {
             if (!addOrDelete) {
                 http.delete(`/MyEVC/${id}`)
             }
-            location.reload();
-            
+            else {
+                http.post(`/MyEVC/AddEVC`, requestdata)
+                console.log("added")
+            }
+            location.reload(requestdata);
+
         });
     };
     const rejectrequest = () => {
@@ -26,6 +42,7 @@ const Request = ({ id, name, status, reqId, toggleInfoshow, address, description
             name: name,
             address: address,
             description: description,
+            bookingRate: bookingRate,
             id: id,
             addOrDelete: addOrDelete
         }); // Call the callback function to toggle infoshow

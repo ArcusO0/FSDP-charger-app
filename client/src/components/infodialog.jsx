@@ -5,7 +5,7 @@ import http from '../http';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
-const RequestInfoDialog = ({ open, handleClose, userid, reqId, name, address, description, addOrDelete }) => {
+const RequestInfoDialog = ({ open, handleClose, userid, reqId, name, address, description, addOrDelete,bookingRate }) => {
     const acceptrequest = () => {
         http.put(`/MyRequests/updateRequest/accept/${userid}`).then((res) => {
             location.reload();
@@ -18,7 +18,6 @@ const RequestInfoDialog = ({ open, handleClose, userid, reqId, name, address, de
 
         });
     };
-    console.log(userid)
     var header = "";
     if (addOrDelete)
     {
@@ -40,6 +39,7 @@ const RequestInfoDialog = ({ open, handleClose, userid, reqId, name, address, de
                 <button onClick={acceptrequest} className="accept">Accept</button>
                 <br></br>
                 <button onClick={rejectrequest} className='deny'>Deny</button>
+                
             </div>
             
         </Modal>

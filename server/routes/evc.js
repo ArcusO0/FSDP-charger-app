@@ -1,4 +1,5 @@
-const { finalEVC, Sequelize } = require("../models");
+const { FinalEVC, Sequelize } = require("../models");
+const { FinalBooking } = require("../models")
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -13,7 +14,7 @@ router.post("/addEVC", async(req, res) => {
         description: yup.string().trim().max(500),
         address: yup.string().trim().min(3).max(500).required(),
         bookingRate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{0,2}$/)).required(),
-        rating: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 1 decimal place', (value) => (value + "").match(/^\d*\.{1}\d?$/)).required(),
+        rating: yup.string().test('is-decimal', 'Invalid rating, enter a decimal value with 1 decimal place', (value) => (value + "").match(/^\d*\.{1}\d?$/)).required(),
         status: yup.string().oneOf(["Good", "Poor", "Critical"]).required(),
         noOfBookings: yup.number().min(0).required()
     });
@@ -34,15 +35,16 @@ router.post("/addEVC", async(req, res) => {
         data.description = data.description.trim();
     }
     data.address = data.address.trim();
-    let result = await finalEVC.create(data);
+    let result = await FinalEVC.create(data);
     res.json(result);
 });
 
 // Get EVC Information (with Search)
 router.get("/", async(req, res) => {
-    let list = await finalEVC.findAll({
+    let list = await FinalEVC.findAll({
+        include: FinalBooking,
         order: [
-            ['id', "ASC"]
+            ['chargerId', "ASC"]
         ]
     });
     res.json(list)
@@ -51,7 +53,7 @@ router.get("/", async(req, res) => {
 // Get EVC by ID
 router.get("/:id", async(req, res) => {
     let id = req.params.id;
-    let evc = await finalEVC.findByPk(id);
+    let evc = await FinalEVC.findByPk(id);
     if (!evc) {
         res.sendStatus(404);
         return;
@@ -61,13 +63,13 @@ router.get("/:id", async(req, res) => {
 // Update EVC Info
 router.put("/updateEVC/:id", async(req, res) => {
     let id = req.params.id;
-    let evc = await finalEVC.findByPk(id);
+    let evc = await FinalEVC.findByPk(id);
     if (!evc) {
         res.sendStatus(404);
         return;
     }
     let data = req.body;
-    let num = await finalEVC.update(data, { where: { id: id } });
+    let num = await FinalEVC.update(data, { where: { id: id } });
     if (num == 1) {
         res.json({
             message: "EVC Info was updated successfully."
@@ -82,8 +84,8 @@ router.put("/updateEVC/:id", async(req, res) => {
 // Delete EVC Info
 router.delete("/:id", async(req, res) => {
     let id = req.params.id;
-    let num = await finalEVC.destroy({
-        where: { id: id }
+    let num = await FinalEVC.destroy({
+        where: { chargerid: id }
     })
     if (num == 1) {
         res.json({
