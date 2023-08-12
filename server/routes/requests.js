@@ -18,11 +18,7 @@ router.post("/addRequest", async(req, res) => {
         type: yup.string().oneOf(["Add", "Delete"]).required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
-<<<<<<< HEAD
-        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d*$/)),
-=======
         rate: yup.number().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{2}$/)),
->>>>>>> origin/Marcus
         description: yup.string().trim().min(3).max(500),
         status: yup.string().oneOf(["Pending", "Approved", "Rejected"]).required()
     });
@@ -39,11 +35,7 @@ router.post("/addRequest", async(req, res) => {
     data.status = data.status.trim();
     data.address = data.address.trim();
     if (data.description) {
-<<<<<<< HEAD
-        data.description = data.description.trim()
-=======
         data.description = data.description.trim();
->>>>>>> origin/Marcus
     }
     let result = await finalRequests.create(data);
     res.json(result);
@@ -83,26 +75,34 @@ router.get("/", async(req, res) => {
     let condition = {};
     let search = req.query.search;
     if (search) {
-        condition[Sequelize.Op.or] = [
-            { type: {
-                    [Sequelize.Op.like]: `${search}%` } },
-            { name: {
-                    [Sequelize.Op.like]: `${search}%` } },
-            { status: {
-                    [Sequelize.Op.like]: `${search}%` } }
+        condition[Sequelize.Op.or] = [{
+                type: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            },
+            {
+                name: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            },
+            {
+                status: {
+                    [Sequelize.Op.like]: `${search}%`
+                }
+            }
         ];
     }
     let list = await finalRequests.findAll({
         where: condition,
         order: [
-                ['id', 'ASC']
-            ] 
+            ['id', 'ASC']
+        ]
     });
     res.json(list);
 });
 
 // Get by ID 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async(req, res) => {
     let id = req.params.id;
     let request = await finalRequests.findByPk(id);
     if (!request) {
@@ -113,10 +113,10 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update Requests using Put
-router.put("/updateRequest/:id", async (req, res) => {
+router.put("/updateRequest/:id", async(req, res) => {
     let id = req.params.id;
     let request = await finalRequests.findByPk(id);
-    if(!request){
+    if (!request) {
         res.sendStatus(404);
         return;
     }
@@ -126,27 +126,22 @@ router.put("/updateRequest/:id", async (req, res) => {
         name: yup.string().trim().min(3).max(100),
         address: yup.string().trim().min(3).max(200),
         description: yup.string().trim().min(3).max(500),
-        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d*$/) ),
+        rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d*$/)),
     });
     try {
-        await validationSchema.validate(data, 
-            { abortEarly: false, strict: true} )
-    } 
-    catch (err) {
+        await validationSchema.validate(data, { abortEarly: false, strict: true })
+    } catch (err) {
         console.error(err);
-        res.status(400).json({errors: err.errors});
+        res.status(400).json({ errors: err.errors });
         return;
     }
-    let num = await finalRequests.update(data, {where: {id:id}});
-    if (num == 1){
+    let num = await finalRequests.update(data, { where: { id: id } });
+    if (num == 1) {
         res.json({
             message: "Request was updated successfully."
         });
     }
 });
-<<<<<<< HEAD
-            
-=======
 router.put("/updateRequest/accept/:id", async(req, res) => {
     const id = req.params.id;
 
@@ -190,17 +185,15 @@ router.put("/updateRequest/reject/:id", async(req, res) => {
 });
 
 
->>>>>>> origin/Marcus
 // Delete Requests 
-router.delete("/deleteRequest/:id", async (req, res) => {
+router.delete("/deleteRequest/:id", async(req, res) => {
     let id = req.params.id;
-    let num = await finalRequests.destroy({ where: {id:id}})
+    let num = await finalRequests.destroy({ where: { id: id } })
     if (num == 1) {
-        res.json({message: "Request was deleted successfully."});
-    }
-    else {
-        res.json({message: `Cannot delete Request with id ${id}`})
+        res.json({ message: "Request was deleted successfully." });
+    } else {
+        res.json({ message: `Cannot delete Request with id ${id}` })
     }
 });
-                                                        
+
 module.exports = router;
