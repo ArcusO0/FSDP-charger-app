@@ -41,8 +41,49 @@ router.post("/addEVC", async(req, res) => {
 
 // Get EVC Information (with Search)
 router.get("/", async(req, res) => {
+    let condition = {};
+    let search = req.query.search;
+    if (search) {
+        condition[Sequelize.Op.or] = [{
+                vendorId: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                chargerId: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                name: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                description: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                address: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                bookingRate: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            },
+            {
+                noOfBookings: {
+                    [Sequelize.Op.like]: `%${search}%`
+                }
+            }
+        ];
+    }
     let list = await FinalEVC.findAll({
         include: FinalBooking,
+        where: condition,
         order: [
             ['chargerId', "ASC"]
         ]

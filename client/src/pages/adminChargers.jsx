@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./admincharger.css"
 import Headerbox from '../components/Headerbox';
-
+import { Box,  Input, IconButton } from '@mui/material';
+import {  Search, Clear } from '@mui/icons-material';
 import http from '../http';
 import Navbar from '../components/navbar';
 import Chart from "chart.js/auto";
@@ -13,15 +14,7 @@ function AdminCharger() {
     const [sortColumn, setSortColumn] = useState("chargerId");
     const [sortOrder, setSortOrder] = useState("asc");
 
-    const getChargers = () => {
-        http.get('/MyEVC').then((res) => {
-            setchargerdata(res.data);
-        });
-    };
-
-    useEffect(() => {
-        getChargers();
-    }, []);
+    
 
     const sortedChargers = [...chargerdata].sort((a, b) => {
         const compareA = a[sortColumn];
@@ -74,10 +67,53 @@ function AdminCharger() {
         }
     };
 
+    const [search, setSearch] = useState('');
+    const onSearchChange = (e) => {
+        setSearch(e.target.value);
+    };
+    const getChargers = () => {
+        http.get('/MyEVC').then((res) => {
+            setchargerdata(res.data);
+        });
+    };
+
+    useEffect(() => {
+        getChargers();
+    }, []);
+    const searchChargers = () => {
+        http.get(`/MyEVC?search=${search}`).then((res) => {
+            setchargerdata(res.data);
+            console.log(res.data)
+        });
+    };
+    const onSearchKeyDown = (e) => {
+        if (e.key === "Enter") {
+            searchChargers();
+        }
+    };
+    const onClickSearch= () => {
+        searchChargers();
+    }
+    const onClickClear= () => {
+        setSearch('');
+        getChargers();
+    };
+
     return (
         <>
             <Navbar />
             <Headerbox number={sortedChargers.length} text="Chargers" />
+            <Box sx={{ display: 'block', alignItems: 'center', mb: 2 ,position:'absolute',right:0,top:"40%"}}>
+                <Input value={search} placeholder="Search"
+                    onChange={onSearchChange}
+                    onKeyDown={onSearchKeyDown}/>
+                <IconButton color="primary" onClick={onClickSearch}>
+                    <Search />
+                </IconButton>
+                <IconButton color="primary" onClick={onClickClear}>
+                    <Clear />
+                </IconButton>
+            </Box>
             <div className="table-container">
                 <table>
                     <thead>
@@ -118,7 +154,7 @@ function AdminCharger() {
                                     <span>{sortOrder === "asc" ? "▲" : "▼"}</span>
                                 )}
                             </th>
-                            <th>trend</th>
+                            <th>Trend</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
@@ -134,19 +170,49 @@ function AdminCharger() {
                                 <td>
                                             <Line
                                                 data={{
-                                                labels: totalpercharger[index].date.reverse(),
+                                            labels: totalpercharger[index].date.reverse(),
+                                            color: "#fba263",
                                                     datasets: [
                                                         {
-                                                            label: 'Total earnings',
+                                                            label: '',
                                                             data: totalpercharger[index].price.reverse(),
-                                                            borderColor: 'blue',
+                                                            backgroundColor: "#fba263",
+                                                            borderColor: '#fba263',
+                                                            color: "#fba263",
                                                             borderWidth: 1,
                                                             fill: false,
                                                         },
                                             ],
                                                 }}
                                                 options={{
-                                                    responsive: false, 
+                                                    responsive: false,
+                                                    plugins: {
+                                                        legend: {
+                                                            display: false,
+                                                        },
+                                                    },
+                                                    scales: {
+                                                        x: {
+                                                            ticks: {
+                                                                color: "#fba263",
+                                                            },
+                                                            title: {
+                                                                display: true,
+                                                                text: 'Date',
+                                                                color: "#fba263",
+                                                            },
+                                                        },
+                                                        y: {
+                                                            ticks: {
+                                                                color: "#fba263",
+                                                            },
+                                                            title: {
+                                                                display: true,
+                                                                text: 'Total Earnings',
+                                                                color: "#fba263",
+                                                            },
+                                                        },
+                                                    },
                                                 }
                                             }
                                             />

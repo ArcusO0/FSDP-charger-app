@@ -8,7 +8,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 function MapWrapper({
     center,
     style,
-    zoom = 12,
+    zoom = 12.5,
     markers = [],
     layers = [],
     scrollWheelZoom = false,

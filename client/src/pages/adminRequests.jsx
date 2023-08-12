@@ -34,8 +34,8 @@ function AdminRequests() {
         getRequests();
     }, []);
     const onlypending = requests.filter((request) => request.status == "Pending");
-    const addRequests = requests.filter((request) => request.addOrDelete);
-    const deleteRequests = requests.filter((request) => !request.addOrDelete);
+    const addRequests = onlypending.filter((request) => request.addOrDelete);
+    const deleteRequests = onlypending.filter((request) => !request.addOrDelete);
     return (
         <div className='pageContainer'>
 
@@ -62,7 +62,6 @@ function AdminRequests() {
             <RequestInfoDialog
                 open={infoshow}
                 handleClose={closeInfoDialog}
-                userid={infoData.id}
                 reqId={infoData.reqId}
                 name={infoData.name}
                 address={infoData.address}

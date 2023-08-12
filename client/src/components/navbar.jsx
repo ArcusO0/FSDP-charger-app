@@ -13,8 +13,8 @@ function Navbar() {
         <img src="/logo.jpg" alt="" className='logo' />
       </a>
       <div className='navbar-header'>
-        <a href="/adminhome" className='book'><FontAwesomeIcon icon={faBook} /></a>
-        <a href="/requests" className='charger'><FontAwesomeIcon icon={faPaperPlane}  /></a>
+        <a href="/AdminHome" className='book'><FontAwesomeIcon icon={faBook} /></a>
+        <a href="/AdminRequests" className='charger'><FontAwesomeIcon icon={faPaperPlane}  /></a>
         <a href="/" className='about'><FontAwesomeIcon icon={faQuestionCircle} /></a>
         
       </div>

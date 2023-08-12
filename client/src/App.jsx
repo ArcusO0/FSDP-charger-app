@@ -18,10 +18,10 @@ function App() {
       <Container>
         <Routes>
           <Route path={"/"} element={<HomePage />} />
-          <Route path={"/adminhome"} element={<AdminHome/>} />
+          <Route path={"/AdminHome"} element={<AdminHome/>} />
           <Route path={"/AdminCharger"} element={<AdminCharger />} />
           <Route path={"/AdminBookings"} element={<AdminBookings />} />
-          <Route path={"/Requests"} element={<AdminRequests />} />
+          <Route path={"/AdminRequests"} element={<AdminRequests />} />
         </Routes>
       </Container>
     </Router>

@@ -11,6 +11,7 @@ export default function HomePage() {
                 style={{
                     position: "absolute",
                     left: "0%",
+                    bottom:"0%",
                     height: "86vh",
                     width: "100vw"
                 }} />

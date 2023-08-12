@@ -20,7 +20,7 @@ const Request = ({ id, name, status, reqId, toggleInfoshow, address, description
     const acceptrequest = () => {
         http.put(`/MyRequests/updateRequest/accept/${id}`).then((res) => {
             if (!addOrDelete) {
-                http.delete(`/MyEVC/${id}`)
+                http.delete(`/MyEVC/${reqId}`)
             }
             else {
                 http.post(`/MyEVC/AddEVC`, requestdata)
