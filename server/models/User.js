@@ -11,8 +11,12 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        imageFile: {
+            type: DataTypes.STRING
+            }
     });
+    
 
 
     return User;
