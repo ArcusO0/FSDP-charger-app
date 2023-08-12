@@ -1,4 +1,4 @@
-const { finalBooking, Sequelize } = require("../models");
+const { FinalBooking, Sequelize } = require("../models");
 const express = require("express");
 const router = express.Router();
 const yup = require("yup");
@@ -28,14 +28,22 @@ router.post("/addBooking", async (req, res) => {
     data.vendorId = data.vendorId.trim();
     data.bookingId = data.bookingId.trim();
     data.customerId = data.customerId.trim();
-    let result = await finalBooking.create(data);
+    let result = await FinalBooking.create(data);
     res.json(result);
 });
 
 
+<<<<<<< HEAD
 router.get("/", async (req, res) => {
     let list = await finalBooking.findAll({
         order:[['id', 'ASC']]
+=======
+router.get("/", async(req, res) => {
+    let list = await FinalBooking.findAll({
+        order: [
+            ['id', 'ASC']
+        ]
+>>>>>>> origin/Marcus
     });
     res.json(list)
 });

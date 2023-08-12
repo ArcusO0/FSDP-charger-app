@@ -18,7 +18,11 @@ router.post("/addRequest", async(req, res) => {
         type: yup.string().oneOf(["Add", "Delete"]).required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
+<<<<<<< HEAD
         rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d*$/)),
+=======
+        rate: yup.number().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value + "").match(/^\d*\.{1}\d{2}$/)),
+>>>>>>> origin/Marcus
         description: yup.string().trim().min(3).max(500),
         status: yup.string().oneOf(["Pending", "Approved", "Rejected"]).required()
     });
@@ -35,7 +39,11 @@ router.post("/addRequest", async(req, res) => {
     data.status = data.status.trim();
     data.address = data.address.trim();
     if (data.description) {
+<<<<<<< HEAD
         data.description = data.description.trim()
+=======
+        data.description = data.description.trim();
+>>>>>>> origin/Marcus
     }
     let result = await finalRequests.create(data);
     res.json(result);
@@ -136,7 +144,53 @@ router.put("/updateRequest/:id", async (req, res) => {
         });
     }
 });
+<<<<<<< HEAD
             
+=======
+router.put("/updateRequest/accept/:id", async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const request = await finalRequests.findByPk(id);
+
+        if (!request) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+
+        // Update the status field to "Accepted"
+        request.status = 'Accepted';
+        await request.save();
+
+        return res.status(200).json({ message: 'Request status updated to Accepted' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while updating the request status' });
+    }
+});
+
+router.put("/updateRequest/reject/:id", async(req, res) => {
+    const id = req.params.id;
+
+    try {
+        const request = await finalRequests.findByPk(id);
+
+        if (!request) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+
+        // Update the status field to "Accepted"
+        request.status = 'Rejected';
+        await request.save();
+
+        return res.status(200).json({ message: 'Request status updated to Accepted' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while updating the request status' });
+    }
+});
+
+
+>>>>>>> origin/Marcus
 // Delete Requests 
 router.delete("/deleteRequest/:id", async (req, res) => {
     let id = req.params.id;
