@@ -37,6 +37,33 @@ function AdminCharger() {
             return 0;
         }
     });
+    var totalpercharger = []
+    for (let i = 0; i < sortedChargers.length; i++){
+        
+        const aggregatedPrices = {};
+        const convertedDictionary = { 'date': [], 'price': [] };
+
+        sortedChargers[i]['FinalBookings'].forEach(entry => {
+            const { createdAt, bookingPrice } = entry;
+
+            // Extract the date part of the datetime
+            const dateOnly = createdAt.slice(0, 10);
+
+            // If the date already exists in the aggregatedPrices object, add the price
+            if (aggregatedPrices[dateOnly]) {
+                aggregatedPrices[dateOnly] += parseFloat(bookingPrice);
+            } else {
+                // If the date doesn't exist, create a new entry with the price
+                aggregatedPrices[dateOnly] = parseFloat(bookingPrice);
+            }
+        });
+        for (const [date, price] of Object.entries(aggregatedPrices)) {
+            convertedDictionary['date'].push(date);
+            convertedDictionary['price'].push(price);
+        }
+        totalpercharger.push(convertedDictionary)
+    }
+
 
     const handleSort = (column) => {
         if (column === sortColumn) {
@@ -46,7 +73,6 @@ function AdminCharger() {
             setSortOrder("asc");
         }
     };
-    
 
     return (
         <>
@@ -96,7 +122,7 @@ function AdminCharger() {
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        {sortedChargers.map((charger) => (
+                        {sortedChargers.map((charger,index) => (
 
                             <tr key={charger.chargerId}>
                                 <td>{charger.chargerId}</td>
@@ -106,23 +132,25 @@ function AdminCharger() {
                                 <td>{charger.noOfBookings}</td>
                                 <td>{charger.bookingRate}</td>
                                 <td>
-                                    <Line
-                                        data={{
-                                            labels: charger.FinalBookings.map((_, index) => index + 1),
-                                            datasets: [
-                                                {
-                                                    label: 'Booking Price',
-                                                    data: charger.FinalBookings.map(item => item.bookingPrice),
-                                                    borderColor: 'blue',
-                                                    borderWidth: 1,
-                                                    fill: false
+                                            <Line
+                                                data={{
+                                                labels: totalpercharger[index].date.reverse(),
+                                                    datasets: [
+                                                        {
+                                                            label: 'Total earnings',
+                                                            data: totalpercharger[index].price.reverse(),
+                                                            borderColor: 'blue',
+                                                            borderWidth: 1,
+                                                            fill: false,
+                                                        },
+                                            ],
+                                                }}
+                                                options={{
+                                                    responsive: false, 
                                                 }
-                                            ]
-                                        }}
-                                        options={{
-                                            responsive: false, // Adjust as needed
-                                        }}
-                                    />
+                                            }
+                                            />
+
                                 </td>
                             </tr>
                             
