@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         chargerId: {
             type: DataTypes.STRING,
+            primaryKey: true,
             allowNull: false
         },
         name: {
@@ -37,5 +38,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
+    finalEVC.associate = (models) => {
+        finalEVC.hasMany(models.finalBooking, {
+            foreignKey: "evcId"
+        });
+    };
     return finalEVC;
 }

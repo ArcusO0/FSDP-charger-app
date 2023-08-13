@@ -28,5 +28,12 @@ module.exports= (sequelize, DataTypes) => {
             allowNull: false
         }
     });
+    finalBooking.associate = (models) => {
+        finalBooking.belongsTo(models.finalEVC, {
+            foreignKey: "evcId",
+            targetKey: "chargerId"
+        });
+    };
+
     return finalBooking;
 };

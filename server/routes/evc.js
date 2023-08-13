@@ -13,7 +13,7 @@ router.post("/addEVC", async (req, res) => {
         description: yup.string().trim().max(500),
         address: yup.string().trim().min(3).max(500).required(),
         rate: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 2 decimal places', (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/)).required(),
-        rating: yup.string().test('is-decimal', 'Invalid rate, enter a decimal value with 1 decimal place', (value) => (value+"").match(/^\d*\.{1}\d?$/)).required(),
+        rating: yup.string().test('is-decimal', 'Invalid rating, enter a decimal value with 1 decimal place', (value) => (value+"").match(/^\d*\.{1}\d?$/)).required(),
         status: yup.string().oneOf(["Good", "Poor", "Critical"]).required(),
         noOfBookings: yup.number().min(0).required()
     });
@@ -41,10 +41,19 @@ router.post("/addEVC", async (req, res) => {
 
 // Get EVC Information (with Search)
 router.get("/", async (req, res)=> {
+    let condition = {};
+    let search = req.query.search;
+    console.log(search);
+    if (search) {
+        condition[Sequelize.Op.or] = [
+            {name: {[Sequelize.Op.like]: `%${search}%`}}
+        ];
+    }
     let list = await finalEVC.findAll({
-        order: [['id',"ASC"]]
+        where: condition,
+        order: [['chargerId',"ASC"]]
     });
-    res.json(list)
+    res.json(list);
 });
 
 // Get EVC by ID
@@ -66,7 +75,7 @@ router.put("/updateEVC/:id", async (req, res) => {
         return;
     }
     let data = req.body;
-    let num = await finalEVC.update(data, {where: {id: id}});
+    let num = await finalEVC.update(data, {where: {chargerId: id}});
     if (num == 1){
         res.json({
             message: "EVC Info was updated successfully."
@@ -78,8 +87,5 @@ router.put("/updateEVC/:id", async (req, res) => {
         })
     }
 });
-
-// Delete EVC Info
-
 
 module.exports = router;
