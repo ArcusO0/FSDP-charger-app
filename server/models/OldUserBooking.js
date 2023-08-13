@@ -11,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
     });
-
-
-    return User;
+    return OldUserBooking;
 }

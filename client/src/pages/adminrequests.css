@@ -1,0 +1,88 @@
+.pageContainer {
+    width: 100%;
+    height: 65vh;
+    margin-left: 10%;
+}
+
+.verticalLine {
+    position: absolute;
+    margin-top: 10%;
+    left: 50%;
+    height: 70%;
+    border-left: 6px solid #FFF;
+}
+
+h2 {
+    display: inline-block;
+    font-size: 30px;
+}
+
+.deltitle {
+    margin-left: 10%;
+    margin-right: 10%
+}
+
+.deleteRequestsContainer {
+    width: 36%;
+    display: inline-block;
+    height: 100%;
+    margin-left: 10%;
+    overflow-y: scroll;
+}
+
+.addRequestsContainer {
+    width: 36%;
+    display: inline-block;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+@media (prefers-color-scheme: light) {
+    .verticalLine {
+        border-left: 6px solid #000;
+    }
+}
+
+@media (max-height:820px) {
+    .deleteRequestsContainer,
+    .addRequestsContainer {
+        height: 100%;
+    }
+}
+
+@media(max-width:900px) {
+    .deltitle {
+        margin-left: 5%;
+    }
+}
+
+@media(max-width:780px) {
+    .deltitle {
+        margin-left: 3%;
+        margin-right: 0;
+    }
+}
+
+@media(max-width:670px) {
+    .requestsTitle {
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 16px;
+    }
+    .deltitle {
+        margin-left: 25%;
+    }
+}
+
+@media(max-width:460px) {
+    .verticalLine {
+        margin-top: 15%;
+    }
+}
+
+@media(max-width:410px) {
+    .deltitle {
+        margin-left: 15%;
+    }
+}

@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {ThemeProvider, createTheme, Container, Card, Typography, Box, Button,
-Link, Grid, Rating} from '@mui/material';
-import {StarRounded, Send} from "@mui/icons-material";
+Link, Grid, Rating, Dialog, IconButton} from '@mui/material';
+import {StarRounded, Send, Close} from "@mui/icons-material";
 import Sidebar from '../components/sidebar';
 import http from "../http";
 import { useNavigate } from 'react-router-dom';
+import CanvasJSReact from "@canvasjs/react-charts";
 
 function Dashboard() {
   const theme = createTheme({
@@ -31,9 +32,42 @@ function Dashboard() {
     });
   }, []);
 
-  const count = bookingList.length;
-  const commissionSum = bookingList.map(attr => parseFloat(attr.bookingPrice)).reduce((sum, val) => sum + val, 0);
+  const initialCount = bookingList.length;
 
+  function perDay() {
+    const count = bookingList.filter((booking) => new Date(booking.createdAt) == DateObj).length;
+    return count;
+  }
+
+  function perMonth() {
+    const startDate = new Date();
+    startDate.setDate(DateObj.getDate() - 30);
+    console.log(startDate);
+    const count = bookingList.filter((booking) => new Date(booking.createdAt) > startDate).length;
+    return count
+  }
+
+  function perYear() {
+    const startDate = new Date();
+    startDate.setFullYear(DateObj.getFullYear() - 1);
+    console.log(startDate);
+    const count = bookingList.filter((booking) => new Date(booking.createdAt) > startDate).length;
+    return count
+  }
+
+  function changeCount(newCount) {
+    var count = document.getElementById("bookingCount");
+    if (count.innerHTML != initialCount) {
+      count.innerHTML = initialCount;
+    }
+    else {
+      count.innerHTML = newCount;
+    }
+  }
+  
+  const commissionSum = bookingList.map(attr => parseFloat(attr.bookingPrice)).reduce((sum, val) => sum + val, 0);
+  
+  
   // Get EVC information from db 
   const [evcList, setEVCList] = useState([]);
 
@@ -46,11 +80,11 @@ function Dashboard() {
 
   function calcStatusPercent(status) {
     const statusCount = evcList.filter((evc) => evc.status == status).length;
-    const percent = statusCount / evcList.length;
+    const percent = (statusCount / evcList.length) * 100;
     if (!percent) {
       return 0;
     }
-    return percent * 100;
+    return percent.toFixed(1);
   }
 
   function calcAvgRating() { 
@@ -60,8 +94,66 @@ function Dashboard() {
     if (!avgRating) {
       return 0
     }
-    return avgRating;
+    return avgRating.toFixed(2);
   }
+
+  // Graph (Canvas JS)
+  function generateCommissionData() {
+    var dataList = []
+    var dataDict = {};
+    for (var i in bookingList) {
+      const bookingDate = bookingList[i].createdAt;
+      const bookPrice = parseFloat(bookingList[i].bookingPrice);
+      if (dataDict[bookingDate]) {
+        dataDict[bookingDate] += bookPrice;  
+      }
+      else {
+        dataDict[bookingDate] = bookPrice
+      }
+    }
+    for (var i in dataDict) {
+      dataList.push({ y: dataDict[i], label: new Date(i).toDateString().slice(4)});
+    }
+    console.log(dataList);
+    return dataList
+  };
+
+  function generateCommissionChart() {
+    var dataList = generateCommissionData();
+    console.log(dataList);
+    var CanvasJS = CanvasJSReact.CanvasJS;
+    var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+    const options = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2",
+      title: {
+        text: "Commission Earned"
+      },
+      axisY: {
+        title: "Commission",
+        prefix: "$"
+      },
+      axisX: {
+        title: "Day",
+        labelFontSize:15 
+      },
+      data: [
+        {
+          type: "line",
+          toolTipContent: "{label}: ${y}",
+          dataPoints: dataList
+        }
+      ]
+    }
+    return (
+      <CanvasJSChart options = {options}/>
+    )
+  }
+  const commissionChart = generateCommissionChart();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -69,7 +161,7 @@ function Dashboard() {
         {sidebar}
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3", minWidth: "100%"}}>
+            <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3", minWidth: "100%"}} onClick={handleOpen}>
               <Typography variant="h3" sx={{pt: 8,pb: 1, fontWeight: "bold"}}>
                 ${commissionSum}
               </Typography>
@@ -77,19 +169,36 @@ function Dashboard() {
                 Balance as at {displayDate} 
               </Typography>
             </Card>
+            <Dialog 
+            fullScreen
+            open={open}
+            onClose={handleClose}
+            >
+              <Box sx={{p:4}}>
+                <IconButton onClick={handleClose}>
+                  <Close/>
+                </IconButton>
+                {commissionChart}
+                <Typography sx={{mt: 3, ml: 1}}>
+                  Some Regression Information
+                </Typography>
+              </Box>
+            </Dialog>
           </Grid>
-          <Grid item xs={6} onClick={() => navigate("/MyBookings")}>
+          <Grid item xs={6}>
             <Card sx={{textAlign:"center", border:"1px solid black", width: "100%"}}>
-              <Typography variant="h3" sx={{pt: 5, fontWeight: "bold"}}>
-                {count}
-              </Typography>
-              <Typography variant="h3" sx={{pb: 5, fontWeight: "bold"}}>
-                Bookings
-              </Typography>
+              <Box onClick={() => navigate("/MyBookings")}>
+                <Typography variant="h3" id="bookingCount" sx={{pt: 5, fontWeight: "bold"}}>
+                  {initialCount}
+                </Typography>
+                <Typography variant="h3" sx={{pb: 5, fontWeight: "bold"}}>
+                  Bookings
+                </Typography>
+              </Box>
               <Box sx={{float:"right", p:0, mt:-4}}>
-                <Button sx={{p:0, pb: 1}}>D</Button>
-                <Button sx={{p:0, pb: 1}}>M</Button>
-                <Button sx={{p:0, pb: 1}}>Y</Button>
+                <Button id="D" sx={{p:0, pb: 1}} onClick={() => changeCount(perDay())}>D</Button>
+                <Button id="M" sx={{p:0, pb: 1}} onClick={() => changeCount(perMonth())}>M</Button>
+                <Button id="Y" sx={{p:0, pb: 1}} onClick={() => changeCount(perYear())}>Y</Button>
               </Box>
             </Card>
           </Grid>

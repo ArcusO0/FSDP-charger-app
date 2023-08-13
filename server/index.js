@@ -38,7 +38,7 @@ app.use("/vendor", vendorRoute)
 const fileRoute = require('./routes/file');
 app.use("/file", fileRoute);
 
-
+const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {
     let port = process.env.APP_PORT;
     app.listen(port, () => {

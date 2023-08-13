@@ -13,6 +13,12 @@ function UpdateEVC() {
         typography: {
             fontFamily: ["Verdana", "Inter", 'Helvetica'].join(','),
         },
+        palette: {
+            defButton: {
+              main: "#9BB1C3",
+              contrastText: "#FFFFFF"
+            }
+        }
     });
 
     const sidebar = Sidebar();
@@ -32,7 +38,7 @@ function UpdateEVC() {
         chargerId: "",
         name: "",
         address: "",
-        rate: "",
+        bookingRate: "",
         description: "",
         rating: "",
         status: ""
@@ -55,8 +61,38 @@ function UpdateEVC() {
       })
     }, [])
 
+    // Searching 
     const [search, setSearch] = useState("");
 
+    const getEVCs = () => {
+        http.get('/MyEVC').then((res) => {
+            console.log(res.data);
+            setEVCList(res.data);
+        });
+    }
+
+    const onSearchChange = (e) => {
+        setSearch(e.target.value);
+    }
+
+    useEffect(()=> {
+        getEVCs();
+    }, [])
+
+    const onSearchKeyDown = (e) => {
+        if (e.key === "Enter") {
+            searchEVC();
+        }
+    }
+    
+    const searchEVC = () => {
+        http.get(`/MyEVC?search=${search}`).then((res)=> {
+            console.log(res.data);
+            setEVCList(res.data);
+        })
+    }    
+
+    // Form 
     const formik = useFormik({
         initialValues: evc,
         enableReinitialize: true,
@@ -71,7 +107,7 @@ function UpdateEVC() {
                 .min(3, "Address must be at least 3 characters")
                 .max(500, "Address must be at most 500 characters")
                 .required("Address is required"),
-            rate: yup.string()
+            bookingRate: yup.string()
                 .test('is-decimal', 
                     'Invalid rate, enter a decimal value with 2 decimal places', 
                     (value) => (value+"").match(/^\d*\.{1}\d{0,2}$/))
@@ -84,7 +120,7 @@ function UpdateEVC() {
                 data.description = data.description.trim();
             }
             console.log(data);
-            http.put(`/MyEVC/updateEVC/${evc.id}`, data)
+            http.put(`/MyEVC/updateEVC/${evc.chargerId}`, data)
             .then((res) => {
                 console.log(res.data);
                 navigate('/MyEVC/Menu');
@@ -128,14 +164,14 @@ function UpdateEVC() {
                             <Typography variant="h5">
                                 Select EV Charger to Update:
                             </Typography>
-                            <Input value={search} placeholder="Search" sx={{minWidth: "100%", border: "1px solid black", borderRadius: 1, mt: 1, p: 0.5}}/>
+                            <Input value={search} placeholder="Search" sx={{minWidth: "100%", border: "1px solid black", borderRadius: 1, mt: 1, p: 0.5}} onChange={onSearchChange} onKeyDown={onSearchKeyDown}/>
                             <Container sx={{maxHeight: 400, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                                 <Grid container spacing={2} sx={{pr:5, minWidth:450}} >
                                     {
                                         evcList.map((evc, i) => {
                                             return(
-                                                <Grid item lg={12} key={evc.id}>
-                                                    <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.id)}}>
+                                                <Grid item lg={12} key={evc.chargerId}>
+                                                    <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.chargerId)}}>
                                                         <CardContent>
                                                             <Typography variant="h6" sx={{mb: 2}}>
                                                                 EV Charger Name: {evc.name}
@@ -184,11 +220,11 @@ function UpdateEVC() {
                                 fullWidth
                                 margin="normal"
                                 label="EV Charger Rate"
-                                name="rate"
-                                value={formik.values.rate}
+                                name="bookingRate"
+                                value={formik.values.bookingRate}
                                 onChange={formik.handleChange}
-                                error={formik.touched.rate && Boolean(formik.errors.rate)}
-                                helperText={formik.touched.rate && formik.errors.rate}
+                                error={formik.touched.bookingRate && Boolean(formik.errors.bookingRate)}
+                                helperText={formik.touched.bookingRate && formik.errors.bookingRate}
                                 InputProps={{
                                     startAdornment: <InputAdornment position="start">$</InputAdornment>,
                                 }}
@@ -209,7 +245,7 @@ function UpdateEVC() {
                                 />         
                             </Grid>
                             <Box sx={{mt: 5}}>
-                                <Button variant="contained" type="Submit" sx={{px:5, py: 1, bgcolor: "#9BB1C3", float:"right"}} anchor="bottom">
+                                <Button variant="contained" type="submit" sx={{px:5, py: 1, float:"right"}} color="defButton" anchor="bottom">
                                     Update
                                 </Button>
                             </Box>

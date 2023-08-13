@@ -104,73 +104,65 @@ function UpdateProfile() {
 
     }
     return (
-        <Box>
-            <Typography variant="h5" sx={{ my: 2 }}>
-                Update Profile
+
+
+        <Box
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: '20px',
+                border: '1px solid #ccc',
+                padding: '20px',
+                maxWidth: '500px',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+            }}>
+            <Typography variant="body1" sx={{ my: 1, textAlign: 'center' }}>
+                Account Information
             </Typography>
-            <Box                 component="form"
-                onSubmit={formik.handleSubmit}
-                sx={{
-                    border: '1px solid #ccc', // Adding a border
-                    padding: '20px', // Adding padding
-                    borderRadius: '8px', // Adding border radius
-                    border: '1px solid #ccc',
-                    boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-                }}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} md={6} lg={8}>
-                        <TextField
-                            fullWidth margin="normal" autoComplete="off"
-                            label="Name"
-                            name="name" size="small"
-                            value={formik.values.name}
-                            onChange={formik.handleChange}
-                            error={formik.touched.name && Boolean(formik.errors.name)}
-                            helperText={formik.touched.name && formik.errors.name}
-                        />
-                        <TextField
-                            fullWidth margin="normal" autoComplete="off"
-                            label="Email"
-                            name="email" size="small"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            error={formik.touched.email && Boolean(formik.errors.email)}
-                            helperText={formik.touched.email && formik.errors.email}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                        <Box sx={{ textAlign: 'center', mt: 2 }} >
-                            <Button variant="contained" component="label">
-                                Profile Picture
-                                <input hidden accept="image/*" multiple type="file"
-                                    onChange={onFileChange} />
-                            </Button>
-                            {
-                                imageFile && (
-                                    <AspectRatio sx={{ mt: 2 }}>
-                                        <Box component="img" alt="tutorial"
-                                            src={`${import.meta.env.VITE_FILE_BASE_URL}${imageFile}`}>
-                                        </Box>
-                                    </AspectRatio>
-                                )
-                            }
-                        </Box>
-                    </Grid>
-                </Grid>
-                <Box sx={{ mt: 2 }}>
-                    <Button variant="contained" type="submit">
-                    <a href="/Login#/UpdatePassword">Update Password</a>
-                    </Button>
-                    <Button
-                        variant="contained"
-                        sx={{ ml: 2 }}
-                        color="error"
-                        onClick={handleOpen}
-                        disabled={deleting} // Disable the button while deleting
-                    >
-                        {deleting ? "Deleting..." : "Delete Account"}
-                    </Button>
-                </Box>
+            <Box component="form" sx={{ maxWidth: '500px' }}
+                onSubmit={formik.handleSubmit}>
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Name"
+                    name="name" size="small"
+                    value={formik.values.name}
+                    onChange={formik.handleChange}
+                    error={formik.touched.name && Boolean(formik.errors.name)}
+                    helperText={formik.touched.name && formik.errors.name}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Email"
+                    name="email" size="small"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Password"
+                    name="password" type="password" size="small"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
+                />
+                <Input
+                    fullWidth
+                    margin="normal"
+                    type="file"
+                    name="profilePicture" // Add the name for the profile picture field
+                    onChange={(event) => {
+                        formik.setFieldValue('profilePicture', event.currentTarget.files[0]);
+                    }}
+                />
+                <Button fullWidth variant="contained" sx={{ mt: 2 }} size='small'
+                    type="submit">
+                    Reset Password
+                </Button>
             </Box>
 
             <Dialog open={open} onClose={handleClose}>

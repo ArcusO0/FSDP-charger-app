@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {ThemeProvider, createTheme, Box, Typography, Card, CardContent, Grid, Dialog, 
     DialogActions, DialogContent, DialogContentText, DialogTitle, Button, 
-    Container, Input, Rating} from "@mui/material";
+    Container, Input, Rating, TextField} from "@mui/material";
 import {ArrowBackIosRounded, AddCircle, CreateSharp, DeleteSharp, StarHalf} from "@mui/icons-material";
 import http from "../http";
 import { useFormik }from "formik";
@@ -14,6 +14,12 @@ function EVCMenu() {
         typography: {
           fontFamily: ["Verdana", "Inter", 'Helvetica'].join(','),
         },
+        palette: {
+            defButton: {
+              main: "#9BB1C3",
+              contrastText: "#FFFFFF"
+            }
+        }
     });
 
     const sidebar = Sidebar();
@@ -29,8 +35,6 @@ function EVCMenu() {
     const handleClose = () => {
         setOpen(false);
     };
-    
-    const [search, setSearch] = useState("");
     
     const[evcList, setEVCList] = useState([]);
 
@@ -69,12 +73,45 @@ function EVCMenu() {
       })
     }, [])
 
+        // Searching 
+        const [search, setSearch] = useState("");
+
+        const getEVCs = () => {
+            http.get('/MyEVC').then((res) => {
+                console.log(res.data);
+                setEVCList(res.data);
+            });
+        }
+    
+        const onSearchChange = (e) => {
+            setSearch(e.target.value);
+        }
+    
+        useEffect(()=> {
+            getEVCs();
+        }, [])
+    
+        const onSearchKeyDown = (e) => {
+            if (e.key === "Enter") {
+                searchEVC();
+            }
+        }
+        
+        const searchEVC = () => {
+            http.get(`/MyEVC?search=${search}`).then((res)=> {
+                console.log(res.data);
+                setEVCList(res.data);
+            })
+        }    
+
     const formik = useFormik({
         initialValues: { 
+            reqId: "1",
             type: "Delete",
+            addOrDelete: true,
             name: evc.name,
             address: evc.address,
-            rate: evc.rate,
+            rate: evc.bookingRate,
             description: evc.description,
             status: "Pending"
         },
@@ -157,9 +194,11 @@ function EVCMenu() {
                         <DeleteSharp sx={{height: 70, width: 70}}/> 
                     </Card>
                     <Dialog open={open} onClose={handleClose}>
-                        <Box sx={{ p:2}}>
-                            <ArrowBackIosRounded sx={{ display: 'inline-block', position: 'relative', top: 4}} onClick={handleClose}/>
-                            <DialogTitle variant="h5" sx= {{display: "inline-block", fontWeight:"bold"}}>Delete EV Chargers</DialogTitle>
+                        <Box sx={{ p:1 }}>
+                            <Box sx={{display:"flex", justifyContent:"center", alignItems:'center'}}>
+                                <ArrowBackIosRounded sx={{ position: 'relative', float:'left'}} onClick={handleClose}/>
+                                <DialogTitle variant="h5" sx= {{display: "inline-block", fontWeight:"bold"}}>Delete EV Chargers</DialogTitle>    
+                            </Box>                    
                             <DialogContent sx={{justifyContent: "center"}}>
                                 <DialogContentText sx={{mb:2}}>
                                     *EV Chargers will be deleted after admin approval
@@ -167,15 +206,15 @@ function EVCMenu() {
                                 <Typography>
                                     Select EV Charger to Update:
                                 </Typography>
-                                <Input value={search} placeholder="Search" sx={{minWidth: "95%", border: "1px solid black", borderRadius: 1, mt: 1, p: 0.5}}/>
+                                <Input value={search} placeholder="Search" sx={{minWidth: "95%", border: "1px solid black", borderRadius: 1, mt: 1, p: 0.5}} onChange={onSearchChange} onKeyDown={onSearchKeyDown}/>
                                 {/* Request Selection */}
                                 <Container sx={{maxHeight: 300, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                                     <Grid container spacing={2} sx={{maxWidth:450}} >
                                         {
                                             evcList.map((evc, i) => {
                                                 return(
-                                                    <Grid item lg={12} key={evc.id}>
-                                                        <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.id)}}>
+                                                    <Grid item lg={12} key={evc.chargerId}>
+                                                        <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.chargerId)}}>
                                                             <CardContent>
                                                                 <Typography variant="h6" sx={{mb: 2}}>
                                                                     EV Charger Name: {evc.name}
@@ -196,28 +235,28 @@ function EVCMenu() {
                             <DialogActions sx={{justifyContent: "center"}}>
                                 <Container component="form" onSubmit={formik.handleSubmit}>
                                     <Box sx={{display:"none"}}>
-                                        <Input
+                                        <TextField
                                         name="name"
                                         value={formik.values.name}
                                         onChange={formik.handleChange}
                                         />
-                                        <Input
+                                        <TextField
                                         name="address"
                                         value={formik.values.address}
                                         onChange={formik.handleChange}
                                         />
-                                        <Input
+                                        <TextField
                                         name="rate"
                                         value={formik.values.rate}
                                         onChange={formik.handleChange}
                                         />
-                                        <Input
+                                        <TextField
                                         name="description"
                                         value={formik.values.description}
                                         onChange={formik.handleChange}
                                         />
                                     </Box>
-                                    <Button type='submit' variant='contained' sx={{width:"90%", bgcolor: "#9BB1C3"}}>Delete</Button>
+                                    <Button type='submit' variant='contained' sx={{width:"90%"}} color="error">Delete</Button>
                                 </Container>
                                 
                             </DialogActions>
