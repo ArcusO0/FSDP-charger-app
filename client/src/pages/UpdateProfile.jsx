@@ -159,7 +159,7 @@ function UpdateProfile() {
                 </Grid>
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">
-                        Update Password
+                    <a href="/Login#/UpdatePassword">Update Password</a>
                     </Button>
                     <Button
                         variant="contained"

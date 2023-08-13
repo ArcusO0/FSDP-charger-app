@@ -45,7 +45,7 @@ function Registervendor() {
             http.post("/vendor/register", data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/login");
+                    navigate("/Login#/LoginVendor");
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);
