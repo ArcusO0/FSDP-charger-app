@@ -9,20 +9,10 @@ import { useCountdown } from '../hooks/useCountdown';
 import DateTimeDisplay from './DateTimeDisplay';
 
 function UserStatus() {
-    const [bookingList, setBookingList] = useState([]);
-    const HOURS_IN_MS = 60 * 60 * 1000;
-    const MINUTES_IN_MS = 60 * 1000;
+    const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
     const NOW_IN_MS = new Date().getTime();
 
-    const getBookings = () => {
-      http.get('/userbooking').then((res) => {
-          setBookingList(res.data);
-      });
-    };
-
-    useEffect(() => {
-        getBookings();
-    }, []);
+    const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
     const ExpiredNotice = () => {
         return (
           <div className="expired-notice">
@@ -70,34 +60,11 @@ function UserStatus() {
     };
 
     return (
-      <Box>
-        <Typography variant="h2" sx={{ my: 2 }}>
-                Countdown Timer
-          </Typography>
-      <Grid container spacing={2}>
-                {
-                    bookingList.map((booking, i) => {
-                        return (
-                          <Grid item xs={12} md={6} lg={4} key={booking.id}>
-                              <Card>
-                                  <CardContent>
-                                    <Typography variant="h6" sx={{ my: 2 }}>
-                                        {booking.bookingID}
-                                    </Typography>
-                                    <CountdownTimer targetDate={NOW_IN_MS + 
-                                      (((parseInt((booking.arrivaltime).substring(0,2))  + booking.duration) * HOURS_IN_MS)) - 
-                                      ((dayjs().format("HH") * HOURS_IN_MS) + (dayjs().format("mm")) * MINUTES_IN_MS)} />
-                                  </CardContent>
-                              </Card>
-                          </Grid>
-                        )
-                    })
-                }
-          </Grid>
-        </Box>
+        <div>
+          <h1>Countdown Timer</h1>
+          <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+        </div>
       );
-      
 }
 
 export default UserStatus;
-{/* <CountdownTimer targetDate={NOW_IN_MS + (booking.duration * HOURS_IN_MS)  + (parseInt((booking.arrivaltime).substring(0,2)) * HOURS_IN_MS) + (parseInt((booking.arrivaltime).substring(3,2)) * MINUTES_IN_MS)} /> */}
