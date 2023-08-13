@@ -7,15 +7,16 @@ import http from '../http';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from './vendorbg.jpeg';
+import Navbarvendor from './navbar/navbarvendor';
 
 
-function Login() {
+function Loginvendor() {
     const navigate = useNavigate();
     const [rememberMe, setRememberMe] = useState(false);
 
     const formik = useFormik({
         initialValues: {
-            name: "", 
+            name: "",
             password: ""
         },
         validationSchema: yup.object().shape({
@@ -32,7 +33,7 @@ function Login() {
         onSubmit: (data) => {
             data.name = data.name.trim()
             data.password = data.password.trim();
-            http.post("/user/login", data)
+            http.post("/vendor/login", data)
                 .then((res) => {
                     localStorage.setItem("accessToken", res.data.accessToken);
                     navigate("/");
@@ -61,12 +62,12 @@ function Login() {
             maxWidth: '500px',
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
             backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: '150px 150 px', 
+            backgroundSize: '150px 150 px',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
         }}>
             <>
-
+                <Navbarvendor />
             </>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Vendor Sign In
@@ -79,10 +80,10 @@ function Login() {
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="Name"
-                    name="name" size='small' 
-                    value={formik.values.name} 
+                    name="name" size='small'
+                    value={formik.values.name}
                     onChange={formik.handleChange}
-                    error={formik.touched.name && Boolean(formik.errors.name)} 
+                    error={formik.touched.name && Boolean(formik.errors.name)}
                     helperText={formik.touched.name && formik.errors.name}
                 />
                 <TextField
@@ -123,4 +124,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default Loginvendor;

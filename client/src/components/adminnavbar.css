@@ -1,6 +1,6 @@
 /* navbar.css */
 
-.navbaradmin {
+.navbar {
     flex-direction: column;
     display: flex;
     position: fixed;
@@ -45,9 +45,12 @@
     font-size: 24px;
 }
 
-.logo {
+.adminlogo {
+    position: absolute;
+    top: 2%;
+    left: 25%;
     height: auto;
-    width: fit-content;
+    width: 50%;
 }
 
 .user {
@@ -55,7 +58,7 @@
 }
 
 @media (max-width: 768px) {
-    .navbaradmin {
+    .navbar {
         z-index: 1;
         width: auto;
         height: auto;

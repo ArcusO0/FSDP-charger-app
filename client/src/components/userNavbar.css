@@ -5,6 +5,8 @@
 }
 
 #navbar {
+    padding: 0;
+    width: 100vw;
     background-color: green;
 }
 

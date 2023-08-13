@@ -6,10 +6,11 @@ import * as yup from 'yup';
 import http from '../http';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import backgroundImage from './vendorbg.jpeg'; 
+import backgroundImage from './vendorbg.jpeg';
+import Navbarvendor from './navbar/navbarvendor';
 
 
-function Register() {
+function Registervendor() {
     const navigate = useNavigate();
 
     const formik = useFormik({
@@ -41,10 +42,10 @@ function Register() {
             data.name = data.name.trim();
             data.email = data.email.trim().toLowerCase();
             data.password = data.password.trim();
-            http.post("/user/register", data)
+            http.post("/vendor/register", data)
                 .then((res) => {
                     console.log(res.data);
-                    navigate("/login");
+                    navigate("/Login#/LoginVendor");
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);
@@ -54,21 +55,24 @@ function Register() {
 
     return (
         <Box
-        sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: '20px',
-            border: '1px solid #ccc',
-            padding: '20px',
-            maxWidth: '500px',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: '150px 150 px', 
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-        }}>
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: '20px',
+                border: '1px solid #ccc',
+                padding: '20px',
+                maxWidth: '500px',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: '150px 150 px',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}>
+            <>
+                <Navbarvendor />
+            </>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Vendor Sign Up
             </Typography>
@@ -125,9 +129,9 @@ function Register() {
                 </Typography>
             </Box>
 
-            <ToastContainer />  
+            <ToastContainer />
         </Box>
     );
 }
 
-export default Register;
+export default Registervendor;

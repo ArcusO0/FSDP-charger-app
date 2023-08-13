@@ -1,10 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {ThemeProvider, createTheme, Container, Card, Typography, Box, Button,
+<<<<<<< HEAD
 Link, Grid, Rating} from '@mui/material';
 import {StarRounded, Send} from "@mui/icons-material";
 import Sidebar from '../components/sidebar';
 import http from "../http";
 import { useNavigate } from 'react-router-dom';
+=======
+Link, Grid, Rating, Dialog, IconButton} from '@mui/material';
+import {StarRounded, Send, Close} from "@mui/icons-material";
+import Sidebar from '../components/sidebar';
+import http from "../http";
+import { useNavigate } from 'react-router-dom';
+import CanvasJSReact from "@canvasjs/react-charts";
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function Dashboard() {
   const theme = createTheme({
@@ -34,7 +43,11 @@ function Dashboard() {
   const initialCount = bookingList.length;
 
   function perDay() {
+<<<<<<< HEAD
     const count = bookingList.filter((booking) => new Date(booking.createdAt) == DateObj).length;
+=======
+    const count = bookingList.filter((booking) => new Date(booking.createdAt).toDateString().slice(0,10) == DateObj.toDateString().slice(0,10)).length;
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
     return count;
   }
 
@@ -96,7 +109,67 @@ function Dashboard() {
     return avgRating.toFixed(2);
   }
 
+<<<<<<< HEAD
  
+=======
+  // Graph (Canvas JS)
+  function generateCommissionData() {
+    var dataList = []
+    var dataDict = {};
+    for (var i in bookingList) {
+      const bookingDate = bookingList[i].createdAt;
+      const bookPrice = parseFloat(bookingList[i].bookingPrice);
+      if (dataDict[bookingDate]) {
+        dataDict[bookingDate] += bookPrice;  
+      }
+      else {
+        dataDict[bookingDate] = bookPrice
+      }
+    }
+    for (var i in dataDict) {
+      dataList.push({ y: dataDict[i], label: new Date(i).toDateString().slice(4)});
+    }
+    console.log(dataList);
+    return dataList
+  };
+
+  function generateCommissionChart() {
+    var dataList = generateCommissionData();
+    console.log(dataList);
+    var CanvasJS = CanvasJSReact.CanvasJS;
+    var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+    const options = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2",
+      title: {
+        text: "Commission Earned"
+      },
+      axisY: {
+        title: "Commission",
+        prefix: "$"
+      },
+      axisX: {
+        title: "Day",
+        labelFontSize:15 
+      },
+      data: [
+        {
+          type: "line",
+          toolTipContent: "{label}: ${y}",
+          dataPoints: dataList
+        }
+      ]
+    }
+    return (
+      <CanvasJSChart options = {options}/>
+    )
+  }
+  const commissionChart = generateCommissionChart();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
   return (
     <ThemeProvider theme={theme}>
@@ -104,7 +177,11 @@ function Dashboard() {
         {sidebar}
         <Grid container spacing={2}>
           <Grid item xs={12}>
+<<<<<<< HEAD
             <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3", minWidth: "100%"}}>
+=======
+            <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3", minWidth: "100%"}} onClick={handleOpen}>
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
               <Typography variant="h3" sx={{pt: 8,pb: 1, fontWeight: "bold"}}>
                 ${commissionSum}
               </Typography>
@@ -112,6 +189,24 @@ function Dashboard() {
                 Balance as at {displayDate} 
               </Typography>
             </Card>
+<<<<<<< HEAD
+=======
+            <Dialog 
+            fullScreen
+            open={open}
+            onClose={handleClose}
+            >
+              <Box sx={{p:4}}>
+                <IconButton onClick={handleClose}>
+                  <Close/>
+                </IconButton>
+                {commissionChart}
+                <Typography sx={{mt: 3, ml: 1}}>
+                  Some Regression Information
+                </Typography>
+              </Box>
+            </Dialog>
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
           </Grid>
           <Grid item xs={6}>
             <Card sx={{textAlign:"center", border:"1px solid black", width: "100%"}}>
@@ -184,4 +279,8 @@ function Dashboard() {
   )
 }
 
+<<<<<<< HEAD
 export default Dashboard
+=======
+export default Dashboard
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421

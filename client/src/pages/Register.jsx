@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import http from '../http';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import backgroundImage from './userbg.jpeg'; 
+import backgroundImage from './userbg.jpeg';
 
 
 function Register() {
@@ -54,21 +54,21 @@ function Register() {
 
     return (
         <Box
-        sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            borderRadius: '20px',
-            border: '1px solid #ccc',
-            padding: '20px',
-            maxWidth: '500px',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: '150px 150 px', 
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-        }}>
+            sx={{
+                marginTop: 8,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                borderRadius: '20px',
+                border: '1px solid #ccc',
+                padding: '20px',
+                maxWidth: '500px',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: '150px 150 px',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Account Sign Up
             </Typography>

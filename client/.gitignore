@@ -12,9 +12,15 @@ dist
 dist-ssr
 *.local
 <<<<<<< HEAD
-.env
+<<<<<<< HEAD
+<<<<<<< HEAD
 =======
->>>>>>> origin/naqib
+.env
+>>>>>>> origin/Safwan
+=======
+>>>>>>> origin/Tyler
+=======
+>>>>>>> b9b54912d474c7ba5f2e0308aaa5ca29b1fee421
 
 # Editor directories and files
 .vscode/*

@@ -6,12 +6,19 @@ import http from '../http';
 import dayjs from 'dayjs';
 import global from '../global';
 
+<<<<<<< HEAD
 
 function UserBookings() {
     const [bookingList, setBookingList] = useState([]);
     const [oldbookingList, setOldBookingList] = useState([]);
     const [search, setSearch] = useState('');
     
+=======
+function UserBookings() {
+    const [bookingList, setBookingList] = useState([]);
+    const [search, setSearch] = useState('');
+
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
     const MoveToOld = () => {
         bookingList.map((booking, a) =>{
             var expiry = 0
@@ -38,6 +45,7 @@ function UserBookings() {
         setSearch(e.target.value);
     };
 
+<<<<<<< HEAD
     const getOldBookings = () => {
         http.get('/olduserbooking').then((res) => {
             setOldBookingList(res.data);
@@ -50,6 +58,8 @@ function UserBookings() {
         });
     };
 
+=======
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
     const getBookings = () => {
         http.get('/userbooking').then((res) => {
             setBookingList(res.data);
@@ -64,7 +74,10 @@ function UserBookings() {
 
     useEffect(() => {
         getBookings();
+<<<<<<< HEAD
         getOldBookings();
+=======
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
     }, []);
 
     const onSearchKeyDown = (e) => {
@@ -123,9 +136,15 @@ function UserBookings() {
                                     <CardContent>
                                         <Box sx={{ display: 'flex', mb: 1 }}>
                                             <Typography variant="h6" sx={{ flexGrow: 1 }}>
+<<<<<<< HEAD
                                                 {booking.bookingID}
                                             </Typography>
                                             <Link to={`/edituserbooking/${booking.id}`}>
+=======
+                                                {booking.email}
+                                            </Typography>
+                                            <Link to={`/editbooking/${booking.id}`}>
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
                                                 <IconButton color="primary" sx={{ padding: '4px' }}>
                                                     <Edit />
                                                 </IconButton>
@@ -192,7 +211,14 @@ function UserBookings() {
                                             {"Arrival: " + olduserbooking.arrivaltime}
                                         </Typography>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+<<<<<<< HEAD
                                             {"Hours: " + olduserbooking.duration}
+=======
+                                            {oldbooking.hours}
+                                        </Typography>
+                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
+                                            {oldbooking.arrival}
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
                                         </Typography>
                                     </CardContent>
                                 </Card>

@@ -105,5 +105,31 @@ router.get("/auth", validateToken, (req, res) => {
         user: userInfo
     });
 });
+router.delete("/:id", validateToken, async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        console.log('User deletion endpoint reached.');
+
+        let user = await User.findByPk(id);
+        if (!user) {
+            console.log(`User with ID ${id} not found.`);
+            return res.sendStatus(404);
+        }
+
+        console.log('User found:', user.toJSON());
+
+        // Delete the user account
+        await user.destroy();
+
+        console.log('User deleted successfully.');
+
+        res.json({ message: "User account deleted successfully." });
+
+    } catch (error) {
+        console.error('Error deleting account:', error);
+        res.status(500).json({ message: "An error occurred while deleting the account." });
+    }
+});
 
 module.exports = router;

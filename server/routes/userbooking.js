@@ -40,6 +40,7 @@ router.get("/", async (req, res) => {
     let search = req.query.search;
     if (search) {
         condition[Sequelize.Op.or] = [
+<<<<<<< HEAD
             { vendorID: { [Sequelize.Op.like]: `%${search}%` } },
             { bookingID: { [Sequelize.Op.like]: `%${search}%` } },
             { customerID: { [Sequelize.Op.like]: `%${search}%` } },
@@ -47,6 +48,12 @@ router.get("/", async (req, res) => {
             { bookingPrice: { [Sequelize.Op.like]: `%${search}%` } },
             { duration: { [Sequelize.Op.like]: `%${search}%` } },
             { arrivaltime: { [Sequelize.Op.like]: `%${search}%` } },
+=======
+            { email: { [Sequelize.Op.like]: `%${search}%` } },
+            { license: { [Sequelize.Op.like]: `%${search}%` } },
+            { hours: { [Sequelize.Op.like]: `%${search}%` } },
+            { arrival: { [Sequelize.Op.like]: `%${search}%` } },
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
         ];
     }
 

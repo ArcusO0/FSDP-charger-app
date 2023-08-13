@@ -2,10 +2,19 @@ import React, {useState, useEffect} from 'react';
 import { PropTypes } from 'prop-types';
 import {ThemeProvider, createTheme, useTheme, Box, Container, Card, Typography,
 Table, TableContainer, TableCell, TableHead, TableRow, TableBody, Paper, 
+<<<<<<< HEAD
 TablePagination, TableFooter, IconButton} from '@mui/material';
 import {FirstPage, LastPage, KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
 import Sidebar from '../components/sidebar';
 import http from "../http";
+=======
+TablePagination, TableFooter, TableSortLabel, IconButton, Dialog} from '@mui/material';
+import {FirstPage, LastPage, KeyboardArrowLeft, KeyboardArrowRight, Close} from "@mui/icons-material";
+import {visuallyHidden} from "@mui/utils";
+import Sidebar from '../components/sidebar';
+import http from "../http";
+import CanvasJSReact from "@canvasjs/react-charts";
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -77,6 +86,95 @@ function ConvertDateString(str) {
   return displayDate;
 }
 
+<<<<<<< HEAD
+=======
+// Table Header with Sorting Icon
+
+function EnhancedTableHead(props) {
+  const {order, orderBy, onRequestSort} = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  return(
+    <TableHead>
+      <TableRow>
+        <TableCell 
+        key={"bookingId"}
+        align={'left'}
+        padding={"none"}
+        sortDirection={orderBy === "bookingId" ? order : false}>
+          <TableSortLabel
+          active={orderBy === "bookingId"}
+          direction={orderBy === "bookingId" ? order: "asc"}
+          onClick={createSortHandler("bookingId")}>
+            Booking ID
+          </TableSortLabel>
+        </TableCell>
+        <TableCell
+        key={"customerId"}
+        align={'left'}
+        padding={"none"}
+        sortDirection={orderBy === "customerId" ? order : false}>
+          <TableSortLabel
+          active={orderBy === "customerId"}
+          direction={orderBy === "customerId" ? order: "asc"}
+          onClick={createSortHandler("customerId")}>
+            Customer ID
+          </TableSortLabel>
+        </TableCell>
+        <TableCell
+        key={"evcId"}
+        align={'left'}
+        padding={"none"}
+        sortDirection={orderBy === "evcId" ? order : false}>
+          <TableSortLabel
+          active={orderBy === "evcId"}
+          direction={orderBy === "evcId" ? order: "asc"}
+          onClick={createSortHandler("evcId")}>
+            EV Charger ID
+          </TableSortLabel>
+        </TableCell>
+        <TableCell
+        key={"bookingDate"}
+        align={'left'}
+        padding={"none"}
+        sortDirection={orderBy === "bookingDate" ? order : false}>
+          <TableSortLabel
+          active={orderBy === "bookingDate"}
+          direction={orderBy === "bookingDate" ? order: "asc"}
+          onClick={createSortHandler("bookingDate")}>
+            Booking Date
+          </TableSortLabel>
+        </TableCell>
+        <TableCell
+        key={"bookingPrice"}
+        align={'left'}
+        padding={"normal"}
+        sortDirection={orderBy === "bookingPrice" ? order : false}>
+          <TableSortLabel
+          active={orderBy === "bookingPrice"}
+          direction={orderBy === "bookingPrice" ? order: "asc"}
+          onClick={createSortHandler("bookingPrice")}>
+            Booking Price
+          </TableSortLabel>
+        </TableCell>
+      </TableRow>
+    </TableHead>
+  )
+}
+
+EnhancedTableHead.propTypes = {
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  orderBy: PropTypes.string.isRequired,
+
+}
+
+
+
+// Main Page for Bookings
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function MyBookings() {
   const theme = createTheme({
@@ -93,6 +191,10 @@ function MyBookings() {
   useEffect(() => {
     http.get("/MyBookings").then((res) => {
       console.log(res.data);
+<<<<<<< HEAD
+=======
+      res.data.bookingPrice = parseFloat(res.data.bookingPrice);
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
       setBookingList(res.data);
     });
   }, []);
@@ -113,12 +215,113 @@ function MyBookings() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+<<<<<<< HEAD
+=======
+
+  // Sorting Table
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("bookingId");
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order ==="asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property)
+  }
+
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  } 
+
+  function getComparator(order, orderBy) {
+    return order === 'desc'
+      ? (a,b) => descendingComparator(a, b, orderBy)
+      : (a,b) => -descendingComparator(a, b, orderBy);
+  }
+
+  function sortData(array, comparator) {
+    const stabilisedThis = array.map((el, index) => [el, index]);
+    stabilisedThis.sort((a,b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilisedThis.map((el) => el[0])
+  } 
+
+
+  // Graph (Canvas JS)
+  function generateBookingData() {
+    var dataList = []
+    var dataDict = {};
+    for (var i in bookingList) {
+      const bookingDate = bookingList[i].createdAt;
+      const numBook = bookingList.filter((booking) => booking.createdAt == bookingDate).length
+      console.log(numBook)
+      dataDict[bookingDate] = numBook
+    }
+    for (var i in dataDict) {
+      dataList.push({ y: dataDict[i], label: new Date(i).toDateString().slice(4)});
+    }
+    return dataList
+  };
+
+  function generateBookingChart() {
+    var dataList = generateBookingData();
+    console.log(dataList);
+    var CanvasJS = CanvasJSReact.CanvasJS;
+    var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+    const options = {
+      animationEnabled: true,
+      exportEnabled: true,
+      theme: "light2",
+      title: {
+        text: "Number of Bookings / Day"
+      },
+      axisY: {
+        title: "Number of Bookings",
+        minimum: 0,
+        increment: 5,
+      },
+      axisX: {
+        title: "Day",
+        labelFontSize: 15
+      },
+      data: [
+        {
+          type: "line",
+          toolTipContent: "{label}: ${y}",
+          dataPoints: dataList
+        }
+      ]
+    }
+    return (
+      <CanvasJSChart options = {options}/>
+    )
+  }
+  const bookingChart = generateBookingChart();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
   return (
     // Add Filtering for each column (Booking Date, Booking Price)
     <ThemeProvider theme={theme}>
       <Container>
         {sidebar}
+<<<<<<< HEAD
         <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3"}}>
+=======
+        <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3"}} onClick={handleOpen}>
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
           <Typography variant="h3" sx={{pt: 10, fontWeight: "bold"}}>
             {count}
           </Typography>
@@ -126,6 +329,7 @@ function MyBookings() {
             Bookings
           </Typography>
         </Card>
+<<<<<<< HEAD
         <TableContainer component={Paper} sx={{mt: 2, mb: 2, boxShadow:"none"}}>
           <Table stickyHeader aria-label='simple table'>
             <TableHead>
@@ -140,6 +344,33 @@ function MyBookings() {
             <TableBody>
               {(rowsPerPage > 0
               ? bookingList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+=======
+        <Dialog 
+            fullScreen
+            open={open}
+            onClose={handleClose}
+            >
+              <Box sx={{p:4}}>
+                <IconButton onClick={handleClose}>
+                  <Close/>
+                </IconButton>
+                {bookingChart}
+                <Typography sx={{mt: 3, ml: 1}}>
+                  Some Regression Information
+                </Typography>
+              </Box>
+            </Dialog>
+        <TableContainer component={Paper} sx={{mt: 2, mb: 2, boxShadow:"none"}}>
+          <Table stickyHeader aria-label='simple table'>
+            <EnhancedTableHead
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            />
+            <TableBody>
+              {(rowsPerPage > 0
+              ? sortData(bookingList,getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+>>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
               : bookingList
               ).map((booking)=> (
                 <TableRow key={booking.id}>

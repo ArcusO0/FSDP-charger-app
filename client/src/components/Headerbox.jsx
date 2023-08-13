@@ -6,7 +6,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 const Headerbox = ({ number, text }) => {
     return (
         <>
-        <a href='/'> <FontAwesomeIcon icon={faChevronLeft} className='back' /></a>
+        <a href='/adminhome'> <FontAwesomeIcon icon={faChevronLeft} className='back' /></a>
         <div className='container'>
             {/* Use the number and text props */}
             <h1 className='number'>{number}</h1>
