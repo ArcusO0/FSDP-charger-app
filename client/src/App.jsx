@@ -24,7 +24,13 @@ import VendorEVCMap from './pages/VendorEVCMap';
 import VendorEVCMenu from './pages/VendorEVCMenu';
 import VendorRequests from './pages/VendorRequests';
 import VendorUpdateEVC from './pages/VendorUpdateEVC';
-
+import UserBookings from './pages/UserBookings';
+import AddUserFeedback from './pages/AddUserFeedback';
+import UserStatus from'./pages/UserStatus';
+import AddUserBooking from './pages/AddUserBooking';
+import EditUserFeedback from './pages/EditUserFeedback';
+import EditUserBooking from './pages/EditUserBooking';
+import UserFeedbacks from './pages/UserFeedbacks';
 
 
 function App() {
