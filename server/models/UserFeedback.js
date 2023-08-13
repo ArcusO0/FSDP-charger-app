@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const UserFeedback = sequelize.define("UserFeedback", {
+    const Feedback = sequelize.define("Feedback", {
         title: {
             type: DataTypes.STRING,
             allowNull: false
@@ -9,5 +9,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
-    return UserFeedback;
+    return Feedback;
 }

@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-    const UserBooking = sequelize.define("UserBooking", {
+    const Booking = sequelize.define("Booking", {
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         vendorID: {
             type: DataTypes.STRING,
             allowNull: false
@@ -16,8 +20,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        bookingPrice: {
-            type: DataTypes.DECIMAL(4,2),
+        bookingID: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        license: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
         duration: {
@@ -29,5 +37,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
     });
-    return UserBooking;
+    return Booking;
 }

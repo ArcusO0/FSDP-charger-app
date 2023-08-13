@@ -17,24 +17,6 @@ require('dotenv').config();
 
 
 // Routes
-<<<<<<< HEAD
-const requests = require('./routes/requests');
-app.use("/requests", requests);
-const bookings = require('./routes/bookings');
-app.use("/bookings", bookings);
-const chargers = require('./routes/chargers');
-app.use("/chargers", chargers);
-const feedbackRoute = require('./routes/feedback');
-app.use("/feedback", feedbackRoute);
-const bookingRoute = require('./routes/booking');
-app.use("/booking", bookingRoute);
-const feedbackRoute = require('./routes/userfeedback');
-app.use("/userfeedback", feedbackRoute);
-const bookingRoute = require('./routes/userbooking');
-app.use("/userbooking", bookingRoute);
-const oldbookingRoute = require('./routes/olduserbooking');
-app.use("/olduserbooking", oldbookingRoute);
-=======
 
 const requestRoute = require("./routes/requests");
 const evcRoute = require("./routes/evc");
@@ -51,7 +33,6 @@ app.use("/vendor", vendorRoute)
 const fileRoute = require('./routes/file');
 app.use("/file", fileRoute);
 
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 db.sequelize.sync({ alter: true }).then(() => {
     let port = process.env.APP_PORT;
