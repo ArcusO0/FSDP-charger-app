@@ -5,6 +5,8 @@ const db = require('./models');
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 // Simple Route
 app.get("/", (req, res) => {
@@ -33,7 +35,10 @@ app.use("/user", userRoute);
 const vendorRoute = require('./routes/vendor');
 app.use("/vendor", vendorRoute)
 
+const fileRoute = require('./routes/file');
+app.use("/file", fileRoute);
 
+const db = require('./models');
 db.sequelize.sync({ alter: true }).then(() => {
     let port = process.env.APP_PORT;
     app.listen(port, () => {
