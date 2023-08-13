@@ -41,15 +41,13 @@ function MyEVC() {
             setEVCList(res.data);
         });
     }, []);
-
-    const addrList = evcList.map((evc) => evc.address);
     
     var requestOptions = {
       method: 'GET',
     };
 
-    addrList.map((address) => {
-      fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=7382d72310e743bcbd4982a95342a6cb`, requestOptions)
+    evcList.map((evc) => {
+      fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(evc.address)}&apiKey=7382d72310e743bcbd4982a95342a6cb`, requestOptions)
         .then((res) => res.json())
         .then(result => {
           console.log(result);
@@ -58,11 +56,13 @@ function MyEVC() {
         .then(result => {
           new mapboxgl.Marker()
             .setLngLat(new mapboxgl.LngLat(result.features[0].geometry.coordinates[0], result.features[0].geometry.coordinates[1]))
-            .setPopup(new mapboxgl.Popup({offset: 25}).setHTML(`<h3>${result.query.text}</h3>`))
+            .setPopup(new mapboxgl.Popup({offset: 30}).setHTML(
+              `<h3>${evc.name}</h3>`
+            ))
             .addTo(map.current)
         })
         .catch(error => console.log('error', error));
-    }); 
+    });
 
     const[bookList, setBookList] = useState([]);
     
@@ -73,6 +73,20 @@ function MyEVC() {
       })
     }, [])
  
+    function setEVCStatus(rating) {
+      if (rating > 3) {
+        const status = "Good";
+        return status
+      }
+      else if (rating > 2) {
+        const status = "Poor";
+        return status
+      }
+      else {
+        const status = "Critical";
+        return status
+      } 
+    }
 
     function setBorderColor(status) {
       if (status == "Good") {
@@ -113,7 +127,7 @@ function MyEVC() {
                           evcList.map((evc, i) => {
                               return(
                                   <Grid item lg={12} key={evc.id}>
-                                      <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.id)}}>
+                                      <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(setEVCStatus(evc.rating))}`}} onClick={() => {setID(evc.id)}}>
                                           <CardContent>
                                               <Typography variant="h6" sx={{mb: 2}}>
                                                   EV Charger Name: {evc.name}

@@ -86,11 +86,8 @@ function App() {
 
       <Container>
         <Routes>
-          <Route path={"/"} element={<HomePage />} />
-          <Route path={"/adminhome"} element={<AdminHome />} />
-          <Route path={"/AdminCharger"} element={<AdminCharger />} />
-          <Route path={"/AdminBookings"} element={<AdminBookings />} />
-          <Route path={"/Requests"} element={<AdminRequests />} />
+
+          
           <Route path={"/register"} element={<Register />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/loginvendor"} element={<LoginVendor />} />
@@ -107,6 +104,10 @@ function App() {
           <Route path={"MyEVC/Menu/AddEVC"} element={<VendorAddEVCRequest />} />
           <Route path={"/MyEVC/Menu/UpdateEVC"} element={<VendorUpdateEVC />} />
 
+          <Route path={"/AdminHome"} element={<AdminHome/>} />
+          <Route path={"/AdminCharger"} element={<AdminCharger />} />
+          <Route path={"/AdminBookings"} element={<AdminBookings />} />
+          <Route path={"/AdminRequests"} element={<AdminRequests />} />
         </Routes>
       </Container>
     </Router>

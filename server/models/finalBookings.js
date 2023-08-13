@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const finalBooking = sequelize.define("finalBooking", {
+    const FinalBooking = sequelize.define("FinalBooking", {
         vendorId: {
             type: DataTypes.STRING,
             allowNull: false
@@ -28,5 +28,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
-    return finalBooking;
+    FinalBooking.associate = (models) => {
+        FinalBooking.belongsTo(models.FinalEVC, {
+            foreignKey: "evcId",
+            targetKey: "chargerId"
+        });
+    };
+
+    return FinalBooking;
 };
