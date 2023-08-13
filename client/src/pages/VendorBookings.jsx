@@ -127,14 +127,14 @@ function EnhancedTableHead(props) {
           </TableSortLabel>
         </TableCell>
         <TableCell
-        key={"bookingDate"}
+        key={"createdAt"}
         align={'left'}
         padding={"none"}
-        sortDirection={orderBy === "bookingDate" ? order : false}>
+        sortDirection={orderBy === "createdAt" ? order : false}>
           <TableSortLabel
-          active={orderBy === "bookingDate"}
-          direction={orderBy === "bookingDate" ? order: "asc"}
-          onClick={createSortHandler("bookingDate")}>
+          active={orderBy === "createdAt"}
+          direction={orderBy === "createdAt" ? order: "asc"}
+          onClick={createSortHandler("createdAt")}>
             Booking Date
           </TableSortLabel>
         </TableCell>
@@ -214,11 +214,23 @@ function MyBookings() {
   }
 
   function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
+    if (orderBy != "bookingPrice") {
+      if (b[orderBy] < a[orderBy]) {
+        return -1;
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return 1;
+      }
     }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
+    else {
+      const valB = parseFloat(b[orderBy]);
+      const valA = parseFloat(a[orderBy]);
+      if (valB < valA) {
+        return -1;
+      }
+      if (valB > valA) {
+        return 1;
+      }
     }
     return 0;
   } 
