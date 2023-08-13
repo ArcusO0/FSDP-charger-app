@@ -3,11 +3,7 @@ import "./adminrequests.css"
 import Request from '../components/request';
 import http from '../http';
 import RequestInfoDialog from '../components/infodialog';
-<<<<<<< HEAD
-import Navbar from '../components/navbar';
-=======
 import Navbar from '../components/adminnavbar';
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function AdminRequests() {
     const [requests, setrequests] = useState([]);
@@ -53,21 +49,13 @@ function AdminRequests() {
             <div className='addRequestsContainer'>
                 
                 {addRequests.map((request) => (
-<<<<<<< HEAD
-                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate} />
-=======
                     <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.type} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate} />
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
                 ))}
             </div>
             
             <div className='deleteRequestsContainer'>
                 {deleteRequests.map((request) => (
-<<<<<<< HEAD
-                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate}/>
-=======
                     <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.type} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate}/>
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
                 ))}
 
             </div>
