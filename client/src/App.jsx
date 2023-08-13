@@ -58,6 +58,7 @@ function App() {
           <Route path={"/loginvendor"} element={<LoginVendor />} />
           <Route path={"/registervendor"} element={<RegisterVendor />} />
           <Route path={"/updateprofile"} element={<UpdateProfile />} />
+          <Route path={"/updatepassword"} element={<UpdatePassword />} />
           <Route path={"/loginadmin"} element={<LoginAdmin />} />
           <Route path={"/navbaradmin"} element={<Navbaradmin/>} />
           <Route path={"/navbarvendor"} element={<Navbarvendor />} />
