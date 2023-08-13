@@ -24,7 +24,13 @@ import VendorEVCMap from './pages/VendorEVCMap';
 import VendorEVCMenu from './pages/VendorEVCMenu';
 import VendorRequests from './pages/VendorRequests';
 import VendorUpdateEVC from './pages/VendorUpdateEVC';
-
+import UserBookings from './pages/UserBookings';
+import AddUserFeedback from './pages/AddUserFeedback';
+import UserStatus from'./pages/UserStatus';
+import AddUserBooking from './pages/AddUserBooking';
+import EditUserFeedback from './pages/EditUserFeedback';
+import EditUserBooking from './pages/EditUserBooking';
+import UserFeedbacks from './pages/UserFeedbacks';
 
 
 function App() {
@@ -75,6 +81,14 @@ function App() {
           <Route path={"/AdminCharger"} element={<AdminCharger />} />
           <Route path={"/AdminBookings"} element={<AdminBookings />} />
           <Route path={"/AdminRequests"} element={<AdminRequests />} />
+
+          <Route path={"/userfeedbacks"} element={<UserFeedbacks />} />
+          <Route path={"/adduserfeedback"} element={<AddUserFeedback />} />
+          <Route path={"/edituserfeedback/:id"} element={<EditUserFeedback />} />
+          <Route path={"/userstatus"} element={<UserStatus/>} />
+          <Route path={"/adduserbooking"} element={<AddUserBooking />} />
+          <Route path={"/edituserbooking/:id"} element={<EditUserBooking />} />
+          <Route path={"/userbookings"} element={<UserBookings />} />
         </Routes>
       </Container>
     </Router>
