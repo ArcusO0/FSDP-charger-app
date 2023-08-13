@@ -21,46 +21,36 @@ function AddUserBooking() {
             evcID:"TBA",
             bookingPrice:0.00,
             duration:1,
-            arrivaltime:dayjs()
+            arrivaltime:"hh:mm"
 
         },
         validationSchema: yup.object().shape({
             vendorID: yup.string().trim()
-                .min(5, 'License plate must be at least 5 characters')
-                .max(10, 'License plate must be at most 10 characters')
                 .required('License plate is required'),
             bookingID: yup.string().trim()
-                .min(5, 'License plate must be at least 5 characters')
-                .max(10, 'License plate must be at most 10 characters')
                 .required('License plate is required'),
             customerID: yup.string().trim()
-                .min(5, 'License plate must be at least 5 characters')
-                .max(10, 'License plate must be at most 10 characters')
                 .required('License plate is required'),
             evcID: yup.string().trim()
-                .min(5, 'License plate must be at least 5 characters')
-                .max(10, 'License plate must be at most 10 characters')
                 .required('License plate is required'),
-            bookingPrice: yup.string().trim()
-                .min(5, 'License plate must be at least 5 characters')
-                .max(10, 'License plate must be at most 10 characters')
+            bookingPrice: yup.number()
                 .required('License plate is required'),
-            hours: yup.number()
+            duration: yup.number()
                 .min(1, 'Must book at least 1 hour')
                 .max(12, '12 hours maximum')
                 .required('Hours is required')
                 .integer("Must be an integer"),
-            arrival: yup.string()
+            arrivaltime: yup.string()
                 .required('Time of arrival is required'),
         }),
         onSubmit: (data) => {
-            data.vendorID = data.email.trim();
-            data.bookingID = data.license.trim();
-            data.customerID = data.license.trim();
-            data.evcID = data.license.trim();
-            data.bookingPrice = data.license.trim();
-            data.hours = data.hours;
-            data.arrival = data.arrival;
+            data.vendorID = data.vendorID.trim();
+            data.bookingID = data.bookingID.trim();
+            data.customerID = data.customerID.trim();
+            data.evcID = data.evcID.trim();
+            data.bookingPrice = data.bookingPrice
+            data.duration = data.duration;
+            data.arrivaltime = data.arrivaltime;
             http.post("/userbooking", data)
                 .then((res) => {
                     console.log(res.data);
@@ -81,67 +71,67 @@ function AddUserBooking() {
                     fullWidth margin="normal" autoComplete="off"
                     label="VendorID"
                     name="vendorID"
-                    value={formik.values.email}
+                    value={formik.values.vendorID}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.vendorID && Boolean(formik.errors.vendorID)}
+                    helperText={formik.touched.vendorID && formik.errors.vendorID}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="BookingID"
                     name="bookingID"
-                    value={formik.values.license}
+                    value={formik.values.bookingID}
                     onChange={formik.handleChange}
-                    error={formik.touched.license && Boolean(formik.errors.license)}
-                    helperText={formik.touched.license && formik.errors.license}
+                    error={formik.touched.bookingID && Boolean(formik.errors.bookingID)}
+                    helperText={formik.touched.bookingID && formik.errors.bookingID}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="CustomerID"
                     name="customerID"
-                    value={formik.values.email}
+                    value={formik.values.customerID}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.customerID && Boolean(formik.errors.customerID)}
+                    helperText={formik.touched.customerID && formik.errors.customerID}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="EvcID"
                     name="evcID"
-                    value={formik.values.email}
+                    value={formik.values.evcID}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.evcID && Boolean(formik.errors.evcID)}
+                    helperText={formik.touched.evcID && formik.errors.evcID}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="BookingPrice"
                     name="bookingPrice"
-                    value={formik.values.email}
+                    value={formik.values.bookingPrice}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.bookingPrice && Boolean(formik.errors.bookingPrice)}
+                    helperText={formik.touched.bookingPrice && formik.errors.bookingPrice}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="Hours"
-                    name="hours"
+                    label="Duration"
+                    name="duration"
                     type="number"
-                    value={formik.values.hours}
+                    value={formik.values.duration}
                     onChange={formik.handleChange}
-                    error={formik.touched.hours && Boolean(formik.errors.hours)}
-                    helperText={formik.touched.hours && formik.errors.hours}
+                    error={formik.touched.duration && Boolean(formik.errors.duration)}
+                    helperText={formik.touched.duration && formik.errors.duration}
                 />
                 <TimePicker
                     views={['hours', 'minutes']}
                     fullWidth margin="normal" autoComplete="off"
-                    label="Arrival"
-                    name="arrival"
+                    label="ArrivalTime"
+                    name="arrivaltime"
                     ampm={false}
-                    value={formik.values.arrival}
-                    onChange={(value) => formik.setFieldValue('arrival', value.format("hh:mm"))}
-                    error={formik.touched.arrival && Boolean(formik.errors.arrival)}
-                    helperText={formik.touched.arrival && formik.errors.arrival}
+                    value={formik.values.arrivaltime}
+                    onChange={(value) => formik.setFieldValue('arrivaltime', value.format("hh:mm"))}
+                    error={formik.touched.arrivaltime && Boolean(formik.errors.arrivaltime)}
+                    helperText={formik.touched.arrivaltime && formik.errors.arrivaltime}
                 />
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">

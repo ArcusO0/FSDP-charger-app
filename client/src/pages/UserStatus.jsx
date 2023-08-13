@@ -9,10 +9,21 @@ import { useCountdown } from '../hooks/useCountdown';
 import DateTimeDisplay from './DateTimeDisplay';
 
 function UserStatus() {
-    const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000;
+    const [bookingList, setBookingList] = useState([]);
+    const Expiry = 3 * 24 * 60 * 60 * 1000;
     const NOW_IN_MS = new Date().getTime();
 
-    const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS;
+    const dateTimeAfterThreeDays = NOW_IN_MS + Expiry;
+
+    const getBookings = () => {
+      http.get('/userbooking').then((res) => {
+          setBookingList(res.data);
+      });
+    };
+
+    useEffect(() => {
+        getBookings();
+    }, []);
     const ExpiredNotice = () => {
         return (
           <div className="expired-notice">
@@ -60,11 +71,31 @@ function UserStatus() {
     };
 
     return (
-        <div>
-          <h1>Countdown Timer</h1>
-          <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-        </div>
+      <Box>
+        <Typography variant="h2" sx={{ my: 2 }}>
+                Countdown Timer
+          </Typography>
+      <Grid container spacing={2}>
+                {
+                    bookingList.map((booking, i) => {
+                        return (
+                          <Grid item xs={12} md={6} lg={4} key={booking.id}>
+                              <Card>
+                                  <CardContent>
+                                    <Typography variant="h6" sx={{ my: 2 }}>
+                                        {booking.bookingID}
+                                    </Typography>
+                                    <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+                                  </CardContent>
+                              </Card>
+                          </Grid>
+                        )
+                    })
+                }
+          </Grid>
+        </Box>
       );
+      
 }
 
 export default UserStatus;

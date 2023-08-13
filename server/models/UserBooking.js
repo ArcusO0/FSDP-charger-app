@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Booking = sequelize.define("Booking", {
+    const UserBooking = sequelize.define("UserBooking", {
         vendorID: {
             type: DataTypes.STRING,
             allowNull: false
@@ -29,5 +29,5 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
     });
-    return Booking;
+    return UserBooking;
 }

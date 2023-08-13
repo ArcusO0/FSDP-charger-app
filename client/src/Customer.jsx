@@ -1,4 +1,4 @@
-import './App.css';
+import './Customer.css';
 import { Container, AppBar, Toolbar, Typography } from '@mui/material';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import UserFeedbacks from './pages/UserFeedbacks';
@@ -10,7 +10,7 @@ import EditUserBooking from './pages/EditUserBooking';
 import UserBookings from './pages/UserBookings';
 
 
-function App() {
+function Customer() {
   return (
     <Router>
       <AppBar position="static" className="AppBar" id="navbar">
@@ -44,4 +44,4 @@ function App() {
   );
 }
 
-export default App;
+export default Customer;

@@ -7,10 +7,13 @@ router.post("/", async (req, res) => {
     let data = req.body;
     // Validate request body
     let validationSchema = yup.object().shape({
-        email: yup.string().trim().min(3).max(321).required(),
-        license: yup.string().trim().min(5).max(10).required(),
-        hours: yup.number().min(1).max(12).required(),
-        arrival: yup.string().trim().min(5).max(5).required(),
+        vendorID: yup.string().required(),
+        bookingID: yup.string().required(),
+        customerID: yup.string().required(),
+        evcID: yup.string().required(),
+        bookingPrice: yup.number().required(),
+        duration: yup.number().min(1).max(12).required(),
+        arrivaltime: yup.string().trim().min(5).max(5).required(),
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
@@ -21,11 +24,14 @@ router.post("/", async (req, res) => {
         return;
     }
 
-    data.email = data.email.trim();
-    data.license = data.license.trim();
-    data.hours = data.hours;
-    data.arrival = data.arrival;
-    let result = await Booking.create(data);
+    data.vendorID = data.vendorID.trim();
+    data.bookingID = data.bookingID.trim();
+    data.customerID = data.customerID.trim();
+    data.evcID = data.evcID.trim();
+    data.bookingPrice = data.bookingPrice
+    data.duration = data.duration;
+    data.arrivaltime = data.arrivaltime;
+    let result = await UserBooking.create(data);
     res.json(result);
 });
 
@@ -34,14 +40,17 @@ router.get("/", async (req, res) => {
     let search = req.query.search;
     if (search) {
         condition[Sequelize.Op.or] = [
-            { email: { [Sequelize.Op.like]: `%${search}%` } },
-            { license: { [Sequelize.Op.like]: `%${search}%` } },
-            { hours: { [Sequelize.Op.like]: `%${search}%` } },
-            { arrival: { [Sequelize.Op.like]: `%${search}%` } },
+            { vendorID: { [Sequelize.Op.like]: `%${search}%` } },
+            { bookingID: { [Sequelize.Op.like]: `%${search}%` } },
+            { customerID: { [Sequelize.Op.like]: `%${search}%` } },
+            { evcID: { [Sequelize.Op.like]: `%${search}%` } },
+            { bookingPrice: { [Sequelize.Op.like]: `%${search}%` } },
+            { duration: { [Sequelize.Op.like]: `%${search}%` } },
+            { arrivaltime: { [Sequelize.Op.like]: `%${search}%` } },
         ];
     }
 
-    let list = await Booking.findAll({
+    let list = await UserBooking.findAll({
         where: condition,
         order: [['createdAt', 'DESC']]
     });
@@ -50,20 +59,20 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     let id = req.params.id;
-    let booking = await Booking.findByPk(id);
+    let userbooking = await UserBooking.findByPk(id);
     // Check id not found
-    if (!booking) {
+    if (!userbooking) {
         res.sendStatus(404);
         return;
     }
-    res.json(booking);
+    res.json(userbooking);
 });
 
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let booking = await Booking.findByPk(id);
-    if (!booking) {
+    let userbooking = await UserBooking.findByPk(id);
+    if (!userbooking) {
         res.sendStatus(404);
         return;
     }
@@ -71,10 +80,13 @@ router.put("/:id", async (req, res) => {
     let data = req.body;
     // Validate request body
     let validationSchema = yup.object().shape({
-        email: yup.string().trim().min(3).max(321).required(),
-        license: yup.string().trim().min(5).max(10).required(),
-        hours: yup.number().min(1).max(12).required(),
-        arrival: yup.string().trim().min(5).max(5).required(),
+        vendorID: yup.string().required(),
+        bookingID: yup.string().required(),
+        customerID: yup.string().required(),
+        evcID: yup.string().required(),
+        bookingPrice: yup.number().required(),
+        duration: yup.number().min(1).max(12).required(),
+        arrivaltime: yup.string().trim().min(5).max(5).required(),
     });
     try {
         await validationSchema.validate(data, { abortEarly: false });
@@ -85,11 +97,14 @@ router.put("/:id", async (req, res) => {
         return;
     }
 
-    data.email = data.email.trim();
-    data.license = data.license.trim();
-    data.hours = data.hours.trim();
-    data.arrival = data.arrival.trim();
-    let num = await Booking.update(data, {
+    data.vendorID = data.vendorID.trim();
+    data.bookingID = data.bookingID.trim();
+    data.customerID = data.customerID.trim();
+    data.evcID = data.evcID.trim();
+    data.bookingPrice = data.bookingPrice
+    data.duration = data.duration;
+    data.arrivaltime = data.arrivaltime;
+    let num = await UserBooking.update(data, {
         where: { id: id }
     });
     if (num == 1) {
@@ -107,13 +122,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let booking = await Booking.findByPk(id);
-    if (!booking) {
+    let userbooking = await UserBooking.findByPk(id);
+    if (!userbooking) {
         res.sendStatus(404);
         return;
     }
 
-    let num = await Booking.destroy({
+    let num = await UserBooking.destroy({
         where: { id: id }
     })
     if (num == 1) {

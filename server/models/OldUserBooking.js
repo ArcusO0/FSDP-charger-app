@@ -1,33 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
-    const Booking = sequelize.define("Booking", {
-        oldvendorID: {
+    const OldUserBooking = sequelize.define("OldUserBooking", {
+        vendorID: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        oldbookingID: {
+        bookingID: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        oldcustomerID: {
+        customerID: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        oldevcID: {
+        evcID: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        oldbookingPrice: {
+        bookingPrice: {
             type: DataTypes.DECIMAL(4,2),
             allowNull: false
         },
-        oldduration: {
+        duration: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        oldarrivaltime: {
+        arrivaltime: {
             type: DataTypes.STRING,
             allowNull: false
         },
     });
-    return Booking;
+    return OldUserBooking;
 }
