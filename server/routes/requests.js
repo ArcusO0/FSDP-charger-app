@@ -7,7 +7,6 @@ const yup = require("yup");
 router.post("/addRequest", async(req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        reqId: yup.string().min(0).required(),
         addOrDelete: yup.boolean().required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
@@ -98,9 +97,7 @@ router.put("/updateRequest/:id", async(req, res) => {
         res.status(400).json({ errors: err.errors });
         return;
     }
-    data.type = data.type.trim();
     data.name = data.name.trim();
-    data.status = data.status.trim();
     let num = await finalRequests.update(data, { where: { id: id } });
     if (num == 1) {
         res.json({
