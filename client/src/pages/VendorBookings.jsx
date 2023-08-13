@@ -2,19 +2,12 @@ import React, {useState, useEffect} from 'react';
 import { PropTypes } from 'prop-types';
 import {ThemeProvider, createTheme, useTheme, Box, Container, Card, Typography,
 Table, TableContainer, TableCell, TableHead, TableRow, TableBody, Paper, 
-<<<<<<< HEAD
-TablePagination, TableFooter, IconButton} from '@mui/material';
-import {FirstPage, LastPage, KeyboardArrowLeft, KeyboardArrowRight} from "@mui/icons-material";
-import Sidebar from '../components/sidebar';
-import http from "../http";
-=======
 TablePagination, TableFooter, TableSortLabel, IconButton, Dialog} from '@mui/material';
 import {FirstPage, LastPage, KeyboardArrowLeft, KeyboardArrowRight, Close} from "@mui/icons-material";
 import {visuallyHidden} from "@mui/utils";
 import Sidebar from '../components/sidebar';
 import http from "../http";
 import CanvasJSReact from "@canvasjs/react-charts";
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -86,8 +79,6 @@ function ConvertDateString(str) {
   return displayDate;
 }
 
-<<<<<<< HEAD
-=======
 // Table Header with Sorting Icon
 
 function EnhancedTableHead(props) {
@@ -174,7 +165,6 @@ EnhancedTableHead.propTypes = {
 
 
 // Main Page for Bookings
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function MyBookings() {
   const theme = createTheme({
@@ -191,10 +181,7 @@ function MyBookings() {
   useEffect(() => {
     http.get("/MyBookings").then((res) => {
       console.log(res.data);
-<<<<<<< HEAD
-=======
       res.data.bookingPrice = parseFloat(res.data.bookingPrice);
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
       setBookingList(res.data);
     });
   }, []);
@@ -215,8 +202,6 @@ function MyBookings() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-<<<<<<< HEAD
-=======
 
   // Sorting Table
   const [order, setOrder] = useState("asc");
@@ -311,17 +296,12 @@ function MyBookings() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
   return (
     // Add Filtering for each column (Booking Date, Booking Price)
     <ThemeProvider theme={theme}>
       <Container>
         {sidebar}
-<<<<<<< HEAD
-        <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3"}}>
-=======
         <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3"}} onClick={handleOpen}>
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
           <Typography variant="h3" sx={{pt: 10, fontWeight: "bold"}}>
             {count}
           </Typography>
@@ -329,22 +309,6 @@ function MyBookings() {
             Bookings
           </Typography>
         </Card>
-<<<<<<< HEAD
-        <TableContainer component={Paper} sx={{mt: 2, mb: 2, boxShadow:"none"}}>
-          <Table stickyHeader aria-label='simple table'>
-            <TableHead>
-              <TableRow>
-                <TableCell>Booking ID</TableCell>
-                <TableCell>Customer ID</TableCell>
-                <TableCell>EV Charger ID</TableCell>
-                <TableCell>Booking Date</TableCell>
-                <TableCell>Booking Price ($)</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-              ? bookingList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-=======
         <Dialog 
             fullScreen
             open={open}
@@ -370,7 +334,6 @@ function MyBookings() {
             <TableBody>
               {(rowsPerPage > 0
               ? sortData(bookingList,getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
               : bookingList
               ).map((booking)=> (
                 <TableRow key={booking.id}>
