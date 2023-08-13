@@ -109,9 +109,5 @@ function UserFeedbacks() {
     );
 }
 
-<<<<<<< HEAD
 
 export default UserFeedbacks;
-=======
-export default UserFeedbacks;
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
