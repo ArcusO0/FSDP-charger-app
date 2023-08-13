@@ -88,7 +88,7 @@ router.get("/", async(req, res) => {
             ['chargerId', "ASC"]
         ]
     });
-    res.json(list)
+    res.json(list);
 });
 
 // Get EVC by ID
@@ -110,7 +110,7 @@ router.put("/updateEVC/:id", async(req, res) => {
         return;
     }
     let data = req.body;
-    let num = await FinalEVC.update(data, { where: { id: id } });
+    let num = await FinalEVC.update(data, { where: { chargerId: id } });
     if (num == 1) {
         res.json({
             message: "EVC Info was updated successfully."

@@ -36,8 +36,6 @@ function EVCMenu() {
         setOpen(false);
     };
     
-    const [search, setSearch] = useState("");
-    
     const[evcList, setEVCList] = useState([]);
 
     useEffect(() => {
@@ -74,6 +72,37 @@ function EVCMenu() {
         setBookList(res.data);
       })
     }, [])
+
+        // Searching 
+        const [search, setSearch] = useState("");
+
+        const getEVCs = () => {
+            http.get('/MyEVC').then((res) => {
+                console.log(res.data);
+                setEVCList(res.data);
+            });
+        }
+    
+        const onSearchChange = (e) => {
+            setSearch(e.target.value);
+        }
+    
+        useEffect(()=> {
+            getEVCs();
+        }, [])
+    
+        const onSearchKeyDown = (e) => {
+            if (e.key === "Enter") {
+                searchEVC();
+            }
+        }
+        
+        const searchEVC = () => {
+            http.get(`/MyEVC?search=${search}`).then((res)=> {
+                console.log(res.data);
+                setEVCList(res.data);
+            })
+        }    
 
     const formik = useFormik({
         initialValues: { 
@@ -177,15 +206,15 @@ function EVCMenu() {
                                 <Typography>
                                     Select EV Charger to Update:
                                 </Typography>
-                                <Input value={search} placeholder="Search" sx={{minWidth: "95%", border: "1px solid black", borderRadius: 1, mt: 1, p: 0.5}}/>
+                                <Input value={search} placeholder="Search" sx={{minWidth: "95%", border: "1px solid black", borderRadius: 1, mt: 1, p: 0.5}} onChange={onSearchChange} onKeyDown={onSearchKeyDown}/>
                                 {/* Request Selection */}
                                 <Container sx={{maxHeight: 300, overflowY: "auto", overflowX:"hidden", my: 3, ml: -2, pb:5}}>
                                     <Grid container spacing={2} sx={{maxWidth:450}} >
                                         {
                                             evcList.map((evc, i) => {
                                                 return(
-                                                    <Grid item lg={12} key={evc.id}>
-                                                        <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.id)}}>
+                                                    <Grid item lg={12} key={evc.chargerId}>
+                                                        <Card sx={{ mt: 3, border: `solid 2px ${setBorderColor(evc.status)}`}} onClick={() => {setID(evc.chargerId)}}>
                                                             <CardContent>
                                                                 <Typography variant="h6" sx={{mb: 2}}>
                                                                     EV Charger Name: {evc.name}
