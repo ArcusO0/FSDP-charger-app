@@ -13,7 +13,8 @@ import http from './http';
 import LoginVendor from './pages/LoginVendor';
 import RegisterVendor from './pages/RegisterVendor';
 import UpdateProfile from './pages/UpdateProfile';
-import LoginAdmin from './pages/LoginAdmin'
+import UpdatePassword from './pages/UpdatePassword';
+import LoginAdmin from './pages/LoginAdmin';
 import Navbaradmin from './pages/navbar/navbaradmin';
 import Navbarvendor from './pages/navbar/navbarvendor';
 import VendorAddEVCRequest from "./pages/VendorAddEVCRequest";

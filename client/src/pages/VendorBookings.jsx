@@ -4,7 +4,6 @@ import {ThemeProvider, createTheme, useTheme, Box, Container, Card, Typography,
 Table, TableContainer, TableCell, TableHead, TableRow, TableBody, Paper, 
 TablePagination, TableFooter, TableSortLabel, IconButton, Dialog} from '@mui/material';
 import {FirstPage, LastPage, KeyboardArrowLeft, KeyboardArrowRight, Close} from "@mui/icons-material";
-import {visuallyHidden} from "@mui/utils";
 import Sidebar from '../components/sidebar';
 import http from "../http";
 import CanvasJSReact from "@canvasjs/react-charts";
@@ -127,14 +126,14 @@ function EnhancedTableHead(props) {
           </TableSortLabel>
         </TableCell>
         <TableCell
-        key={"bookingDate"}
+        key={"createdAt"}
         align={'left'}
         padding={"none"}
-        sortDirection={orderBy === "bookingDate" ? order : false}>
+        sortDirection={orderBy === "createdAt" ? order : false}>
           <TableSortLabel
-          active={orderBy === "bookingDate"}
-          direction={orderBy === "bookingDate" ? order: "asc"}
-          onClick={createSortHandler("bookingDate")}>
+          active={orderBy === "createdAt"}
+          direction={orderBy === "createdAt" ? order: "asc"}
+          onClick={createSortHandler("createdAt")}>
             Booking Date
           </TableSortLabel>
         </TableCell>
@@ -180,7 +179,6 @@ function MyBookings() {
   
   useEffect(() => {
     http.get("/MyBookings").then((res) => {
-      console.log(res.data);
       res.data.bookingPrice = parseFloat(res.data.bookingPrice);
       setBookingList(res.data);
     });
@@ -214,11 +212,23 @@ function MyBookings() {
   }
 
   function descendingComparator(a, b, orderBy) {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
+    if (orderBy != "bookingPrice") {
+      if (b[orderBy] < a[orderBy]) {
+        return -1;
+      }
+      if (b[orderBy] > a[orderBy]) {
+        return 1;
+      }
     }
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
+    else {
+      const valB = parseFloat(b[orderBy]);
+      const valA = parseFloat(a[orderBy]);
+      if (valB < valA) {
+        return -1;
+      }
+      if (valB > valA) {
+        return 1;
+      }
     }
     return 0;
   } 
@@ -249,7 +259,6 @@ function MyBookings() {
     for (var i in bookingList) {
       const bookingDate = bookingList[i].createdAt;
       const numBook = bookingList.filter((booking) => booking.createdAt == bookingDate).length
-      console.log(numBook)
       dataDict[bookingDate] = numBook
     }
     for (var i in dataDict) {
@@ -260,7 +269,6 @@ function MyBookings() {
 
   function generateBookingChart() {
     var dataList = generateBookingData();
-    console.log(dataList);
     var CanvasJS = CanvasJSReact.CanvasJS;
     var CanvasJSChart = CanvasJSReact.CanvasJSChart;
     const options = {

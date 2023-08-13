@@ -35,7 +35,7 @@ function Dashboard() {
   const initialCount = bookingList.length;
 
   function perDay() {
-    const count = bookingList.filter((booking) => new Date(booking.createdAt) == DateObj).length;
+    const count = bookingList.filter((booking) => new Date(booking.createdAt).toDateString().slice(0,10) == DateObj.toDateString().slice(0,10)).length;
     return count;
   }
 
