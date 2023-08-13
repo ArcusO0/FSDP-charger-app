@@ -7,7 +7,6 @@ import AdminBookings from './pages/UserBookings';
 import AdminRequests from './pages/Requests';
 import HomePage from './pages/home';
 import { useState, useEffect } from 'react';
-
 import Register from './pages/Register';
 import Login from './pages/Login';
 import http from './http';
