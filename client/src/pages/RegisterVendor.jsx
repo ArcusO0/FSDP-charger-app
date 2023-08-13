@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Checkbox } from '@mui/material';
+import React from 'react';
+import { Box, Typography, TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from '../http';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import backgroundImage from './userbg.jpeg';
+import backgroundImage from './vendorbg.jpeg'; 
+import Navbarvendor from './navbar/navbarvendor';
 
-function Login() {
+
+function Registervendor() {
     const navigate = useNavigate();
-    const [rememberMe, setRememberMe] = useState(false);
 
     const formik = useFormik({
         initialValues: {
-            name: "", 
-            password: ""
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: ""
         },
         validationSchema: yup.object().shape({
             name: yup.string().trim()
@@ -23,19 +26,26 @@ function Login() {
                 .min(3, 'Name must be at least 3 characters')
                 .max(50, 'Name must be at most 50 characters')
                 .required('Name is required'),
+            email: yup.string().trim()
+                .email('Enter a valid email')
+                .max(50, 'Email must be at most 50 characters')
+                .required('Email is required'),
             password: yup.string().trim()
                 .min(8, 'Password must be at least 8 characters')
                 .max(50, 'Password must be at most 50 characters')
-                .required('Password is required')
+                .required('Password is required'),
+            confirmPassword: yup.string().trim()
+                .required('Confirm password is required')
+                .oneOf([yup.ref('password'), null], 'Passwords must match')
         }),
         onSubmit: (data) => {
-            data.name = data.name.trim()
+            data.name = data.name.trim();
+            data.email = data.email.trim().toLowerCase();
             data.password = data.password.trim();
-            http.post("/user/login", data)
+            http.post("/vendor/register", data)
                 .then((res) => {
-                    localStorage.setItem("accessToken", res.data.accessToken);
-                    navigate("/");
-                    window.location.reload();
+                    console.log(res.data);
+                    navigate("/Login#/LoginVendor");
                 })
                 .catch(function (err) {
                     toast.error(`${err.response.data.message}`);
@@ -43,13 +53,9 @@ function Login() {
         }
     });
 
-
-    const handleRememberMeChange = (event) => {
-        setRememberMe(event.target.checked);
-    };
-
     return (
-        <Box sx={{
+        <Box
+        sx={{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
@@ -64,62 +70,68 @@ function Login() {
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
         }}>
+            <>
+                <Navbarvendor /> 
+            </>
             <Typography variant="h5" sx={{ my: 2 }}>
-                Account Sign In
+                Vendor Sign Up
             </Typography>
             <Typography variant="body1" sx={{ my: 1, textAlign: 'center' }}>
-                Please fill in your detail to access your account.
+                Please fill in your detail to create your account.
             </Typography>
             <Box component="form" sx={{ maxWidth: '500px' }}
                 onSubmit={formik.handleSubmit}>
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
                     label="Name"
-                    name="name" size='small' 
-                    value={formik.values.name} 
+                    name="name" size="small"
+                    value={formik.values.name}
                     onChange={formik.handleChange}
-                    error={formik.touched.name && Boolean(formik.errors.name)} 
+                    error={formik.touched.name && Boolean(formik.errors.name)}
                     helperText={formik.touched.name && formik.errors.name}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
+                    label="Email"
+                    name="email" size="small"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
                     label="Password"
-                    name="password" type="password" size='small'
-                    value={formik.values.password}
+                    name="password" type="password" size="small"
+                    value={formik.values.password}      
                     onChange={formik.handleChange}
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
                 />
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Checkbox
-                        checked={rememberMe}
-                        onChange={handleRememberMeChange}
-                        color="primary"
-                    />
-                    <Typography variant="body2">Remember Me</Typography>
-                    <Box sx={{ flexGrow: 2 }} /> {/* For spacing */}
-                    <Typography variant="body2">
-                        <a href="/forgot-password">Forgot Password?</a>
-                    </Typography>
-                </Box>
-
-                <Button fullWidth variant="contained" sx={{ mt: 2 }} type="submit">
-                    Sign In
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Confirm Password"
+                    name="confirmPassword" type="password" size="small"
+                    value={formik.values.confirmPassword}
+                    onChange={formik.handleChange}
+                    error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+                    helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                />
+                <Button fullWidth variant="contained" sx={{ mt: 2 }}
+                    type="submit">
+                    Sign Up
                 </Button>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Dont have an account? <a href="/Login#/Register">Sign Up</a>
+                    Already have an account? <a href="/Login#/LoginVendor">Sign In</a>
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Are you a vendor? <a href="/Login#/LoginVendor">Click Here!</a>
-                </Typography>
-                <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Admin Log In? <a href="/Login#/LoginAdmin">Click Here!</a>
+                    Are you a vendor? <a href="/Login#/Login">Click Here!</a>
                 </Typography>
             </Box>
-            <ToastContainer />
+
+            <ToastContainer />  
         </Box>
-        
     );
 }
 
-export default Login;
+export default Registervendor;
