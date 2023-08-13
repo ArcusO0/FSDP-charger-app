@@ -123,13 +123,13 @@ function AddUserBooking() {
                     helperText={formik.touched.duration && formik.errors.duration}
                 />
                 <TimePicker
-                    views={['hours', 'minutes']}
+                    views={['hours']}
                     fullWidth margin="normal" autoComplete="off"
-                    label="ArrivalTime"
+                    label="Hour"
                     name="arrivaltime"
                     ampm={false}
                     value={formik.values.arrivaltime}
-                    onChange={(value) => formik.setFieldValue('arrivaltime', value.format("hh:mm"))}
+                    onChange={(value) => formik.setFieldValue('arrivaltime', value.format("HH:mm"))}
                     error={formik.touched.arrivaltime && Boolean(formik.errors.arrivaltime)}
                     helperText={formik.touched.arrivaltime && formik.errors.arrivaltime}
                 />

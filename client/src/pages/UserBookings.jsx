@@ -139,7 +139,7 @@ function UserBookings() {
                                             </Typography>
                                         </Box>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {booking.bookingPrice}
+                                            {"Arrival: " + booking.arrivaltime}
                                         </Typography>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
                                             {"Hours: " + booking.duration}
@@ -189,13 +189,10 @@ function UserBookings() {
                                             </Typography>
                                         </Box>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {olduserbooking.license}
+                                            {"Arrival: " + olduserbooking.arrivaltime}
                                         </Typography>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {olduserbooking.duration}
-                                        </Typography>
-                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {olduserbooking.arrivaltime}
+                                            {"Hours: " + olduserbooking.duration}
                                         </Typography>
                                     </CardContent>
                                 </Card>

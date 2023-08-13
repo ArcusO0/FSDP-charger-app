@@ -10,10 +10,9 @@ import DateTimeDisplay from './DateTimeDisplay';
 
 function UserStatus() {
     const [bookingList, setBookingList] = useState([]);
-    const Expiry = 3 * 24 * 60 * 60 * 1000;
+    const HOURS_IN_MS = 60 * 60 * 1000;
+    const MINUTES_IN_MS = 60 * 1000;
     const NOW_IN_MS = new Date().getTime();
-
-    const dateTimeAfterThreeDays = NOW_IN_MS + Expiry;
 
     const getBookings = () => {
       http.get('/userbooking').then((res) => {
@@ -85,7 +84,9 @@ function UserStatus() {
                                     <Typography variant="h6" sx={{ my: 2 }}>
                                         {booking.bookingID}
                                     </Typography>
-                                    <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+                                    <CountdownTimer targetDate={NOW_IN_MS + 
+                                      (((parseInt((booking.arrivaltime).substring(0,2))  + booking.duration) * HOURS_IN_MS)) - 
+                                      ((dayjs().format("HH") * HOURS_IN_MS) + (dayjs().format("mm")) * MINUTES_IN_MS)} />
                                   </CardContent>
                               </Card>
                           </Grid>
@@ -99,3 +100,4 @@ function UserStatus() {
 }
 
 export default UserStatus;
+{/* <CountdownTimer targetDate={NOW_IN_MS + (booking.duration * HOURS_IN_MS)  + (parseInt((booking.arrivaltime).substring(0,2)) * HOURS_IN_MS) + (parseInt((booking.arrivaltime).substring(3,2)) * MINUTES_IN_MS)} /> */}
