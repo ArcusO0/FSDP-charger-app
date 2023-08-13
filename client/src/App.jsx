@@ -75,6 +75,14 @@ function App() {
           <Route path={"/AdminCharger"} element={<AdminCharger />} />
           <Route path={"/AdminBookings"} element={<AdminBookings />} />
           <Route path={"/AdminRequests"} element={<AdminRequests />} />
+
+          <Route path={"/userfeedbacks"} element={<UserFeedbacks />} />
+          <Route path={"/adduserfeedback"} element={<AddUserFeedback />} />
+          <Route path={"/edituserfeedback/:id"} element={<EditUserFeedback />} />
+          <Route path={"/userstatus"} element={<UserStatus/>} />
+          <Route path={"/adduserbooking"} element={<AddUserBooking />} />
+          <Route path={"/edituserbooking/:id"} element={<EditUserBooking />} />
+          <Route path={"/userbookings"} element={<UserBookings />} />
         </Routes>
       </Container>
     </Router>
