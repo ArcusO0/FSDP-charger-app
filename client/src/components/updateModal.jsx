@@ -59,7 +59,7 @@ function UpdateModal({req_id, req_name, req_address, req_description, req_rate})
             data.description = data.description.trim();
         }
         console.log(data);
-        http.put(`/MyRequests/updateRequest/${req.reqId}`, data)
+        http.put(`/MyRequests/updateRequest/${req.id}`, data)
         .then((res)=> {
           console.log(res.data);
           reloadPage();

@@ -1,19 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {ThemeProvider, createTheme, Container, Card, Typography, Box, Button,
-<<<<<<< HEAD
-Link, Grid, Rating} from '@mui/material';
-import {StarRounded, Send} from "@mui/icons-material";
-import Sidebar from '../components/sidebar';
-import http from "../http";
-import { useNavigate } from 'react-router-dom';
-=======
 Link, Grid, Rating, Dialog, IconButton} from '@mui/material';
 import {StarRounded, Send, Close} from "@mui/icons-material";
 import Sidebar from '../components/sidebar';
 import http from "../http";
 import { useNavigate } from 'react-router-dom';
 import CanvasJSReact from "@canvasjs/react-charts";
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
 function Dashboard() {
   const theme = createTheme({
@@ -43,11 +35,7 @@ function Dashboard() {
   const initialCount = bookingList.length;
 
   function perDay() {
-<<<<<<< HEAD
-    const count = bookingList.filter((booking) => new Date(booking.createdAt) == DateObj).length;
-=======
     const count = bookingList.filter((booking) => new Date(booking.createdAt).toDateString().slice(0,10) == DateObj.toDateString().slice(0,10)).length;
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
     return count;
   }
 
@@ -109,9 +97,6 @@ function Dashboard() {
     return avgRating.toFixed(2);
   }
 
-<<<<<<< HEAD
- 
-=======
   // Graph (Canvas JS)
   function generateCommissionData() {
     var dataList = []
@@ -169,7 +154,6 @@ function Dashboard() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
 
   return (
     <ThemeProvider theme={theme}>
@@ -177,11 +161,7 @@ function Dashboard() {
         {sidebar}
         <Grid container spacing={2}>
           <Grid item xs={12}>
-<<<<<<< HEAD
-            <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3", minWidth: "100%"}}>
-=======
             <Card sx={{textAlign:"center", mt: 3, bgcolor:"#9BB1C3", minWidth: "100%"}} onClick={handleOpen}>
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
               <Typography variant="h3" sx={{pt: 8,pb: 1, fontWeight: "bold"}}>
                 ${commissionSum}
               </Typography>
@@ -189,8 +169,6 @@ function Dashboard() {
                 Balance as at {displayDate} 
               </Typography>
             </Card>
-<<<<<<< HEAD
-=======
             <Dialog 
             fullScreen
             open={open}
@@ -206,7 +184,6 @@ function Dashboard() {
                 </Typography>
               </Box>
             </Dialog>
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
           </Grid>
           <Grid item xs={6}>
             <Card sx={{textAlign:"center", border:"1px solid black", width: "100%"}}>
@@ -279,8 +256,4 @@ function Dashboard() {
   )
 }
 
-<<<<<<< HEAD
 export default Dashboard
-=======
-export default Dashboard
->>>>>>> a17fec0e2840c5f10c33dbaf8cfc81f5a1630421
