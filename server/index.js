@@ -14,12 +14,7 @@ app.get("/", (req, res) => {
 });
 
 require('dotenv').config();
-db.sequelize.sync({ alter: true }).then(() => {
-    let port = process.env.APP_PORT;
-    app.listen(port, () => {
-        console.log(`⚡Server running on http://localhost:${port}`);
-    });
-});
+
 
 // Routes
 
@@ -38,7 +33,7 @@ app.use("/vendor", vendorRoute)
 const fileRoute = require('./routes/file');
 app.use("/file", fileRoute);
 
-const db = require('./models');
+
 db.sequelize.sync({ alter: true }).then(() => {
     let port = process.env.APP_PORT;
     app.listen(port, () => {

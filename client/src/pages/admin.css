@@ -1,0 +1,58 @@
+.top {
+    position: absolute;
+    width: 80%;
+    height: 25%;
+    top: 20%;
+    left: 10%;
+    padding: 0;
+    background-color: #fba263;
+}
+
+.bottom {
+    position: fixed;
+    width: 80%;
+    height: 25%;
+    bottom: 18%;
+    left: 10%;
+    padding: 0;
+    background-color: #fba263;
+}
+
+.icon {
+    font-size: 45px;
+}
+
+.header {
+    position: absolute;
+    left: 10%;
+    top: 0;
+    font-size: 30px;
+}
+
+.subheader1 {
+    left: 10%;
+    position: absolute;
+    bottom: 77.8%;
+    font-size: 24px;
+}
+
+.subheader2 {
+    left: 10%;
+    position: absolute;
+    bottom: 40.8%;
+    font-size: 24px;
+}
+
+@media (max-width:768px) {
+    .header {
+        font-size: 24px;
+    }
+    .subheader1 {
+        bottom: 78.5%;
+        font-size: 16px;
+    }
+    .subheader2 {
+        bottom: 41.5%;
+        font-size: 16px;
+    }
+}

@@ -47,47 +47,12 @@ function App() {
 
   return (
     <Router>
-      <AppBar position="static" className="AppBar" sx={{ backgroundColor: 'green' }}>
-        <Container>
-          <Toolbar disableGutters={true}>
-            <Link to="/">
-              <Typography variant="h6" component="div">
-                Logo
-              </Typography>
-            </Link>
-            <Link to="/" ><Typography>Bookings</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Rewards</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Status</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Map</Typography></Link>
-            <Box sx={{ flexGrow: 0.5 }}></Box>
-            <Link to="/" ><Typography>Feedback</Typography></Link>
-            <Box sx={{ flexGrow: 2 }}></Box>
-            {user && (
-              <>
-                <Link to="/UpdateProfile">
-                  <Typography>{user.name}</Typography>
-                </Link>
-                <Button onClick={logout}>Logout</Button>
-              </>
-            )
-            }
-            {!user && (
-              <>
-                <Link to="/register" ><Typography>Register</Typography></Link>
-                <Link to="/login" ><Typography>Login</Typography></Link>
-              </>
-            )}
-          </Toolbar>
-        </Container>
-      </AppBar>
+      
 
       <Container>
         <Routes>
 
-          
+          <Route path={"/"} element={<HomePage />} />
           <Route path={"/register"} element={<Register />} />
           <Route path={"/login"} element={<Login />} />
           <Route path={"/loginvendor"} element={<LoginVendor />} />

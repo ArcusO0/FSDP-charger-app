@@ -4,7 +4,7 @@ import Headerbox from '../components/Headerbox';
 import { Box,  Input, IconButton } from '@mui/material';
 import {  Search, Clear } from '@mui/icons-material';
 import http from '../http';
-import Navbar from '../components/navbar';
+import Navbar from '../components/adminnavbar';
 import Chart from "chart.js/auto";
 import { Line } from 'react-chartjs-2';
 <script src="path/to/chartjs/dist/chart.umd.js"></script>

@@ -4,7 +4,8 @@ export default function HomePage() {
     
 
     return (
-        <>
+        <div style={{}}>
+        
             <UserNavbar />
             <MapWrapper center={[1.3521, 103.8198]}
                 scrollWheelZoom={true}
@@ -15,7 +16,8 @@ export default function HomePage() {
                     height: "86vh",
                     width: "100vw"
                 }} />
-        </>
+                
+            </div>
         
     );
 }

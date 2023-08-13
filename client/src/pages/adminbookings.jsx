@@ -3,7 +3,7 @@ import "./adminbookings.css"
 import Headerbox from '../components/Headerbox';
 
 import http from '../http';
-import Navbar from '../components/navbar';
+import Navbar from '../components/adminnavbar';
 
 function AdminBookings() {
     const [bookingdata, setbookingdata] = useState([]);

@@ -3,7 +3,7 @@ import "./adminrequests.css"
 import Request from '../components/request';
 import http from '../http';
 import RequestInfoDialog from '../components/infodialog';
-import Navbar from '../components/navbar';
+import Navbar from '../components/adminnavbar';
 
 function AdminRequests() {
     const [requests, setrequests] = useState([]);
@@ -49,13 +49,13 @@ function AdminRequests() {
             <div className='addRequestsContainer'>
                 
                 {addRequests.map((request) => (
-                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate} />
+                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.type} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate} />
                 ))}
             </div>
             
             <div className='deleteRequestsContainer'>
                 {deleteRequests.map((request) => (
-                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.reqId} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate}/>
+                    <Request key={request.id} id={request.id} name={request.name} status={request.status} reqId={request.type} toggleInfoshow={toggleInfoshow} address={request.address} description={request.description} addOrDelete={request.addOrDelete} bookingRate={request.rate}/>
                 ))}
 
             </div>

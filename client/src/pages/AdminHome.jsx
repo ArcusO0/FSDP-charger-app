@@ -3,7 +3,7 @@ import "./admin.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChargingStation,faBookOpen } from '@fortawesome/free-solid-svg-icons';
 
-import Navbar from '../components/navbar';
+import Navbar from '../components/adminnavbar';
 
 function AdminHome() {
     
