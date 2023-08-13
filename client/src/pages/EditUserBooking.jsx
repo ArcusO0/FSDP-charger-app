@@ -1,23 +1,28 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, TextField, Button } from '@mui/material';
-import { useFormik, useField, useFormikContext } from 'formik';
-import * as yup from 'yup';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import http from '../http';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import UserNavbar from "../components/userNavbar";
 
 function EditUserBooking() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [booking, setBooking] = useState({
-        email:"",
-        license:"",
-        hours:"",
-        arrival:dayjs()
+    const [userbooking, setBooking] = useState({
+        vendorID:"TBA",
+        bookingID:"TBA",
+        customerID:"TBA",
+        evcID:"TBA",
+        bookingPrice:0.00,
+        duration:1,
+        arrivaltime:"hh:mm"
     });
 
     useEffect(() => {
@@ -27,31 +32,35 @@ function EditUserBooking() {
     }, []);
 
     const formik = useFormik({
-        initialValues: booking,
+        initialValues: userbooking,
         enableReinitialize: true,
         validationSchema: yup.object().shape({
-            email: yup.string().trim()
-                .min(3, 'email is too short')
-                .max(320, 'email is too long')
-                .email("Invalid Email")
-                .required('Email is required'),
-            license: yup.string().trim()
-                .min(5, 'License plate must be at least 5 characters')
-                .max(10, 'License plate must be at most 10 characters')
+            vendorID: yup.string().trim()
                 .required('License plate is required'),
-            hours: yup.number()
+            bookingID: yup.string().trim()
+                .required('License plate is required'),
+            customerID: yup.string().trim()
+                .required('License plate is required'),
+            evcID: yup.string().trim()
+                .required('License plate is required'),
+            bookingPrice: yup.number()
+                .required('License plate is required'),
+            duration: yup.number()
                 .min(1, 'Must book at least 1 hour')
                 .max(12, '12 hours maximum')
                 .required('Hours is required')
                 .integer("Must be an integer"),
-            arrival: yup.string()
+            arrivaltime: yup.string()
                 .required('Time of arrival is required'),
         }),
         onSubmit: (data) => {
-            data.email = data.email.trim();
-            data.license = data.license.trim();
-            data.hours = data.hours;
-            data.arrival = data.arrival;
+            data.vendorID = data.vendorID.trim();
+            data.bookingID = data.bookingID.trim();
+            data.customerID = data.customerID.trim();
+            data.evcID = data.evcID.trim();
+            data.bookingPrice = data.bookingPrice
+            data.duration = data.duration;
+            data.arrivaltime = data.arrivaltime;
             http.put(`/userbooking/${id}`, data)
                 .then((res) => {
                     console.log(res.data);
@@ -71,58 +80,86 @@ function EditUserBooking() {
     };
 
     const deleteBooking = () => {
-        http.delete(`/booking/${id}`)
+        http.delete(`/userbooking/${id}`)
             .then((res) => {
                 console.log(res.data);
-                navigate("/bookings");
+                navigate("/userbookings");
             });
     }
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box>
+        <UserNavbar/>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Edit Booking
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
             <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="Email"
-                    name="email"
-                    value={formik.values.email}
+                    label="VendorID"
+                    name="vendorID"
+                    value={formik.values.vendorID}
                     onChange={formik.handleChange}
-                    error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.email}
+                    error={formik.touched.vendorID && Boolean(formik.errors.vendorID)}
+                    helperText={formik.touched.vendorID && formik.errors.vendorID}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="License"
-                    name="license"
-                    value={formik.values.license}
+                    label="BookingID"
+                    name="bookingID"
+                    value={formik.values.bookingID}
                     onChange={formik.handleChange}
-                    error={formik.touched.license && Boolean(formik.errors.license)}
-                    helperText={formik.touched.license && formik.errors.license}
+                    error={formik.touched.bookingID && Boolean(formik.errors.bookingID)}
+                    helperText={formik.touched.bookingID && formik.errors.bookingID}
                 />
                 <TextField
                     fullWidth margin="normal" autoComplete="off"
-                    label="Hours"
-                    name="hours"
+                    label="CustomerID"
+                    name="customerID"
+                    value={formik.values.customerID}
+                    onChange={formik.handleChange}
+                    error={formik.touched.customerID && Boolean(formik.errors.customerID)}
+                    helperText={formik.touched.customerID && formik.errors.customerID}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="EvcID"
+                    name="evcID"
+                    value={formik.values.evcID}
+                    onChange={formik.handleChange}
+                    error={formik.touched.evcID && Boolean(formik.errors.evcID)}
+                    helperText={formik.touched.evcID && formik.errors.evcID}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="BookingPrice"
+                    name="bookingPrice"
+                    value={formik.values.bookingPrice}
+                    onChange={formik.handleChange}
+                    error={formik.touched.bookingPrice && Boolean(formik.errors.bookingPrice)}
+                    helperText={formik.touched.bookingPrice && formik.errors.bookingPrice}
+                />
+                <TextField
+                    fullWidth margin="normal" autoComplete="off"
+                    label="Duration"
+                    name="duration"
                     type="number"
-                    value={formik.values.hours}
+                    value={formik.values.duration}
                     onChange={formik.handleChange}
-                    error={formik.touched.hours && Boolean(formik.errors.hours)}
-                    helperText={formik.touched.hours && formik.errors.hours}
+                    error={formik.touched.duration && Boolean(formik.errors.duration)}
+                    helperText={formik.touched.duration && formik.errors.duration}
                 />
                 <TimePicker
-                    views={['hours', 'minutes']}
+                    views={['hours']}
                     fullWidth margin="normal" autoComplete="off"
-                    label="Arrival"
-                    name="arrival"
+                    label="ArrivalTime"
+                    name="arrivaltime"
                     ampm={false}
-                    value={formik.values.arrival}
-                    onChange={(value) => formik.setFieldValue('arrival', value.format("hh:mm"))}
-                    error={formik.touched.arrival && Boolean(formik.errors.arrival)}
-                    helperText={formik.touched.arrival && formik.errors.arrival}
+                    value={formik.values.arrivaltime}
+                    onChange={(value) => formik.setFieldValue('arrivaltime', value.format("HH:mm"))}
+                    error={formik.touched.arrivaltime && Boolean(formik.errors.arrivaltime)}
+                    helperText={formik.touched.arrivaltime && formik.errors.arrivaltime}
                 />
                 <Box sx={{ mt: 2 }}>
                     <Button variant="contained" type="submit">

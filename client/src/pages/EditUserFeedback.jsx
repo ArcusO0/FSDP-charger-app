@@ -5,6 +5,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } 
 import http from '../http';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import UserNavbar from "../components/userNavbar";
 
 function EditUserFeedback() {
     const { id } = useParams();
@@ -65,6 +66,7 @@ function EditUserFeedback() {
 
     return (
         <Box>
+            <UserNavbar/>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Edit Feedback
             </Typography>

@@ -5,6 +5,7 @@ import { AccessTime, Search, Clear, Edit } from '@mui/icons-material';
 import http from '../http';
 import dayjs from 'dayjs';
 import global from '../global';
+import UserNavbar from "../components/userNavbar";
 
 function UserFeedbacks() {
     const [feedbackList, setFeedbackList] = useState([]);
@@ -47,6 +48,7 @@ function UserFeedbacks() {
 
     return (
         <Box>
+            <UserNavbar/>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Feedbacks
             </Typography>

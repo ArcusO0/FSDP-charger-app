@@ -20,12 +20,17 @@ require('dotenv').config();
 
 const requestRoute = require("./routes/requests");
 const evcRoute = require("./routes/evc");
-const bookingRoute = require("./routes/booking");
 app.use('/MyRequests', requestRoute);
 app.use("/MyEVC", evcRoute);
-app.use("/MyBookings", bookingRoute);
 const userRoute = require('./routes/user');
 app.use("/user", userRoute);
+
+const feedbackRoute = require('./routes/userfeedback');
+app.use("/userfeedback", feedbackRoute);
+const bookingRoute = require('./routes/userbooking');
+app.use("/userbooking", bookingRoute);
+const oldbookingRoute = require('./routes/olduserbooking');
+app.use("/olduserbooking", oldbookingRoute);
 
 const vendorRoute = require('./routes/vendor');
 app.use("/vendor", vendorRoute)
