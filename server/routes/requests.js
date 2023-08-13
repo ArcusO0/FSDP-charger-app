@@ -7,7 +7,6 @@ const yup = require("yup");
 router.post("/addRequest", async(req, res) => {
     let data = req.body;
     let validationSchema = yup.object().shape({
-        reqId: yup.string().min(0).required(),
         addOrDelete: yup.boolean().required(),
         name: yup.string().trim().min(3).max(100).required(),
         address: yup.string().trim().min(3).max(500).required(),
