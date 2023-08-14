@@ -49,6 +49,7 @@ function Login() {
     };
 
     return (
+
         <Box sx={{
             marginTop: 8,
             display: 'flex',
@@ -114,6 +115,9 @@ function Login() {
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
                     Admin Log In? <a href="/loginadmin">Click Here!</a>
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
+                    Back to <a href="/">Home</a>
                 </Typography>
             </Box>
             <ToastContainer />
