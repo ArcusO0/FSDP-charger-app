@@ -36,7 +36,7 @@ function Loginvendor() {
             http.post("/vendor/login", data)
                 .then((res) => {
                     localStorage.setItem("accessToken", res.data.accessToken);
-                    navigate("/");
+                    navigate("/Dashboard");
                     window.location.reload();
                 })
                 .catch(function (err) {

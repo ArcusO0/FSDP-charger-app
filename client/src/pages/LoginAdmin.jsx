@@ -36,7 +36,7 @@ function Login() {
             http.post("/user/login", data)
                 .then((res) => {
                     localStorage.setItem("accessToken", res.data.accessToken);
-                    navigate("/");
+                    navigate("/AdminHome");
                     window.location.reload();
                 })
                 .catch(function (err) {

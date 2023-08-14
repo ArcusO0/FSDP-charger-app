@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import './userNavbar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faPaperPlane, faQuestionCircle, faUser } from '@fortawesome/free-solid-svg-icons';
+import {Button } from '@mui/material';
 
 function UserNavbar() {
+    const logout = ()=>{
+        localStorage.clear();   
+        window.location = "/";
+    }
     return (
         <div className="usernavbar">
             <a href="/" >
@@ -16,6 +21,7 @@ function UserNavbar() {
                 <a href="/" className='userabout'>Rewards</a>
                 <a href="/userfeedbacks" className='userabout'>Feedback</a>
                 <a href="/login" className='useruser'><FontAwesomeIcon icon={faUser} /></a>
+                <Button onClick={logout}>Logout</Button>
             </div>
         </div>
     );
