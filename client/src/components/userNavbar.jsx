@@ -10,7 +10,7 @@ function UserNavbar() {
                 <img src="/logo.jpg" alt="" className='useradminlogo' />
             </a>
             <div className='usernavbar-header'>
-                <a href="/" className='userbook'>Book Charger</a>
+                <a href="/" className='userbook' id='firstlink'>Book Charger</a>
                 <a href="/userbookings" className='userbook'>Bookings</a>
                 <a href="/userstatus" className='usercharger'>Status</a>
                 <a href="/" className='userabout'>Rewards</a>

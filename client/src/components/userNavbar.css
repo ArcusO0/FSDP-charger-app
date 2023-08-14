@@ -19,6 +19,10 @@
     flex-direction: row;
 }
 
+#firstlink {
+    padding-left: 50px;
+}
+
 .usernavbar.open {
     height: auto;
 }
@@ -48,7 +52,8 @@
 
 .useradminlogo {
     position: absolute;
-    padding: 20px;
+    margin-left: 800px;
+    padding-top: 10px;
     height: 60px;
     width: 60px;
 }
