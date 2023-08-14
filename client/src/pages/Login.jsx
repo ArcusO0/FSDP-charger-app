@@ -107,13 +107,13 @@ function Login() {
                     Sign In
                 </Button>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Dont have an account? <a href="/Login#/Register">Sign Up</a>
+                    Dont have an account? <a href="/Register">Sign Up</a>
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Are you a vendor? <a href="/Login#/LoginVendor">Click Here!</a>
+                    Are you a vendor? <a href="/loginvendor">Click Here!</a>
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Admin Log In? <a href="/Login#/LoginAdmin">Click Here!</a>
+                    Admin Log In? <a href="/loginadmin">Click Here!</a>
                 </Typography>
             </Box>
             <ToastContainer />

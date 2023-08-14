@@ -112,7 +112,7 @@ function Login() {
                     Sign In
                 </Button>
                 <Typography variant="body2" sx={{ mt: 1, textAlign: 'center' }}>
-                    Are you a vendor? <a href="/Login#/LoginVendor">Click Here!</a>
+                    Are you a vendor? <a href="/loginvendor">Click Here!</a>
                 </Typography>
             </Box>
             <ToastContainer />
