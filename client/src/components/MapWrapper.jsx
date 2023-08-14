@@ -71,7 +71,7 @@ function MapWrapper({
                 {evcList.map((evc, index) => (
                     evc.latLng && (
                         <Marker position={evc.latLng} key={index}>
-                            <Popup><b>Name:</b> {evc.name} <br /><b>Rating:</b> {evc.rating}<FontAwesomeIcon icon={faStar} style={{ color: "orange" }} /> <br /><b>Booking rate:</b> ${evc.bookingRate}/hr <br /><button style={{backgroundColor:"white",color:"black",border:"1px solid black"}}>Book</button></Popup>
+                            <Popup><b>Name:</b> {evc.name} <br /><b>Address:</b> {evc.address} <br /><b>Rating:</b> {evc.rating}<FontAwesomeIcon icon={faStar} style={{ color: "orange" }} /> <br /><b>Booking rate:</b> ${evc.bookingRate}/hr <br /><button style={{backgroundColor:"white",color:"black",border:"1px solid black"}}>Book</button></Popup>
                         </Marker>
                     )
                 ))}
