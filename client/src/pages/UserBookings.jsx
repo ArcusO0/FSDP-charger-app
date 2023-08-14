@@ -5,15 +5,30 @@ import { AccessTime, Search, Clear, Edit } from '@mui/icons-material';
 import http from '../http';
 import dayjs from 'dayjs';
 import global from '../global';
+import UserNavbar from "../components/userNavbar";
+
 
 function UserBookings() {
     const [bookingList, setBookingList] = useState([]);
+    const [oldbookingList, setOldBookingList] = useState([]);
     const [search, setSearch] = useState('');
-
+    
     const MoveToOld = () => {
-        http.get('/userbooking').then((res) => {
-            setBookingList(res.data);
-        });
+        bookingList.map((booking, a) =>{
+            var expiry = 0
+            expiry = parseInt((booking.arrivaltime).substring(0,2)) + booking.duration;
+            if(dayjs().format("HH") >= expiry){
+                http.post("/olduserbooking", booking)
+                .then((res) => {
+                    console.log(res.booking);
+                });
+                    http.delete(`/userbooking/${booking.id}`)
+                .then((res) => {
+                    console.log(res.data);
+                });
+                getOldBookings()
+            }
+        })
     };
 
     const onClickRefresh = () => {
@@ -22,6 +37,18 @@ function UserBookings() {
 
     const onSearchChange = (e) => {
         setSearch(e.target.value);
+    };
+
+    const getOldBookings = () => {
+        http.get('/olduserbooking').then((res) => {
+            setOldBookingList(res.data);
+        });
+    };
+
+    const searchOldBookings = () => {
+        http.get(`/olduserbooking?search=${search}`).then((res) => {
+            setOldBookingList(res.data);
+        });
     };
 
     const getBookings = () => {
@@ -38,6 +65,7 @@ function UserBookings() {
 
     useEffect(() => {
         getBookings();
+        getOldBookings();
     }, []);
 
     const onSearchKeyDown = (e) => {
@@ -57,6 +85,7 @@ function UserBookings() {
 
     return (
         <Box>
+            <UserNavbar/>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Active Bookings
             </Typography>
@@ -80,7 +109,7 @@ function UserBookings() {
                     Refresh
                 </Button>
                 <Box sx={{ pr: 5}} />
-                <Link to="/addbooking" style={{ textDecoration: 'none' }}>
+                <Link to="/adduserbooking" style={{ textDecoration: 'none' }}>
                     <Button variant='contained'>
                         Book A Charger
                     </Button>
@@ -96,9 +125,9 @@ function UserBookings() {
                                     <CardContent>
                                         <Box sx={{ display: 'flex', mb: 1 }}>
                                             <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                                                {booking.email}
+                                                {booking.bookingID}
                                             </Typography>
-                                            <Link to={`/editbooking/${booking.id}`}>
+                                            <Link to={`/edituserbooking/${booking.id}`}>
                                                 <IconButton color="primary" sx={{ padding: '4px' }}>
                                                     <Edit />
                                                 </IconButton>
@@ -112,13 +141,10 @@ function UserBookings() {
                                             </Typography>
                                         </Box>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {booking.license}
+                                            {"Arrival: " + booking.arrivaltime}
                                         </Typography>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {booking.hours}
-                                        </Typography>
-                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {booking.arrival}
+                                            {"Hours: " + booking.duration}
                                         </Typography>
                                     </CardContent>
                                 </Card>
@@ -147,31 +173,28 @@ function UserBookings() {
 
             <Grid container spacing={2}>
                 {
-                    bookingList.map((oldbooking, i) => {
+                    oldbookingList.map((olduserbooking, i) => {
                         return (
-                            <Grid item xs={12} md={6} lg={4} key={oldbooking.id}>
+                            <Grid item xs={12} md={6} lg={4} key={olduserbooking.id}>
                                 <Card>
                                     <CardContent>
                                         <Box sx={{ display: 'flex', mb: 1 }}>
                                             <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                                                {oldbooking.email}
+                                                {olduserbooking.bookingID}
                                             </Typography>
                                         </Box>
                                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}
                                             color="text.secondary">
                                             <AccessTime sx={{ mr: 1 }} />
                                             <Typography>
-                                                {dayjs(oldbooking.createdAt).format(global.datetimeFormat)}
+                                                {dayjs(olduserbooking.createdAt).format(global.datetimeFormat)}
                                             </Typography>
                                         </Box>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {oldbooking.license}
+                                            {"Arrival: " + olduserbooking.arrivaltime}
                                         </Typography>
                                         <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {oldbooking.hours}
-                                        </Typography>
-                                        <Typography sx={{ whiteSpace: 'pre-wrap' }}>
-                                            {oldbooking.arrival}
+                                            {"Hours: " + olduserbooking.duration}
                                         </Typography>
                                     </CardContent>
                                 </Card>

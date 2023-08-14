@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
 
     data.title = data.title.trim();
     data.description = data.description.trim();
-    let result = await Feedback.create(data);
+    let result = await UserFeedback.create(data);
     res.json(result);
 });
 
@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
         ];
     }
 
-    let list = await Feedback.findAll({
+    let list = await UserFeedback.findAll({
         where: condition,
         order: [['createdAt', 'DESC']]
     });
@@ -44,7 +44,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     let id = req.params.id;
-    let feedback = await Feedback.findByPk(id);
+    let feedback = await UserFeedback.findByPk(id);
     // Check id not found
     if (!feedback) {
         res.sendStatus(404);
@@ -56,7 +56,7 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let feedback = await Feedback.findByPk(id);
+    let feedback = await UserFeedback.findByPk(id);
     if (!feedback) {
         res.sendStatus(404);
         return;
@@ -79,7 +79,7 @@ router.put("/:id", async (req, res) => {
 
     data.title = data.title.trim();
     data.description = data.description.trim();
-    let num = await Feedback.update(data, {
+    let num = await UserFeedback.update(data, {
         where: { id: id }
     });
     if (num == 1) {
@@ -97,13 +97,13 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     let id = req.params.id;
     // Check id not found
-    let feedback = await Feedback.findByPk(id);
+    let feedback = await UserFeedback.findByPk(id);
     if (!feedback) {
         res.sendStatus(404);
         return;
     }
 
-    let num = await Feedback.destroy({
+    let num = await UserFeedback.destroy({
         where: { id: id }
     })
     if (num == 1) {

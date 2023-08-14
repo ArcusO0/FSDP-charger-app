@@ -1,15 +1,76 @@
-.AppBar a {
-    color: inherit;
-    text-decoration: none;
-    margin-right: 16px;
+/* navbar.css */
+
+
+
+/* .usernavbar {
+    color: green;
+    flex-direction: row;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 6.25%;
+    text-align: center;
+    padding: 2px;
+    transition: transform 0.3s ease;
+} */
+
+.usernavbar {
+    color: green;
+    flex-direction: row;
 }
 
-#navbar {
-    padding: 0;
-    width: 100vw;
+.usernavbar.open {
+    height: auto;
+}
+
+.usernavbar-header {
     background-color: green;
+    display: flex;
+    flex-direction: row;
 }
 
-.AppBar a:hover {
-    color: lightblue;
+.usernavbar-toggle {
+    display: none;
+    cursor: pointer;
 }
+
+
+.userbook,
+.usercharger,
+.usersettings,
+.userabout,
+.useruser {
+    color: black;
+    display: block;
+    padding: 20px;
+    font-size: 24px;
+}
+
+.useradminlogo {
+    position: absolute;
+    padding: 20px;
+    height: 60px;
+    width: 60px;
+}
+
+.useruser {
+    margin-top: auto;
+}
+
+/* @media (max-width: 768px) {
+    .usernavbar {
+        z-index: 1;
+        width: auto;
+        height: auto;
+        width: auto;
+        display: flex;
+        flex-direction: row;
+        padding-left: 5px;
+    }
+    .userbook,
+    .usercharger,
+    .usersettings,
+    .userabout {
+        font-size: 20px;
+    }
+} */

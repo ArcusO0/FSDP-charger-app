@@ -4,6 +4,7 @@ import { Box, Typography, TextField, Button } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from '../http';
+import UserNavbar from "../components/userNavbar";
 
 function AddUserFeedback() {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ function AddUserFeedback() {
 
     return (
         <Box>
+            <UserNavbar/>
             <Typography variant="h5" sx={{ my: 2 }}>
                 Add Feedback
             </Typography>
