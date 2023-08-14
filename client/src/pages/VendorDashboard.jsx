@@ -241,7 +241,7 @@ function Dashboard() {
             </Card>
           </Grid>
           <Grid item xs={6} onClick={() => navigate("/MyRequests")}>
-            <Card sx={{border:"1px solid black", width: "100%"}}>
+            <Card sx={{border:"1px solid black", width: "100%",cursor:"pointer"}}>
               <Box sx={{display:"flex", p: 8.7, alignItems:"center"}}>
                 <Send sx={{transform:"rotate(-40deg)", display: "inline-block", mr: 2, ml:5, width:"65px" , height: "55px"}}/>
                 <Typography variant="h5" sx={{fontWeight:"bold", display: "inline-block"}}>
