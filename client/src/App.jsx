@@ -56,7 +56,7 @@ function App() {
     <Router>
       
 
-      <Container>
+      <Container  disableGutters >
         <Routes>
 
           <Route path={"/"} element={<HomePage />} />

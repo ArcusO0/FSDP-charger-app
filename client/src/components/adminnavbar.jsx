@@ -18,7 +18,7 @@ function Navbar() {
                 <a href="/" className='about'><FontAwesomeIcon icon={faQuestionCircle} /></a>
 
             </div>
-            <a href="/" className='user'><FontAwesomeIcon icon={faUser} /></a>
+            <a href="/login" className='user'><FontAwesomeIcon icon={faUser} /></a>
         </div>
 
     );

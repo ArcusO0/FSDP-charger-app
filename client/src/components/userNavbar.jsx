@@ -15,7 +15,7 @@ function UserNavbar() {
                 <a href="/userstatus" className='usercharger'>Status</a>
                 <a href="/" className='userabout'>Rewards</a>
                 <a href="/userfeedbacks" className='userabout'>Feedback</a>
-                <a href="/" className='useruser'><FontAwesomeIcon icon={faUser} /></a>
+                <a href="/login" className='useruser'><FontAwesomeIcon icon={faUser} /></a>
             </div>
         </div>
     );

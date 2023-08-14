@@ -40,7 +40,7 @@ function AdminCharger() {
             const { createdAt, bookingPrice } = entry;
 
             // Extract the date part of the datetime
-            const dateOnly = createdAt.slice(0, 10);
+            const dateOnly = createdAt.slice(8,10) +"/"+ createdAt.slice(5, 7);
 
             // If the date already exists in the aggregatedPrices object, add the price
             if (aggregatedPrices[dateOnly]) {
@@ -103,8 +103,8 @@ function AdminCharger() {
         <>
             <Navbar />
             <Headerbox number={sortedChargers.length} text="Chargers" />
-            <Box sx={{ display: 'block', alignItems: 'center', mb: 2 ,position:'absolute',right:0,top:"40%"}}>
-                <Input value={search} placeholder="Search"
+            <Box sx={{ display: 'block', alignItems: 'center', mb: 2 ,position:'absolute',right:"-3%",top:"40%"}}>
+                <Input value={search} placeholder="Search" sx={{width:"50%"}}
                     onChange={onSearchChange}
                     onKeyDown={onSearchKeyDown}/>
                 <IconButton color="primary" onClick={onClickSearch}>
@@ -170,12 +170,12 @@ function AdminCharger() {
                                 <td>
                                             <Line
                                                 data={{
-                                            labels: totalpercharger[index].date.reverse(),
+                                            labels: totalpercharger[index].date,
                                             color: "#fba263",
                                                     datasets: [
                                                         {
                                                             label: '',
-                                                            data: totalpercharger[index].price.reverse(),
+                                                            data: totalpercharger[index].price,
                                                             backgroundColor: "#fba263",
                                                             borderColor: '#fba263',
                                                             color: "#fba263",
